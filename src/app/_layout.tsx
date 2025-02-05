@@ -32,9 +32,6 @@ const { LightTheme, DarkTheme } = adaptNavigationTheme({
   reactNavigationDark: NavigationDarkTheme,
 });
 
-// NavigationBar.setPositionAsync('absolute').then((r) => '');
-// NavigationBar.setBackgroundColorAsync('FFFFFF').then((r) => '');
-
 const CombinedDefaultTheme = merge(LightTheme, customLightTheme);
 const CombinedDarkTheme = merge(DarkTheme, customDarkTheme);
 
@@ -61,7 +58,12 @@ export default function RootLayout() {
           backgroundColor={colorScheme === 'dark' ? '#2b2732' : '#f3edf6'}
         />
         <Stack>
-          <Stack.Screen name="(application)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="(application)"
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack>
       </ThemeProvider>
     </PaperProvider>

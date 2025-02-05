@@ -1,21 +1,22 @@
 import React from 'react';
 import { router, Tabs } from 'expo-router';
 import {
-  Feather,
-  MaterialCommunityIcons,
   Entypo,
+  Feather,
   Ionicons,
+  MaterialCommunityIcons,
 } from '@expo/vector-icons';
+import { View } from 'react-native';
 import { FAB } from 'react-native-paper';
-import { View, StyleSheet } from 'react-native';
+import { styles } from './styles';
 
-const ApplicationLayout = () => {
+const Footer = () => {
   return (
     <Tabs
       screenOptions={{
         tabBarStyle: {
           borderTopWidth: 0,
-          paddingTop: 5,
+          paddingTop: 0,
         },
       }}
     >
@@ -77,21 +78,4 @@ const ApplicationLayout = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  fabContainer: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    top: -35,
-    height: 60,
-    width: 60,
-    overflow: 'hidden',
-  },
-  fab: {
-    elevation: 0,
-    boxShadow: 'none',
-    backgroundColor: 'color.primary',
-  },
-});
-
-export default ApplicationLayout;
+export default Footer;
