@@ -16,6 +16,7 @@ import {
 } from '@react-navigation/native';
 import merge from 'deepmerge';
 import { useEffect } from 'react';
+import { AuthProvider } from '@/src/context/AuthContext';
 
 const customDarkTheme = {
   ...MD3DarkTheme,
@@ -50,21 +51,24 @@ export default function RootLayout() {
 
   const paperTheme =
     colorScheme === 'dark' ? CombinedDarkTheme : CombinedDefaultTheme;
+
   return (
     <PaperProvider theme={paperTheme}>
       <ThemeProvider value={paperTheme}>
-        <StatusBar
-          barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
-          backgroundColor={colorScheme === 'dark' ? '#2b2732' : '#f3edf6'}
-        />
-        <Stack>
-          <Stack.Screen
-            name="(application)"
-            options={{
-              headerShown: false,
-            }}
+        <AuthProvider>
+          <StatusBar
+            barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
+            backgroundColor={colorScheme === 'dark' ? '#2b2732' : '#f3edf6'}
           />
-        </Stack>
+          <Stack>
+            <Stack.Screen
+              name="(application)"
+              options={{
+                headerShown: false,
+              }}
+            />
+          </Stack>
+        </AuthProvider>
       </ThemeProvider>
     </PaperProvider>
   );

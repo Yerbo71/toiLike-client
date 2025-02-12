@@ -1,17 +1,27 @@
 import { View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
+import { useContext } from 'react';
+import { AuthContext } from '@/src/context/AuthContext';
+import { WithoutToken } from '@/src/components/withoutToken';
 
 export default function Ordering() {
+  const { isAuthenticated } = useContext(AuthContext);
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Text>Ordering</Text>
-      <Button mode="contained">Press</Button>
-    </View>
+    <>
+      {isAuthenticated ? (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text>Ordering</Text>
+          <Button mode="contained">Press</Button>
+        </View>
+      ) : (
+        <WithoutToken />
+      )}
+    </>
   );
 }

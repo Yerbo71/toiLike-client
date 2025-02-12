@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { Searchbar, Card } from 'react-native-paper';
+import { Searchbar } from 'react-native-paper';
 import { Controller, useForm } from 'react-hook-form';
 import HomeCarousel from '@/src/components/home/homeCarousel';
 
