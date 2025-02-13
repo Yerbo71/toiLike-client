@@ -13,6 +13,6 @@ export const styles = StyleSheet.create({
   fab: {
     elevation: 0,
     boxShadow: 'none',
-    backgroundColor: 'rgb(0, 95, 175)',
+    backgroundColor: 'rgb(165, 200, 255)',
   },
 });
