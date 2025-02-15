@@ -2,21 +2,22 @@ import React, { useContext } from 'react';
 import { View } from 'react-native';
 import { Button, Text, TextInput, useTheme } from 'react-native-paper';
 import { AuthContext } from '../../../context/AuthContext';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
+import { router } from 'expo-router';
 
 type FormData = {
   username: string;
   password: string;
 };
 
-export default function Login({ navigation }: any) {
+export default function Login() {
   const { signIn } = useContext(AuthContext);
   const theme = useTheme();
   const {
-    register,
+    control,
     formState: { errors },
     handleSubmit,
-  } = useForm({
+  } = useForm<FormData>({
     mode: 'onSubmit',
     defaultValues: {
       username: '',
@@ -26,11 +27,11 @@ export default function Login({ navigation }: any) {
 
   const onSubmit = async (data: FormData) => {
     const result = await signIn?.(data.username, data.password);
-    if (!result?.success) {
-      // Можно добавить обработку ошибок логина, например, setError('root', { message: result?.message })
-    } else {
-      navigation.replace('Protected');
-    }
+    // if (!result?.success) {
+    //   // Можно добавить обработку ошибок логина, например, setError('root', { message: result?.message })
+    // } else {
+    //   router.replace('/protected');
+    // }
   };
 
   return (
@@ -66,20 +67,26 @@ export default function Login({ navigation }: any) {
         }}
       >
         <View>
-          <TextInput
-            label="Username"
-            mode="outlined"
-            {...register('username', {
-              required: {
-                value: true,
-                message: 'Username is required',
-              },
+          <Controller
+            control={control}
+            name="username"
+            rules={{
+              required: 'Username is required',
               minLength: {
-                value: 3,
-                message: 'Username must be at least 3 characters',
+                value: 4,
+                message: 'Username must be at least 4 characters',
               },
-            })}
-            error={!!errors.username}
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                label="Username"
+                mode="outlined"
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                error={!!errors.username}
+              />
+            )}
           />
           {errors.username && (
             <Text
@@ -91,21 +98,27 @@ export default function Login({ navigation }: any) {
           )}
         </View>
         <View>
-          <TextInput
-            label="Password"
-            mode="outlined"
-            secureTextEntry
-            {...register('password', {
-              required: {
-                value: true,
-                message: 'Password is required',
-              },
+          <Controller
+            control={control}
+            name="password"
+            rules={{
+              required: 'Password is required',
               minLength: {
                 value: 6,
                 message: 'Password must be at least 6 characters',
               },
-            })}
-            error={!!errors.password}
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                label="Password"
+                mode="outlined"
+                secureTextEntry
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                error={!!errors.password}
+              />
+            )}
           />
           {errors.password && (
             <Text
@@ -140,6 +153,9 @@ export default function Login({ navigation }: any) {
           alignSelf: 'center',
           fontWeight: 'bold',
           color: theme.colors.primary,
+        }}
+        onPress={() => {
+          router.push('/(auth)/registration');
         }}
       >
         Create new account
