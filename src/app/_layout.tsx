@@ -4,7 +4,7 @@ import { Stack } from 'expo-router';
 import * as NavigationBar from 'expo-navigation-bar';
 import { StatusBar, Platform } from 'react-native';
 import { ThemeProvider } from '@react-navigation/native';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { AuthProvider } from '@/src/context/AuthContext';
 import {
   CombinedDarkTheme,
@@ -38,6 +38,12 @@ export default function RootLayout() {
           <Stack>
             <Stack.Screen
               name="(application)"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="(auth)"
               options={{
                 headerShown: false,
               }}

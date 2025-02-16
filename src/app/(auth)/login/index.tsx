@@ -4,6 +4,7 @@ import { Button, Text, TextInput, useTheme } from 'react-native-paper';
 import { AuthContext } from '../../../context/AuthContext';
 import { useForm, Controller } from 'react-hook-form';
 import { router } from 'expo-router';
+import { CTextInput } from '@/src/shared';
 
 type FormData = {
   username: string;
@@ -66,69 +67,30 @@ export default function Login() {
           gap: 15,
         }}
       >
-        <View>
-          <Controller
-            control={control}
-            name="username"
-            rules={{
-              required: 'Username is required',
-              minLength: {
-                value: 4,
-                message: 'Username must be at least 4 characters',
-              },
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                label="Username"
-                mode="outlined"
-                value={value}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                error={!!errors.username}
-              />
-            )}
-          />
-          {errors.username && (
-            <Text
-              style={{ color: theme.colors.error, marginTop: 5 }}
-              variant="labelSmall"
-            >
-              {errors.username.message}
-            </Text>
-          )}
-        </View>
-        <View>
-          <Controller
-            control={control}
-            name="password"
-            rules={{
-              required: 'Password is required',
-              minLength: {
-                value: 6,
-                message: 'Password must be at least 6 characters',
-              },
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                label="Password"
-                mode="outlined"
-                secureTextEntry
-                value={value}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                error={!!errors.password}
-              />
-            )}
-          />
-          {errors.password && (
-            <Text
-              style={{ color: theme.colors.error, marginTop: 5 }}
-              variant="labelSmall"
-            >
-              {errors.password.message}
-            </Text>
-          )}
-        </View>
+        <CTextInput
+          control={control}
+          name="username"
+          label="Username"
+          rules={{
+            required: 'Username is required',
+            minLength: {
+              value: 4,
+              message: 'Username must be at least 4 characters',
+            },
+          }}
+        />
+        <CTextInput
+          control={control}
+          name="password"
+          label="Password"
+          rules={{
+            required: 'Password is required',
+            minLength: {
+              value: 6,
+              message: 'Password must be at least 6 characters',
+            },
+          }}
+        />
         <Text
           variant="bodyMedium"
           style={{
@@ -140,11 +102,7 @@ export default function Login() {
           Forgot your password?
         </Text>
       </View>
-      <Button
-        mode="contained"
-        style={{ borderRadius: 10 }}
-        onPress={handleSubmit(onSubmit)}
-      >
+      <Button mode="contained" onPress={handleSubmit(onSubmit)}>
         Sign In
       </Button>
       <Text

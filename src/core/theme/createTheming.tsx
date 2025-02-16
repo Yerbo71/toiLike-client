@@ -13,13 +13,13 @@ import merge from 'deepmerge';
 const customDarkTheme = {
   ...MD3DarkTheme,
   colors: Colors.dark,
-  roundness: 10,
+  roundness: 2,
 };
 
 const customLightTheme = {
   ...MD3LightTheme,
   colors: Colors.light,
-  roundness: 10,
+  roundness: 2,
 };
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({

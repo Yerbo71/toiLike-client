@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { View } from 'react-native';
-import { Button, Text, TextInput, useTheme } from 'react-native-paper';
+import { Button, Text, useTheme } from 'react-native-paper';
 import { AuthContext } from '@/src/context/AuthContext';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { router } from 'expo-router';
+import { CTextInput } from '@/src/shared';
 
 type FormData = {
   username: string;
@@ -31,7 +32,7 @@ export default function Registration({ navigation }: any) {
   });
 
   const onSubmit = async (data: FormData) => {
-    console.log(data); // Тут должна быть логика регистрации
+    console.log(data);
     delete data.confirmPassword;
   };
 
@@ -53,9 +54,10 @@ export default function Registration({ navigation }: any) {
         </Text>
       </View>
       <View style={{ display: 'flex', flexDirection: 'column', gap: 15 }}>
-        <Controller
+        <CTextInput
           control={control}
           name="username"
+          label="Username"
           rules={{
             required: 'Username is required',
             minLength: {
@@ -63,26 +65,11 @@ export default function Registration({ navigation }: any) {
               message: 'Username must be at least 4 characters',
             },
           }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              label="Username"
-              mode="outlined"
-              value={value}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              error={!!errors.username}
-            />
-          )}
         />
-        {errors.username && (
-          <Text style={{ color: theme.colors.error }}>
-            {errors.username.message}
-          </Text>
-        )}
-
-        <Controller
+        <CTextInput
           control={control}
           name="email"
+          label="Email"
           rules={{
             required: 'Email is required',
             pattern: {
@@ -90,26 +77,11 @@ export default function Registration({ navigation }: any) {
               message: 'Enter a valid email',
             },
           }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              label="Email"
-              mode="outlined"
-              value={value}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              error={!!errors.email}
-            />
-          )}
         />
-        {errors.email && (
-          <Text style={{ color: theme.colors.error }}>
-            {errors.email.message}
-          </Text>
-        )}
-
-        <Controller
+        <CTextInput
           control={control}
           name="password"
+          label="Password"
           rules={{
             required: 'Password is required',
             minLength: {
@@ -117,49 +89,17 @@ export default function Registration({ navigation }: any) {
               message: 'Password must be at least 6 characters',
             },
           }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              label="Password"
-              mode="outlined"
-              secureTextEntry
-              value={value}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              error={!!errors.password}
-            />
-          )}
         />
-        {errors.password && (
-          <Text style={{ color: theme.colors.error }}>
-            {errors.password.message}
-          </Text>
-        )}
-
-        <Controller
+        <CTextInput
           control={control}
           name="confirmPassword"
+          label="Confirm password"
           rules={{
             required: 'Confirm Password is required',
-            validate: (value) =>
+            validate: (value: string | undefined) =>
               value === watch('password') || 'Passwords do not match',
           }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              label="Confirm Password"
-              mode="outlined"
-              secureTextEntry
-              value={value}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              error={!!errors.confirmPassword}
-            />
-          )}
         />
-        {errors.confirmPassword && (
-          <Text style={{ color: theme.colors.error }}>
-            {errors.confirmPassword.message}
-          </Text>
-        )}
       </View>
       <Button
         mode="contained"

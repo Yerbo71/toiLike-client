@@ -1,40 +1,17 @@
 import { View } from 'react-native';
-import { Searchbar } from 'react-native-paper';
-import { Controller, useForm } from 'react-hook-form';
 import HomeCarousel from '@/src/components/home/homeCarousel';
+import HomeRestaurantBlock from '@/src/components/home/homeRestaurantBlock';
+import HomeSearchBar from '@/src/components/home/homeSearchBar';
+import HomeServicesBlock from '@/src/components/home/homeServicesBlock';
 
 export default function HomeScreen() {
-  const { control } = useForm({
-    defaultValues: {
-      search: '',
-    },
-  });
   return (
     <View>
-      <View
-        style={{
-          paddingTop: 15,
-          paddingLeft: 10,
-          paddingRight: 10,
-          paddingBottom: 10,
-        }}
-      >
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Searchbar
-              placeholder="Search"
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="search"
-        />
-      </View>
+      <HomeSearchBar />
       <HomeCarousel />
+      <HomeRestaurantBlock />
+      <HomeServicesBlock />
+      <HomeRestaurantBlock />
     </View>
   );
 }
