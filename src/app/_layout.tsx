@@ -1,40 +1,15 @@
 import { useColorScheme } from 'react-native';
-import {
-  MD3DarkTheme,
-  MD3LightTheme,
-  PaperProvider,
-  adaptNavigationTheme,
-} from 'react-native-paper';
+import { PaperProvider } from 'react-native-paper';
 import { Stack } from 'expo-router';
-import { Colors } from '../constants/Colors';
 import * as NavigationBar from 'expo-navigation-bar';
 import { StatusBar, Platform } from 'react-native';
-import {
-  DarkTheme as NavigationDarkTheme,
-  DefaultTheme as NavigationDefaultTheme,
-  ThemeProvider,
-} from '@react-navigation/native';
-import merge from 'deepmerge';
+import { ThemeProvider } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { AuthProvider } from '@/src/context/AuthContext';
-
-const customDarkTheme = {
-  ...MD3DarkTheme,
-  colors: Colors.dark,
-};
-
-const customLightTheme = {
-  ...MD3LightTheme,
-  colors: Colors.light,
-};
-
-const { LightTheme, DarkTheme } = adaptNavigationTheme({
-  reactNavigationLight: NavigationDefaultTheme,
-  reactNavigationDark: NavigationDarkTheme,
-});
-
-const CombinedDefaultTheme = merge(LightTheme, customLightTheme);
-const CombinedDarkTheme = merge(DarkTheme, customDarkTheme);
+import {
+  CombinedDarkTheme,
+  CombinedDefaultTheme,
+} from '@/src/core/theme/createTheming';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
