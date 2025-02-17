@@ -4,8 +4,9 @@ import { Text, useTheme } from 'react-native-paper';
 import Entypo from '@expo/vector-icons/Entypo';
 import PreviewCard from '@/src/shared/PreviewCard';
 import { restaurants } from '../../constants/mock/restaurants';
+import { router } from 'expo-router';
 
-const HomeServicesBlock = () => {
+const HomeArtistsBlock = () => {
   const theme = useTheme();
   return (
     <View>
@@ -18,7 +19,7 @@ const HomeServicesBlock = () => {
           alignItems: 'center',
         }}
       >
-        <Text variant="titleLarge">Services</Text>
+        <Text variant="titleLarge">Artists</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text variant="titleMedium" style={{ color: theme.colors.primary }}>
             All
@@ -37,7 +38,9 @@ const HomeServicesBlock = () => {
             image={item.image}
             title={item.title}
             description={item.description}
-            onPress={() => console.log(`${item.title} clicked`)}
+            rating={item.rating}
+            location={item.location}
+            onPress={() => router.push(`/(application)/details/${item.id}`)}
           />
         )}
       />
@@ -45,4 +48,4 @@ const HomeServicesBlock = () => {
   );
 };
 
-export default HomeServicesBlock;
+export default HomeArtistsBlock;

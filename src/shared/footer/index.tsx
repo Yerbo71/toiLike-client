@@ -74,6 +74,13 @@ const Footer = () => {
           ),
         }}
       />
+      <Tabs.Screen
+        name="details/[id]"
+        options={{
+          href: null,
+          headerShown: false,
+        }}
+      />
     </Tabs>
   );
 };

@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 import { AuthContext } from '@/src/context/AuthContext';
 import { useRouter } from 'expo-router';
-import { WithoutToken } from '@/src/components/withoutToken';
+import { WithoutToken } from '../../../shared/withoutToken';
 
 export default function Profile() {
   const { isAuthenticated } = useContext(AuthContext);

@@ -4,6 +4,7 @@ import { Text, useTheme } from 'react-native-paper';
 import Entypo from '@expo/vector-icons/Entypo';
 import PreviewCard from '@/src/shared/PreviewCard';
 import { restaurants } from '../../constants/mock/restaurants';
+import { router } from 'expo-router';
 
 const HomeRestaurantBlock = () => {
   const theme = useTheme();
@@ -36,8 +37,10 @@ const HomeRestaurantBlock = () => {
           <PreviewCard
             image={item.image}
             title={item.title}
+            rating={item.rating}
+            location={item.location}
             description={item.description}
-            onPress={() => console.log(`${item.title} clicked`)}
+            onPress={() => router.push(`/(application)/details/${item.id}`)}
           />
         )}
       />

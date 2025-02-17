@@ -1,17 +1,18 @@
-import { View } from 'react-native';
-import HomeCarousel from '@/src/components/home/homeCarousel';
-import HomeRestaurantBlock from '@/src/components/home/homeRestaurantBlock';
-import HomeSearchBar from '@/src/components/home/homeSearchBar';
-import HomeServicesBlock from '@/src/components/home/homeServicesBlock';
+import { ScrollView } from 'react-native';
+import HomeCarousel from '@/src/pages/home/homeCarousel';
+import HomeRestaurantBlock from '@/src/pages/home/homeRestaurantBlock';
+import HomeSearchBar from '@/src/pages/home/homeSearchBar';
+import HomeServicesBlock from '@/src/pages/home/homeServicesBlock';
+import HomeArtistsBlock from '@/src/pages/home/homeArtistsBlock';
 
 export default function HomeScreen() {
   return (
-    <View>
+    <ScrollView>
       <HomeSearchBar />
       <HomeCarousel />
       <HomeRestaurantBlock />
       <HomeServicesBlock />
-      <HomeRestaurantBlock />
-    </View>
+      <HomeArtistsBlock />
+    </ScrollView>
   );
 }

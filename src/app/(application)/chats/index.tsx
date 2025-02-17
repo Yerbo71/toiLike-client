@@ -2,7 +2,7 @@ import { View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useContext } from 'react';
 import { AuthContext } from '@/src/context/AuthContext';
-import { WithoutToken } from '@/src/components/withoutToken';
+import { WithoutToken } from '../../../shared/withoutToken';
 
 export default function Chats() {
   const { isAuthenticated } = useContext(AuthContext);

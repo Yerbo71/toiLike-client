@@ -3,8 +3,6 @@ import { View, Dimensions } from 'react-native';
 import { Card } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
 
-const { width } = Dimensions.get('window');
-
 const images = [
   { uri: 'https://picsum.photos/700' },
   { uri: 'https://picsum.photos/701' },
