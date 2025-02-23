@@ -1,19 +1,18 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { checkAuth, login, logout } from '../services/authService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface AuthContextType {
   isAuthenticated: boolean;
   token: string | null;
-  signIn?: (
-    username: string,
-    password: string,
-  ) => Promise<{ success: boolean; token?: string }>;
-  signOut?: () => void;
+  signIn: (token: string) => Promise<void>;
+  signOut: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   token: null,
+  signIn: async () => {},
+  signOut: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -22,26 +21,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const verifyAuth = async () => {
-      const auth = await checkAuth();
-      setIsAuthenticated(auth.isAuthenticated);
-      setToken(auth.token ?? null);
+      const storedToken = await AsyncStorage.getItem('accessToken');
+      if (storedToken) {
+        setToken(storedToken);
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+        setToken(null);
+      }
     };
     verifyAuth();
   }, []);
 
-  const signIn = async (username: string, password: string) => {
-    const result = await login(username, password);
-    if (result.success) {
-      setIsAuthenticated(true);
-      setToken(result.token ?? null);
-    }
-    return result;
+  // Функция для входа
+  const signIn = async (newToken: string) => {
+    await AsyncStorage.setItem('accessToken', newToken);
+    setToken(newToken);
+    setIsAuthenticated(true);
   };
 
+  // Функция для выхода
   const signOut = async () => {
-    await logout();
-    setIsAuthenticated(false);
+    await AsyncStorage.removeItem('accessToken');
     setToken(null);
+    setIsAuthenticated(false);
   };
 
   return (

@@ -1,9 +1,9 @@
-import { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 import { AuthContext } from '@/src/context/AuthContext';
-import { useRouter } from 'expo-router';
-import { WithoutToken } from '../../../shared/withoutToken';
+import { WithoutToken } from '@/src/shared/withoutToken';
+import { router } from 'expo-router';
 
 export default function Profile() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -19,7 +19,18 @@ export default function Profile() {
           }}
         >
           <Text>Profile</Text>
-          <Button mode="contained">Press</Button>
+          <Button
+            mode="contained"
+            onPress={() => {
+              router.push('/(auth)/login');
+            }}
+            style={{
+              width: 300,
+              marginTop: 10,
+            }}
+          >
+            Login
+          </Button>
         </View>
       ) : (
         <WithoutToken />

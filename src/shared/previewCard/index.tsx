@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { GestureResponderEvent } from 'react-native';
-import { Card, Text, useTheme, Chip } from 'react-native-paper';
-import RatingChip from '@/src/shared/ratingChip';
+import { Card, Text, useTheme } from 'react-native-paper';
+import { RatingChip } from '@/src/shared/ratingChip';
 
 interface Props {
   image: string;
@@ -12,7 +12,7 @@ interface Props {
   onPress: (event: GestureResponderEvent) => void;
 }
 
-const PreviewCard: FC<Props> = ({
+export const PreviewCard: FC<Props> = ({
   image,
   title,
   description,
@@ -48,5 +48,3 @@ const PreviewCard: FC<Props> = ({
     </Card>
   );
 };
-
-export default PreviewCard;

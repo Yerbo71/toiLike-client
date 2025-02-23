@@ -2,7 +2,7 @@ import { View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useContext } from 'react';
 import { AuthContext } from '@/src/context/AuthContext';
-import { WithoutToken } from '../../../shared/withoutToken';
+import { WithoutToken } from '@/src/shared/withoutToken';
 
 export default function Ordering() {
   const { isAuthenticated } = useContext(AuthContext);

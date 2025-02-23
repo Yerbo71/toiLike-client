@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import { View } from 'react-native';
-import { Button, Text, TextInput, useTheme } from 'react-native-paper';
-import { AuthContext } from '../../../context/AuthContext';
-import { useForm, Controller } from 'react-hook-form';
+import { Button, Text, useTheme } from 'react-native-paper';
+import { AuthContext } from '@/src/context/AuthContext';
+import { useForm } from 'react-hook-form';
 import { router } from 'expo-router';
 import { CTextInput } from '@/src/shared';
+import { login } from '@/src/core/rest/login-in/index';
 
 type FormData = {
-  username: string;
+  usernameOrEmail: string;
   password: string;
 };
 
@@ -21,18 +22,21 @@ export default function Login() {
   } = useForm<FormData>({
     mode: 'onSubmit',
     defaultValues: {
-      username: '',
+      usernameOrEmail: '',
       password: '',
     },
   });
 
   const onSubmit = async (data: FormData) => {
-    const result = await signIn?.(data.username, data.password);
-    // if (!result?.success) {
-    //   // Можно добавить обработку ошибок логина, например, setError('root', { message: result?.message })
-    // } else {
-    //   router.replace('/protected');
-    // }
+    try {
+      const response = await login(data);
+      await signIn(response.accessToken);
+      router.replace('/(application)');
+    } catch (err) {
+      console.error(err);
+    } finally {
+      console.log('56');
+    }
   };
 
   return (
@@ -69,13 +73,13 @@ export default function Login() {
       >
         <CTextInput
           control={control}
-          name="username"
-          label="Username"
+          name="usernameOrEmail"
+          label="Username or email"
           rules={{
-            required: 'Username is required',
+            required: 'Username or email is required',
             minLength: {
               value: 4,
-              message: 'Username must be at least 4 characters',
+              message: 'Username or email must be at least 4 characters',
             },
           }}
         />

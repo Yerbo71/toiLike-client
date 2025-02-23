@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from '../../shared/footer';
+import { Footer } from '@/src/shared/footer';
 
 const ApplicationLayout = () => {
   return <Footer />;

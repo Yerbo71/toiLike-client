@@ -7,7 +7,7 @@ interface Props {
   rating: number;
 }
 
-const RatingChip: FC<Props> = ({ rating }) => {
+export const RatingChip: FC<Props> = ({ rating }) => {
   const theme = useTheme();
 
   const colorChange = () => {
@@ -41,5 +41,3 @@ const RatingChip: FC<Props> = ({ rating }) => {
     </View>
   );
 };
-
-export default RatingChip;
