@@ -4,7 +4,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { Text, useTheme } from 'react-native-paper';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-const DetailProfileRateBlock = () => {
+export const DetailRateBlock = () => {
   const theme = useTheme();
   return (
     <View
@@ -41,5 +41,3 @@ const DetailProfileRateBlock = () => {
     </View>
   );
 };
-
-export default DetailProfileRateBlock;

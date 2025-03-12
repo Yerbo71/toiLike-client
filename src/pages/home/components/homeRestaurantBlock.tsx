@@ -3,10 +3,10 @@ import { FlatList, View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import Entypo from '@expo/vector-icons/Entypo';
 import { PreviewCard } from '@/src/shared/previewCard';
-import { restaurants } from '../../constants/mock/restaurants';
+import { restaurants } from '../../../constants/mock/restaurants';
 import { router } from 'expo-router';
 
-const HomeServicesBlock = () => {
+const HomeRestaurantBlock = () => {
   const theme = useTheme();
   return (
     <View>
@@ -19,7 +19,7 @@ const HomeServicesBlock = () => {
           alignItems: 'center',
         }}
       >
-        <Text variant="titleLarge">Services</Text>
+        <Text variant="titleLarge">Restaurants</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text variant="titleMedium" style={{ color: theme.colors.primary }}>
             All
@@ -37,9 +37,9 @@ const HomeServicesBlock = () => {
           <PreviewCard
             image={item.image}
             title={item.title}
-            description={item.description}
             rating={item.rating}
             location={item.location}
+            description={item.description}
             onPress={() => router.push(`/(application)/details/${item.id}`)}
           />
         )}
@@ -48,4 +48,4 @@ const HomeServicesBlock = () => {
   );
 };
 
-export default HomeServicesBlock;
+export default HomeRestaurantBlock;

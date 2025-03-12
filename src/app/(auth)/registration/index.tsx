@@ -14,7 +14,6 @@ type FormData = {
 };
 
 export default function Registration({ navigation }: any) {
-  const { signIn } = useContext(AuthContext);
   const theme = useTheme();
   const {
     control,

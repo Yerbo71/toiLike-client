@@ -3,7 +3,7 @@ import { FlatList, View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import Entypo from '@expo/vector-icons/Entypo';
 import { PreviewCard } from '@/src/shared/previewCard';
-import { restaurants } from '../../constants/mock/restaurants';
+import { restaurants } from '../../../constants/mock/restaurants';
 import { router } from 'expo-router';
 
 const HomeArtistsBlock = () => {

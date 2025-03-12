@@ -5,7 +5,7 @@ import { AuthContext } from '@/src/context/AuthContext';
 import { useForm } from 'react-hook-form';
 import { router } from 'expo-router';
 import { CTextInput } from '@/src/shared';
-import { login } from '@/src/core/rest/login-in/index';
+import { login } from '@/src/core/rest/login-in';
 
 type FormData = {
   usernameOrEmail: string;
@@ -35,7 +35,7 @@ export default function Login() {
     } catch (err) {
       console.error(err);
     } finally {
-      console.log('56');
+      console.log('');
     }
   };
 
