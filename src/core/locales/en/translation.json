@@ -13,5 +13,14 @@
     "aboutApp": "About application",
     "rating": "Rating",
     "theme": "Theme"
+  },
+  "staffOrderingPage": {
+    "title": "Trust the EventApp Team",
+    "description": "We provide an official contract and quality guarantee",
+    "orderItems1": "24/7 organizer consultation",
+    "orderItems2": "We will find a restaurant",
+    "orderItems3": "We will organize a show program",
+    "orderItems4": "We will control the entire process",
+    "orderNow": "Order now"
   }
 }

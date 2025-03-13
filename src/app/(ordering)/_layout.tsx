@@ -1,0 +1,16 @@
+import React from 'react';
+import { Stack } from 'expo-router';
+
+const OrderLayout = () => {
+  return (
+    <Stack
+      screenOptions={{
+        headerTitle: '',
+      }}
+    >
+      <Stack.Screen name="staffOrdering" options={{ headerTitle: '' }} />
+    </Stack>
+  );
+};
+
+export default OrderLayout;

@@ -24,6 +24,7 @@ function RootLayoutContent() {
               options={{ headerShown: false }}
             />
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(ordering)" options={{ headerShown: false }} />
           </Stack>
         </AuthProvider>
       </ThemeProvider>
