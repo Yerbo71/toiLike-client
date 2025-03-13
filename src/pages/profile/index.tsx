@@ -31,7 +31,7 @@ const ProfilePage = () => {
         <DetailAvatar />
         <Text
           variant="titleLarge"
-          style={{ alignSelf: 'center', marginTop: 50 }}
+          style={{ alignSelf: 'center', marginTop: 40 }}
         >
           Profile
         </Text>
@@ -40,8 +40,8 @@ const ProfilePage = () => {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: 15,
-          marginTop: 100,
+          gap: 10,
+          marginTop: 80,
           marginBottom: 50,
         }}
       >
@@ -55,6 +55,7 @@ const ProfilePage = () => {
             borderColor: theme.colors.error,
             marginLeft: 10,
             marginRight: 10,
+            marginTop: 10,
           }}
         >
           Sign out

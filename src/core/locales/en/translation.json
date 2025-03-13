@@ -1,0 +1,17 @@
+{
+  "system": {
+    "home": "Home",
+    "applications": "Applications",
+    "order": "Order",
+    "chats": "Chats",
+    "profile": "Profile",
+    "language": "Language",
+    "city": "City",
+    "notifications": "Notifications",
+    "choose": "Choose",
+    "techSupport": "Tech Support",
+    "aboutApp": "About application",
+    "rating": "Rating",
+    "theme": "Theme"
+  }
+}

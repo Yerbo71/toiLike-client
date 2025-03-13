@@ -1,14 +1,26 @@
-import React from 'react';
-import { Surface } from 'react-native-paper';
+import React, { useState } from 'react';
+import { Menu, Surface } from 'react-native-paper';
 import { ChevronButton } from '@/src/shared/chevronButton';
+import { useI18n } from '@/src/context/LocaleContext';
 
 const ProfileSettings = () => {
+  const { locale, setLocale, t } = useI18n();
+  const [menuVisible, setMenuVisible] = useState(false);
+  const stringLocale =
+    locale === 'ru' ? 'Русский' : locale === 'kz' ? 'Қазақша' : 'English';
+
+  const toggleMenu = () => setMenuVisible(!menuVisible);
+  const closeMenu = () => setMenuVisible(false);
+
+  const changeLanguage = (newLocale: string) => {
+    setLocale(newLocale);
+    closeMenu();
+  };
   return (
     <Surface
       style={{
         padding: 10,
         borderRadius: 10,
-        marginTop: 10,
         display: 'flex',
         flexDirection: 'column',
         gap: 10,
@@ -18,21 +30,36 @@ const ProfileSettings = () => {
     >
       <ChevronButton
         leftIcon="city"
-        leftTitle="City"
+        leftTitle={t('system.city')}
         rightIcon="chevron-right"
-        rightTitle="Choose"
+        rightTitle={t('system.choose')}
       />
-      <ChevronButton
-        leftIcon="alpha-a-circle-outline"
-        leftTitle="Language"
-        rightIcon="chevron-right"
-        rightTitle="Choose"
-      />
+      <Menu
+        visible={menuVisible}
+        onDismiss={closeMenu}
+        anchorPosition="bottom"
+        style={{
+          right: 10,
+          left: 10,
+        }}
+        anchor={
+          <ChevronButton
+            leftIcon="ab-testing"
+            leftTitle={t('system.language')}
+            rightIcon="chevron-right"
+            rightTitle={stringLocale}
+            onPress={toggleMenu}
+          />
+        }
+      >
+        <Menu.Item onPress={() => changeLanguage('ru')} title="Русский" />
+        <Menu.Item onPress={() => changeLanguage('kz')} title="Қазақша" />
+        <Menu.Item onPress={() => changeLanguage('en')} title="English" />
+      </Menu>
       <ChevronButton
         leftIcon="bell"
-        leftTitle="Notifications"
-        rightIcon="chevron-right"
-        rightTitle="Choose"
+        leftTitle={t('system.notifications')}
+        isToggled
       />
     </Surface>
   );

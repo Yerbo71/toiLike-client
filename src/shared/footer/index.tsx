@@ -11,9 +11,11 @@ import { FAB } from 'react-native-paper';
 import { styles } from './styles';
 import { useModal } from '@/src/hooks/useModal';
 import FooterMenuModal from '@/src/shared/footer/components/footerMenuModal';
+import { useI18n } from '@/src/context/LocaleContext';
 
 export const Footer = () => {
   const { open, close, modalOpen } = useModal();
+  const { t } = useI18n();
   return (
     <>
       <Tabs
@@ -27,7 +29,7 @@ export const Footer = () => {
         <Tabs.Screen
           name="index"
           options={{
-            title: 'Home',
+            title: t('system.home'),
             tabBarIcon: ({ color }) => (
               <Feather name="home" size={24} color={color} />
             ),
@@ -36,7 +38,7 @@ export const Footer = () => {
         <Tabs.Screen
           name="myApplications/index"
           options={{
-            title: 'Applications',
+            title: t('system.applications'),
             tabBarIcon: ({ color }) => (
               <Entypo name="text-document" size={24} color={color} />
             ),
@@ -45,7 +47,7 @@ export const Footer = () => {
         <Tabs.Screen
           name="ordering/index"
           options={{
-            title: 'Order',
+            title: t('system.order'),
             tabBarIcon: () => (
               <View style={styles.fabContainer}>
                 <FAB
@@ -61,7 +63,7 @@ export const Footer = () => {
         <Tabs.Screen
           name="chats/index"
           options={{
-            title: 'Chat',
+            title: t('system.chats'),
             tabBarIcon: ({ color }) => (
               <Ionicons name="chatbubbles-outline" size={24} color={color} />
             ),
@@ -70,7 +72,7 @@ export const Footer = () => {
         <Tabs.Screen
           name="profile/index"
           options={{
-            title: 'Profile',
+            title: t('system.profile'),
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons name="account" size={24} color={color} />
             ),

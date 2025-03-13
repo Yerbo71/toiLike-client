@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { Icon, Text } from 'react-native-paper';
+import React, { FC, useState } from 'react';
+import { Icon, Switch, Text } from 'react-native-paper';
 import {
   View,
   StyleSheet,
@@ -10,10 +10,19 @@ import {
 interface Props {
   leftIcon: string;
   leftTitle: string;
-  rightIcon: string;
-  rightTitle: string;
+  rightIcon?: string;
+  rightTitle?: string;
   onPress?: () => void;
+  isToggled?: boolean;
 }
+
+const styles = StyleSheet.create({
+  side: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
+});
 
 export const ChevronButton: FC<Props> = ({
   leftIcon,
@@ -21,8 +30,11 @@ export const ChevronButton: FC<Props> = ({
   rightIcon,
   rightTitle,
   onPress,
+  isToggled,
 }) => {
   const colorScheme = useColorScheme();
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
   return (
     <TouchableOpacity
@@ -43,18 +55,14 @@ export const ChevronButton: FC<Props> = ({
         <Icon size={20} source={leftIcon} />
         <Text variant="bodyMedium">{leftTitle}</Text>
       </View>
-      <View style={styles.side}>
-        <Text variant="bodyMedium">{rightTitle}</Text>
-        <Icon size={20} source={rightIcon} />
-      </View>
+      {isToggled ? (
+        <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
+      ) : (
+        <View style={styles.side}>
+          <Text variant="bodyMedium">{rightTitle}</Text>
+          <Icon size={20} source={rightIcon} />
+        </View>
+      )}
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  side: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-  },
-});

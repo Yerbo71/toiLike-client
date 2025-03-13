@@ -2,9 +2,11 @@ import React from 'react';
 import { Surface } from 'react-native-paper';
 import { ChevronButton } from '@/src/shared/chevronButton';
 import { useTheme } from '@/src/context/ThemeContext';
+import { useI18n } from '@/src/context/LocaleContext';
 
 const ProfileTechSupport = () => {
   const { setThemeMode, themeMode } = useTheme();
+  const { t } = useI18n();
 
   const toggleThemeMode = () => {
     const nextMode =
@@ -22,7 +24,6 @@ const ProfileTechSupport = () => {
       style={{
         padding: 10,
         borderRadius: 10,
-        marginTop: 10,
         display: 'flex',
         flexDirection: 'column',
         gap: 10,
@@ -32,25 +33,25 @@ const ProfileTechSupport = () => {
     >
       <ChevronButton
         leftIcon="account-wrench"
-        leftTitle="Tech support"
+        leftTitle={t('system.techSupport')}
         rightIcon="chevron-right"
-        rightTitle="Choose"
+        rightTitle={t('system.choose')}
       />
       <ChevronButton
         leftIcon="application-braces"
-        leftTitle="About application"
+        leftTitle={t('system.aboutApp')}
         rightIcon="chevron-right"
-        rightTitle="Choose"
+        rightTitle={t('system.choose')}
       />
       <ChevronButton
         leftIcon="progress-star"
-        leftTitle="Rate app"
+        leftTitle={t('system.rating')}
         rightIcon="chevron-right"
-        rightTitle="Choose"
+        rightTitle={t('system.choose')}
       />
       <ChevronButton
         leftIcon="theme-light-dark"
-        leftTitle="Theme"
+        leftTitle={t('system.theme')}
         rightIcon="chevron-right"
         rightTitle={themeMode}
         onPress={toggleThemeMode}

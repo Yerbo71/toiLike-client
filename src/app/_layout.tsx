@@ -5,6 +5,7 @@ import { ThemeProvider } from '@react-navigation/native';
 import React from 'react';
 import { AuthProvider } from '@/src/context/AuthContext';
 import { ThemeProviderApp, useTheme } from '@/src/context/ThemeContext';
+import { I18nProvider } from '@/src/context/LocaleContext';
 
 function RootLayoutContent() {
   const { theme, paperTheme } = useTheme();
@@ -14,8 +15,8 @@ function RootLayoutContent() {
       <ThemeProvider value={paperTheme}>
         <AuthProvider>
           <StatusBar
-            barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
-            backgroundColor={theme === 'dark' ? '#2b2732' : '#f3edf6'}
+            barStyle={theme === 'Dark' ? 'light-content' : 'dark-content'}
+            backgroundColor={theme === 'Dark' ? '#2b2732' : '#f3edf6'}
           />
           <Stack>
             <Stack.Screen
@@ -32,8 +33,10 @@ function RootLayoutContent() {
 
 export default function RootLayout() {
   return (
-    <ThemeProviderApp>
-      <RootLayoutContent />
-    </ThemeProviderApp>
+    <I18nProvider>
+      <ThemeProviderApp>
+        <RootLayoutContent />
+      </ThemeProviderApp>
+    </I18nProvider>
   );
 }

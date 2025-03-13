@@ -1,0 +1,17 @@
+{
+  "system": {
+    "home": "Главная",
+    "applications": "Заявки",
+    "order": "Заказать",
+    "chats": "Чаты",
+    "profile": "Профиль",
+    "language": "Язык",
+    "city": "Город",
+    "notifications": "Уведомление",
+    "choose": "Выбрать",
+    "techSupport": "Тех поддержка",
+    "aboutApp": "Про приложение",
+    "rating": "Рейтинг",
+    "theme": "Тема"
+  }
+}
