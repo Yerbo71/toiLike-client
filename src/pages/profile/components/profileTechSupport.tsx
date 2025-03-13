@@ -1,8 +1,22 @@
 import React from 'react';
-import { Button, Surface } from 'react-native-paper';
+import { Surface } from 'react-native-paper';
 import { ChevronButton } from '@/src/shared/chevronButton';
+import { useTheme } from '@/src/context/ThemeContext';
 
 const ProfileTechSupport = () => {
+  const { setThemeMode, themeMode } = useTheme();
+
+  const toggleThemeMode = () => {
+    const nextMode =
+      themeMode === 'System'
+        ? 'Light'
+        : themeMode === 'Light'
+          ? 'Dark'
+          : 'System';
+
+    setThemeMode(nextMode);
+  };
+
   return (
     <Surface
       style={{
@@ -12,6 +26,8 @@ const ProfileTechSupport = () => {
         display: 'flex',
         flexDirection: 'column',
         gap: 10,
+        marginLeft: 10,
+        marginRight: 10,
       }}
     >
       <ChevronButton
@@ -31,6 +47,13 @@ const ProfileTechSupport = () => {
         leftTitle="Rate app"
         rightIcon="chevron-right"
         rightTitle="Choose"
+      />
+      <ChevronButton
+        leftIcon="theme-light-dark"
+        leftTitle="Theme"
+        rightIcon="chevron-right"
+        rightTitle={themeMode}
+        onPress={toggleThemeMode}
       />
     </Surface>
   );
