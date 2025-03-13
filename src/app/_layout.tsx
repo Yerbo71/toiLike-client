@@ -6,6 +6,8 @@ import React from 'react';
 import { AuthProvider } from '@/src/context/AuthContext';
 import { ThemeProviderApp, useTheme } from '@/src/context/ThemeContext';
 import { I18nProvider } from '@/src/context/LocaleContext';
+import { enGB, registerTranslation } from 'react-native-paper-dates';
+registerTranslation('en-GB', enGB);
 
 function RootLayoutContent() {
   const { theme, paperTheme } = useTheme();

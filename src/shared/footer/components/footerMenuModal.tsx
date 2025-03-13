@@ -45,7 +45,12 @@ const FooterMenuModal: FC<Props> = ({ close }) => {
           <Text variant="titleMedium">Ordering</Text>
           <IconButton icon="close" onPress={close} />
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            close();
+            router.push('/(ordering)/manualOrdering');
+          }}
+        >
           <Card.Title
             title="Submit application"
             subtitle="Create a request manually"

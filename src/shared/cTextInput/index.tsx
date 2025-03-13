@@ -9,6 +9,7 @@ interface CTextInputProps {
   name: string;
   label: string;
   rules?: object;
+  multiline?: boolean;
 }
 
 export const CTextInput: React.FC<CTextInputProps> = ({
@@ -16,6 +17,7 @@ export const CTextInput: React.FC<CTextInputProps> = ({
   name,
   label,
   rules,
+  multiline,
 }) => {
   const theme = useTheme();
 
@@ -38,6 +40,8 @@ export const CTextInput: React.FC<CTextInputProps> = ({
               onChangeText={onChange}
               error={!!error}
               theme={{ roundness: 10 }}
+              multiline={multiline}
+              numberOfLines={multiline ? 4 : 1}
             />
             {error && (
               <Text

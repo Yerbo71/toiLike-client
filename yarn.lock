@@ -6249,6 +6249,13 @@ react-native-is-edge-to-edge@^1.1.6:
   resolved "https://registry.yarnpkg.com/react-native-is-edge-to-edge/-/react-native-is-edge-to-edge-1.1.6.tgz#69ec13f70d76e9245e275eed4140d0873a78f902"
   integrity sha512-1pHnFTlBahins6UAajXUqeCOHew9l9C2C8tErnpGC3IyLJzvxD+TpYAixnCbrVS52f7+NvMttbiSI290XfwN0w==
 
+react-native-paper-dates@^0.22.36:
+  version "0.22.36"
+  resolved "https://registry.yarnpkg.com/react-native-paper-dates/-/react-native-paper-dates-0.22.36.tgz#7c53149097e12b7d535bba101743edac1ccb2c00"
+  integrity sha512-TF113tKOP92M7Iai5Aom2qIIDurF3nEdh2Upc90LMn45uh3pUdHdbXH1ZUWUAR3P+fTWGGW/h7z+JeAK3MfwHQ==
+  dependencies:
+    color "^4.2.3"
+
 react-native-paper@^5.13.1:
   version "5.13.1"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-5.13.1.tgz#50217012b2d008397296c9bfb755d603a373f48b"
