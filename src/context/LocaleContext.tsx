@@ -11,13 +11,13 @@ import * as SecureStore from 'expo-secure-store';
 import * as Localization from 'expo-localization';
 
 const I18nContext = createContext({
-  locale: 'ru',
+  locale: 'en',
   setLocale: (locale: string) => {},
   t: (key: string) => Locales.t(key),
 });
 
 export const I18nProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [locale, setLocale] = useState('ru');
+  const [locale, setLocale] = useState('en');
 
   useEffect(() => {
     const loadLocale = async () => {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Menu, Surface } from 'react-native-paper';
 import { ChevronButton } from '@/src/shared/chevronButton';
 import { useI18n } from '@/src/context/LocaleContext';
+import { router } from 'expo-router';
 
 const ProfileSettings = () => {
   const { locale, setLocale, t } = useI18n();
@@ -33,6 +34,9 @@ const ProfileSettings = () => {
         leftTitle={t('system.city')}
         rightIcon="chevron-right"
         rightTitle={t('system.choose')}
+        onPress={() => {
+          router.push('/(ordering)/countryChoose');
+        }}
       />
       <Menu
         visible={menuVisible}

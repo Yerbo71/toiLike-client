@@ -11,4 +11,4 @@ export const Locales = new I18n({
 });
 
 Locales.enableFallback = true;
-Locales.defaultLocale = 'ru';
+Locales.defaultLocale = 'en';
