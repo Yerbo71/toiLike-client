@@ -15,7 +15,7 @@ type FormData = {
 };
 
 const ManualOrderingPage = () => {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const {
     control,
     formState: { errors },
@@ -140,7 +140,7 @@ const ManualOrderingPage = () => {
       </View>
 
       <DatePickerModal
-        locale="en-GB"
+        locale={locale === 'kz' ? 'ru' : locale}
         mode="single"
         visible={datePickerVisible}
         onDismiss={() => setDatePickerVisible(false)}
@@ -154,6 +154,7 @@ const ManualOrderingPage = () => {
       />
 
       <TimePickerModal
+        locale={locale}
         visible={timePickerVisible}
         onDismiss={() => setTimePickerVisible(false)}
         onConfirm={({ hours, minutes }) => {

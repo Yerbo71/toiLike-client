@@ -23,5 +23,19 @@
     "orderItems3": "We will organize a show program",
     "orderItems4": "We will control the entire process",
     "orderNow": "Order now"
+  },
+  "orderModal": {
+    "orderOne": {
+      "title": "Submit application",
+      "description": "Create a request manually"
+    },
+    "orderTwo": {
+      "title": "Specialist help",
+      "description": "Entrust the organization to a specialist"
+    },
+    "orderThree": {
+      "title": "AI help",
+      "description": "Entrust the organization to AI"
+    }
   }
 }

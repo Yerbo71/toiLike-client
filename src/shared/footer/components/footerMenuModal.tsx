@@ -11,6 +11,7 @@ import {
 import { View } from 'react-native';
 import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native';
+import { useI18n } from '@/src/context/LocaleContext';
 
 interface Props {
   close: () => void;
@@ -18,6 +19,7 @@ interface Props {
 
 const FooterMenuModal: FC<Props> = ({ close }) => {
   const theme = useTheme();
+  const { t } = useI18n();
   return (
     <Portal>
       <Modal
@@ -42,7 +44,7 @@ const FooterMenuModal: FC<Props> = ({ close }) => {
             alignItems: 'center',
           }}
         >
-          <Text variant="titleMedium">Ordering</Text>
+          <Text variant="titleMedium">{t('system.order')}</Text>
           <IconButton icon="close" onPress={close} />
         </View>
         <TouchableOpacity
@@ -52,8 +54,8 @@ const FooterMenuModal: FC<Props> = ({ close }) => {
           }}
         >
           <Card.Title
-            title="Submit application"
-            subtitle="Create a request manually"
+            title={t('orderModal.orderOne.title')}
+            subtitle={t('orderModal.orderOne.description')}
             left={(props) => <Avatar.Icon {...props} icon="list-status" />}
             right={(props) => <IconButton {...props} icon="chevron-right" />}
             style={{
@@ -71,8 +73,8 @@ const FooterMenuModal: FC<Props> = ({ close }) => {
           }}
         >
           <Card.Title
-            title="Specialist help"
-            subtitle="Entrust the organization to a specialist"
+            title={t('orderModal.orderTwo.title')}
+            subtitle={t('orderModal.orderTwo.description')}
             left={(props) => <Avatar.Icon {...props} icon="account-star" />}
             right={(props) => <IconButton {...props} icon="chevron-right" />}
             style={{
@@ -85,8 +87,8 @@ const FooterMenuModal: FC<Props> = ({ close }) => {
         </TouchableOpacity>
         <TouchableOpacity>
           <Card.Title
-            title="AI help"
-            subtitle="Entrust the organization to AI"
+            title={t('orderModal.orderThree.title')}
+            subtitle={t('orderModal.orderThree.description')}
             left={(props) => <Avatar.Icon {...props} icon="robot-happy" />}
             right={(props) => <IconButton {...props} icon="chevron-right" />}
             style={{

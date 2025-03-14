@@ -9,6 +9,7 @@ import {
 import { Locales } from './../core/locales';
 import * as SecureStore from 'expo-secure-store';
 import * as Localization from 'expo-localization';
+import { en, ru, registerTranslation } from 'react-native-paper-dates';
 
 const I18nContext = createContext({
   locale: 'en',
@@ -30,6 +31,9 @@ export const I18nProvider: FC<{ children: ReactNode }> = ({ children }) => {
     };
     loadLocale();
   }, []);
+
+  registerTranslation('en', en);
+  registerTranslation('ru', ru);
 
   const changeLocale = async (newLocale: string) => {
     Locales.locale = newLocale;
