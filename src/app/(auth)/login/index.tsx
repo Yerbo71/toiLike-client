@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { View } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
 import { AuthContext } from '@/src/context/AuthContext';
@@ -6,36 +6,37 @@ import { useForm } from 'react-hook-form';
 import { router } from 'expo-router';
 import { CTextInput } from '@/src/shared';
 import { login } from '@/src/core/rest/login-in';
-
-type FormData = {
-  usernameOrEmail: string;
-  password: string;
-};
+import Toast from 'react-native-toast-message';
+import type { components } from '@/src/types/api';
 
 export default function Login() {
   const { signIn } = useContext(AuthContext);
   const theme = useTheme();
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<FormData>({
+  const { control, handleSubmit } = useForm<
+    components['schemas']['LoginInRequest']
+  >({
     mode: 'onSubmit',
     defaultValues: {
       usernameOrEmail: '',
       password: '',
     },
   });
+  const [isPending, setIsPending] = useState(false);
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: components['schemas']['LoginInRequest']) => {
+    setIsPending(true);
     try {
       const response = await login(data);
       await signIn(response.accessToken);
       router.replace('/(application)');
     } catch (err) {
-      console.error(err);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: (err as Error).message,
+      });
     } finally {
-      console.log('');
+      setIsPending(false);
     }
   };
 
@@ -94,6 +95,7 @@ export default function Login() {
               message: 'Password must be at least 6 characters',
             },
           }}
+          secureTextEntry
         />
         <Text
           variant="bodyMedium"
@@ -106,7 +108,12 @@ export default function Login() {
           Forgot your password?
         </Text>
       </View>
-      <Button mode="contained" onPress={handleSubmit(onSubmit)}>
+      <Button
+        mode="contained"
+        onPress={handleSubmit(onSubmit)}
+        loading={isPending}
+        disabled={isPending}
+      >
         Sign In
       </Button>
       <Text

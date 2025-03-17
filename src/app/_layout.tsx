@@ -6,6 +6,7 @@ import React from 'react';
 import { AuthProvider } from '@/src/context/AuthContext';
 import { ThemeProviderApp, useTheme } from '@/src/context/ThemeContext';
 import { I18nProvider } from '@/src/context/LocaleContext';
+import Toast from 'react-native-toast-message';
 
 function RootLayoutContent() {
   const { theme, paperTheme } = useTheme();
@@ -26,6 +27,7 @@ function RootLayoutContent() {
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
             <Stack.Screen name="(ordering)" options={{ headerShown: false }} />
           </Stack>
+          <Toast />
         </AuthProvider>
       </ThemeProvider>
     </PaperProvider>

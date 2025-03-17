@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image, ScrollView, View } from 'react-native';
 import { Button, useTheme, Text } from 'react-native-paper';
 import { DetailAvatar, DetailRateBlock } from '@/src/shared';
 import ProfileSettings from '@/src/pages/profile/components/profileSettings';
 import ProfileTechSupport from '@/src/pages/profile/components/profileTechSupport';
-
+import { AuthContext } from '@/src/context/AuthContext';
 const ProfilePage = () => {
   const theme = useTheme();
+  const { signOut } = useContext(AuthContext);
   return (
     <ScrollView>
       <Image
@@ -57,6 +58,7 @@ const ProfilePage = () => {
             marginRight: 10,
             marginTop: 10,
           }}
+          onPress={() => signOut()}
         >
           Sign out
         </Button>

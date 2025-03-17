@@ -1,19 +1,13 @@
 import axios from 'axios';
-import { BASE_URL } from '@/src/constants/api/api';
+import type { operations } from '@/src/types/api';
 
-export interface LoginRequest {
-  usernameOrEmail: string;
-  password: string;
-}
+const BASE_URL = 'http://13.60.16.27:8777';
 
-export interface LoginResponse {
-  accessToken: string;
-  refreshToken: string;
-}
-
-export const login = async (data: LoginRequest): Promise<LoginResponse> => {
-  const response = await axios.post<LoginResponse>(
-    `${BASE_URL}auth-service/auth/login-in`,
+export const login = async (
+  data: operations['loginIn']['requestBody']['content']['application/json'],
+): Promise<operations['loginIn']['responses'][200]['content']['*/*']> => {
+  const response = await axios.post(
+    `${BASE_URL}/auth-service/auth/login-in`,
     data,
   );
   return response.data;

@@ -5,7 +5,10 @@
     "paths": {
       "@/*": [
         "./*"
-      ]
+      ],
+      "module": "ESNext",
+      "moduleResolution": "Bundled",
+      "noUncheckedIndexedAccess": true
     }
   },
   "include": [

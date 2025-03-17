@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
-import { AuthContext } from '@/src/context/AuthContext';
 import { useForm } from 'react-hook-form';
 import { router } from 'expo-router';
 import { CTextInput } from '@/src/shared';
+import { signUp } from '@/src/core/rest/sign-up';
+import Toast from 'react-native-toast-message';
 
 type FormData = {
   username: string;
@@ -13,14 +14,10 @@ type FormData = {
   confirmPassword?: string;
 };
 
-export default function Registration({ navigation }: any) {
+export default function Registration() {
   const theme = useTheme();
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-    watch,
-  } = useForm<FormData>({
+  const [isPending, setIsPending] = useState(false);
+  const { control, handleSubmit, watch, reset } = useForm<FormData>({
     mode: 'onSubmit',
     defaultValues: {
       username: '',
@@ -31,10 +28,27 @@ export default function Registration({ navigation }: any) {
   });
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
-    delete data.confirmPassword;
+    setIsPending(true);
+    try {
+      const { confirmPassword, ...requestData } = data;
+      await signUp(requestData);
+      Toast.show({
+        type: 'success',
+        text1: 'Registration Successful',
+        text2: 'You can now log in!',
+      });
+      reset();
+      router.push('/(auth)/login');
+    } catch (err) {
+      Toast.show({
+        type: 'error',
+        text1: 'Registration Failed',
+        text2: (err as Error).message,
+      });
+    } finally {
+      setIsPending(false);
+    }
   };
-
   return (
     <View style={{ flex: 1, padding: 20, justifyContent: 'center', gap: 40 }}>
       <View style={{ gap: 10 }}>
@@ -81,6 +95,7 @@ export default function Registration({ navigation }: any) {
           control={control}
           name="password"
           label="Password"
+          secureTextEntry
           rules={{
             required: 'Password is required',
             minLength: {
@@ -93,6 +108,7 @@ export default function Registration({ navigation }: any) {
           control={control}
           name="confirmPassword"
           label="Confirm password"
+          secureTextEntry
           rules={{
             required: 'Confirm Password is required',
             validate: (value: string | undefined) =>
@@ -104,8 +120,10 @@ export default function Registration({ navigation }: any) {
         mode="contained"
         style={{ borderRadius: 10 }}
         onPress={handleSubmit(onSubmit)}
+        loading={isPending}
+        disabled={isPending}
       >
-        Sign Up
+        {isPending ? 'Signing Up...' : 'Sign Up'}
       </Button>
       <Text
         variant="bodyMedium"
