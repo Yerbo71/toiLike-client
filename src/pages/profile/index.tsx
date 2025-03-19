@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Image, ScrollView, View } from 'react-native';
-import { Button, useTheme, Text } from 'react-native-paper';
+import { Button, useTheme, Text, IconButton } from 'react-native-paper';
 import { DetailAvatar, DetailRateBlock } from '@/src/shared';
 import ProfileSettings from '@/src/pages/profile/components/profileSettings';
 import ProfileTechSupport from '@/src/pages/profile/components/profileTechSupport';
@@ -14,6 +14,16 @@ const ProfilePage = () => {
         source={{ uri: 'https://picsum.photos/701' }}
         style={{ width: '100%', height: 200 }}
         resizeMode="cover"
+      />
+      <IconButton
+        icon="pencil"
+        style={{
+          position: 'absolute',
+          right: 10,
+          top: 10,
+          backgroundColor: theme.colors.surface,
+          zIndex: 100,
+        }}
       />
       <View
         style={{
