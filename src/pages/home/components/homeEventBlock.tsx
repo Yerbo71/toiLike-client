@@ -6,7 +6,7 @@ import { PreviewCard } from '@/src/shared/previewCard';
 import { restaurants } from '../../../constants/mock/restaurants';
 import { router } from 'expo-router';
 
-const HomeRestaurantBlock = () => {
+const HomeEventBlock = () => {
   const theme = useTheme();
   return (
     <View>
@@ -19,7 +19,7 @@ const HomeRestaurantBlock = () => {
           alignItems: 'center',
         }}
       >
-        <Text variant="titleLarge">Restaurants</Text>
+        <Text variant="titleLarge">Events</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text variant="titleMedium" style={{ color: theme.colors.primary }}>
             All
@@ -48,4 +48,4 @@ const HomeRestaurantBlock = () => {
   );
 };
 
-export default HomeRestaurantBlock;
+export default HomeEventBlock;

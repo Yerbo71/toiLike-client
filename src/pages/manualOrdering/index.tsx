@@ -96,7 +96,6 @@ const ManualOrderingPage = () => {
             <>
               <TouchableOpacity
                 onPress={() => {
-                  console.log('dawd');
                   setDatePickerVisible(true);
                 }}
               >
