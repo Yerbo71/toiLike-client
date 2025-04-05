@@ -4,7 +4,7 @@ import { Button, Text, useTheme } from 'react-native-paper';
 import { useForm } from 'react-hook-form';
 import { router } from 'expo-router';
 import { CTextInput } from '@/src/shared';
-import { signUp } from '@/src/core/rest/sign-up';
+import { signUp } from '../../../core/rest/auth/sign-up';
 import Toast from 'react-native-toast-message';
 
 type FormData = {

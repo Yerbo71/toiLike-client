@@ -5,7 +5,7 @@ import { AuthContext } from '@/src/context/AuthContext';
 import { useForm } from 'react-hook-form';
 import { router } from 'expo-router';
 import { CTextInput } from '@/src/shared';
-import { login } from '@/src/core/rest/login-in';
+import { login } from '../../../core/rest/auth/login-in';
 import Toast from 'react-native-toast-message';
 import type { components } from '@/src/types/api';
 
