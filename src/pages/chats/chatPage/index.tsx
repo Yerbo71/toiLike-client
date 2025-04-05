@@ -15,6 +15,7 @@ import {
   useTheme,
   IconButton,
 } from 'react-native-paper';
+import { askChatGPT } from '@/src/core/api/chatgpt';
 
 const ChatPage = () => {
   const [input, setInput] = useState('');
@@ -32,8 +33,8 @@ const ChatPage = () => {
     setInput('');
     scrollRef.current?.scrollToEnd({ animated: true });
 
-    // const reply = await askChatGPT(input);
-    // setMessages([...newMessages, { role: 'assistant', content: reply }]);
+    const reply = await askChatGPT(input);
+    setMessages([...newMessages, { role: 'assistant', content: reply }]);
   };
 
   return (
