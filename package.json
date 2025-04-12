@@ -9,7 +9,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "generate-types-api1": "openapi-typescript http://13.60.16.27:8777/v3/api-docs -o src/type/api.ts",
+    "generate-types-api2": "openapi-typescript http://13.60.10.213:8085/v3/api-docs -o src/type/api2ts.ts"
   },
   "jest": {
     "preset": "jest-expo"
