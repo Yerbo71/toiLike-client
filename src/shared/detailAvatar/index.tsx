@@ -6,9 +6,17 @@ import { postUploadAvatarUser } from '@/src/core/rest/user/postUploadAvatarUser'
 import { useContext } from 'react';
 import { AuthContext } from '@/src/context/AuthContext';
 
-export const DetailAvatar = () => {
+interface ProfileAvatarImageProps {
+  initialBackgroundUri?: string;
+}
+
+export const DetailAvatar: React.FC<ProfileAvatarImageProps> = ({
+  initialBackgroundUri,
+}) => {
   const { token } = useContext(AuthContext);
-  const [avatarUri, setAvatarUri] = useState<string | null>(null);
+  const [avatarUri, setAvatarUri] = useState<string | null>(
+    initialBackgroundUri || null,
+  );
 
   const handleChoosePhoto = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({

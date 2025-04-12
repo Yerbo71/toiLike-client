@@ -9,11 +9,13 @@ import ProfileBackgroundImage from '@/src/pages/profile/components/profileBackgr
 
 const ProfilePage = () => {
   const theme = useTheme();
-  const { signOut } = useContext(AuthContext);
+  const { signOut, user } = useContext(AuthContext);
   return (
     <ScrollView>
       <View style={{ position: 'relative' }}>
-        <ProfileBackgroundImage />
+        <ProfileBackgroundImage
+          initialBackgroundUri={user?.['*/*'].secondaryImage}
+        />
         <View
           style={{
             borderTopLeftRadius: 10,
@@ -28,12 +30,12 @@ const ProfilePage = () => {
             padding: 15,
           }}
         >
-          <DetailAvatar />
+          <DetailAvatar initialBackgroundUri={user?.['*/*'].avatarImage} />
           <Text
             variant="titleLarge"
             style={{ alignSelf: 'center', marginTop: 40 }}
           >
-            Profile
+            {user?.['*/*'].username || 'User Name'}
           </Text>
         </View>
       </View>
