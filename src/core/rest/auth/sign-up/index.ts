@@ -3,9 +3,7 @@ import type { operations } from '@/src/types/api';
 import { AUTH_BASE_URL } from '@/src/constants/api/apiConst';
 
 export type SignUpRequest =
-  operations['signUp']['requestBody']['content']['application/json'] & {
-    role: 'ROLE_USER' | 'ROLE_ADMIN' | 'ROLE_COMPANY';
-  };
+  operations['signUp']['requestBody']['content']['application/json'];
 
 export const signUp = async (
   data: SignUpRequest,

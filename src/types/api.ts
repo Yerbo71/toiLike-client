@@ -76,12 +76,14 @@ export interface components {
             username: string;
             email: string;
             password: string;
+            /** @enum {string} */
+            role: "ROLE_USER" | "ROLE_RESTAURANT_OWNER" | "ROLE_SERVICE_VENDOR";
         };
         Role: {
             /** Format: int64 */
             id?: number;
             /** @enum {string} */
-            name?: "ROLE_USER" | "ROLE_ADMIN" | "ROLE_COMPANY";
+            name?: "ROLE_USER" | "ROLE_RESTAURANT_OWNER" | "ROLE_SERVICE_VENDOR";
         };
         User: {
             /** Format: int64 */

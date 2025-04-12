@@ -20,7 +20,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/event-service/user/upload": {
+    "/event-service/user/upload-secondary": {
         parameters: {
             query?: never;
             header?: never;
@@ -29,7 +29,39 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["uploadFile"];
+        post: operations["uploadSecondaryImage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/event-service/user/upload-avatar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["uploadAvatar"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/event-service/user-vendor/create-user-vendor": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["createUserVendor"];
         delete?: never;
         options?: never;
         head?: never;
@@ -46,6 +78,54 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["createEvent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/event-service/event-vendor/request-event-service-by-vendor/{eventVendorId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["requestEventServiceByVendor"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/event-service/event-vendor/request-event-service-by-user/{eventVendorId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["requestEventService"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/event-service/user/get-current-user": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getCurrentUser"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -84,22 +164,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/event-service/event/get-popular-events": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getEvents_2"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/event-service/event/get-event/{id}": {
         parameters: {
             query?: never;
@@ -108,6 +172,54 @@ export interface paths {
             cookie?: never;
         };
         get: operations["getEvent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/event-service/event-vendor/find-approval-events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["findApprovalEvents"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/event-service/event-template/get-popular-event-templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getPopularEvents"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/event-service/event-template/get-by-id/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getById"];
         put?: never;
         post?: never;
         delete?: never;
@@ -191,6 +303,38 @@ export interface components {
             /** @enum {string} */
             serviceType: "PRESENTERS" | "SINGERS" | "DANCERS" | "GROUP" | "OPERATORS" | "PHOTOGRAPH" | "MOBILOGRAPH" | "TRANSPORT" | "DECORATORS" | "ANIMATORS" | "TECHNICAL_STAFF" | "SECURITY" | "SOUND_ENGINEERS" | "MEDICAL_WORKERS" | "STYLISTS" | "TECHNICAL_EQUIPMENT" | "HAIR_DRESSERS" | "CLOTHING_SUPPLIERS" | "FLOWER_SUPPLIERS";
         };
+        ApiResponse: {
+            /** @enum {string} */
+            status: "SUCCESS" | "FAIL";
+            message: string;
+        };
+        UserVendorRequest: {
+            title: string;
+            description?: string;
+            experience?: string;
+            /** Format: float */
+            averageCost?: number;
+            /** @enum {string} */
+            serviceType: "PRESENTERS" | "SINGERS" | "DANCERS" | "GROUP" | "OPERATORS" | "PHOTOGRAPH" | "MOBILOGRAPH" | "TRANSPORT" | "DECORATORS" | "ANIMATORS" | "TECHNICAL_STAFF" | "SECURITY" | "SOUND_ENGINEERS" | "MEDICAL_WORKERS" | "STYLISTS" | "TECHNICAL_EQUIPMENT" | "HAIR_DRESSERS" | "CLOTHING_SUPPLIERS" | "FLOWER_SUPPLIERS";
+        };
+        EventVendorByUser: {
+            /** Format: float */
+            cost: number;
+        };
+        SocialMedia: {
+            url: string;
+            /** @enum {string} */
+            socialMediaType: "WHATS_UP" | "TELEGRAM" | "INSTAGRAM" | "OTHERS";
+        };
+        UserResponse: {
+            /** Format: int64 */
+            id: number;
+            username: string;
+            email: string;
+            socialMedia: components["schemas"]["SocialMedia"][];
+            avatarImage: string;
+            secondaryImage: string;
+        };
         PlaceResponse: {
             /** Format: int64 */
             id: number;
@@ -198,6 +342,71 @@ export interface components {
             city?: string;
             street?: string;
             description?: string;
+            halls: components["schemas"]["HallResponse"][];
+        };
+        EventVendorResponse: {
+            /** Format: int64 */
+            id: number;
+            /** Format: float */
+            cost: number;
+            event: components["schemas"]["EventResponse"];
+            userVendor: components["schemas"]["UserVendorResponse"];
+            approvedByVendor: boolean;
+            approvedByUser: boolean;
+        };
+        PageableResponseEventVendorResponse: {
+            /** Format: int32 */
+            totalCount: number;
+            /** Format: int32 */
+            totalPages: number;
+            list: components["schemas"]["EventVendorResponse"][];
+        };
+        EventTemplateResponse: {
+            /** Format: int64 */
+            id: number;
+            title: string;
+            description?: string;
+            mainImage?: string;
+            secondaryImage?: string;
+        };
+        EventTemplateResponseList: {
+            eventTemplates: components["schemas"]["EventTemplateResponse"][];
+        };
+        EventTemplateRatingResponse: {
+            /** Format: int64 */
+            id: number;
+            /** Format: float */
+            rating: number;
+            comment: string;
+            type: string;
+            userId: components["schemas"]["UserDetails"];
+            /** Format: date */
+            date: string;
+        };
+        FullEventTemplateResponse: {
+            /** Format: int64 */
+            id: number;
+            title: string;
+            description?: string;
+            mainImage?: string;
+            secondaryImage?: string;
+            services: components["schemas"]["UserVendorTemplateResponse"][];
+            ratings: components["schemas"]["EventTemplateRatingResponse"][];
+        };
+        UserDetails: {
+            /** Format: int64 */
+            id: number;
+            username: string;
+        };
+        UserVendorTemplateResponse: {
+            /** Format: int64 */
+            id: number;
+            title?: string;
+            additionalVendors?: string;
+            /** Format: float */
+            rating?: number;
+            /** Format: float */
+            reviews?: number;
         };
     };
     responses: never;
@@ -234,7 +443,7 @@ export interface operations {
             };
         };
     };
-    uploadFile: {
+    uploadSecondaryImage: {
         parameters: {
             query?: never;
             header?: never;
@@ -256,7 +465,56 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": string;
+                    "*/*": components["schemas"]["ApiResponse"];
+                };
+            };
+        };
+    };
+    uploadAvatar: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponse"];
+                };
+            };
+        };
+    };
+    createUserVendor: {
+        parameters: {
+            query: {
+                request: components["schemas"]["UserVendorRequest"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["UserVendorResponse"];
                 };
             };
         };
@@ -281,6 +539,78 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["EventResponse"];
+                };
+            };
+        };
+    };
+    requestEventServiceByVendor: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eventVendorId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EventVendorByUser"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
+                };
+            };
+        };
+    };
+    requestEventService: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eventVendorId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EventVendorByUser"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
+                };
+            };
+        };
+    };
+    getCurrentUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["UserResponse"];
                 };
             };
         };
@@ -325,26 +655,6 @@ export interface operations {
             };
         };
     };
-    getEvents_2: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["EventResponse"][];
-                };
-            };
-        };
-    };
     getEvent: {
         parameters: {
             query?: never;
@@ -363,6 +673,71 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["EventResponse"];
+                };
+            };
+        };
+    };
+    findApprovalEvents: {
+        parameters: {
+            query: {
+                page: number;
+                size: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageableResponseEventVendorResponse"];
+                };
+            };
+        };
+    };
+    getPopularEvents: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["EventTemplateResponseList"];
+                };
+            };
+        };
+    };
+    getById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FullEventTemplateResponse"];
                 };
             };
         };
