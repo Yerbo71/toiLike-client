@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { TextInput, Text } from 'react-native-paper';
 import { Controller } from 'react-hook-form';
@@ -22,7 +22,7 @@ export const CTextInput: React.FC<CTextInputProps> = ({
   secureTextEntry,
 }) => {
   const theme = useTheme();
-
+  const [show, setShow] = useState(false);
   return (
     <View>
       <Controller
@@ -44,7 +44,15 @@ export const CTextInput: React.FC<CTextInputProps> = ({
               theme={{ roundness: 10 }}
               multiline={multiline}
               numberOfLines={multiline ? 4 : 1}
-              secureTextEntry={secureTextEntry}
+              secureTextEntry={secureTextEntry && !show}
+              right={
+                secureTextEntry ? (
+                  <TextInput.Icon
+                    icon={show ? 'eye' : 'eye-off'}
+                    onPress={() => setShow(!show)}
+                  />
+                ) : undefined
+              }
             />
             {error && (
               <Text
