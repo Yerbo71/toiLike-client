@@ -5,6 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { postUploadAvatarUser } from '@/src/core/rest/user/postUploadAvatarUser';
 import { useContext } from 'react';
 import { AuthContext } from '@/src/context/AuthContext';
+import { getCurrentUser } from '@/src/core/rest/user/getCurrentUser';
 
 interface ProfileAvatarImageProps {
   initialBackgroundUri?: string;
@@ -34,6 +35,7 @@ export const DetailAvatar: React.FC<ProfileAvatarImageProps> = ({
         try {
           await postUploadAvatarUser(token, fileUri);
           console.log('Avatar uploaded successfully!');
+          await getCurrentUser(token);
         } catch (error) {
           console.error('Failed to upload avatar:', error);
         }
@@ -51,7 +53,11 @@ export const DetailAvatar: React.FC<ProfileAvatarImageProps> = ({
         }}
       >
         <Avatar.Image
-          source={{ uri: avatarUri || 'https://picsum.photos/100' }}
+          source={{
+            uri: avatarUri
+              ? `${avatarUri}?${new Date().getTime()}`
+              : 'https://picsum.photos/701',
+          }}
           size={100}
         />
       </View>

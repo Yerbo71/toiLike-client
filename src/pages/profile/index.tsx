@@ -10,7 +10,6 @@ import ProfileBackgroundImage from '@/src/pages/profile/components/profileBackgr
 const ProfilePage = () => {
   const theme = useTheme();
   const { signOut, user } = useContext(AuthContext);
-  console.log(user);
   return (
     <ScrollView>
       <View style={{ position: 'relative' }}>

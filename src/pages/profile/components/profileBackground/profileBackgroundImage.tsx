@@ -4,6 +4,7 @@ import { IconButton } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { postUploadBackgroundUser } from '@/src/core/rest/user/postUploadBackgroundUser';
 import { AuthContext } from '@/src/context/AuthContext';
+import { getCurrentUser } from '@/src/core/rest/user/getCurrentUser';
 
 interface ProfileBackgroundImageProps {
   initialBackgroundUri?: string;
@@ -30,7 +31,6 @@ const ProfileBackgroundImage: React.FC<ProfileBackgroundImageProps> = ({
       aspect: [4, 3],
       quality: 1,
     });
-    console.log(result);
 
     if (!result.canceled && result.assets?.[0]?.uri) {
       const fileUri = result.assets[0].uri;
@@ -51,7 +51,11 @@ const ProfileBackgroundImage: React.FC<ProfileBackgroundImageProps> = ({
   return (
     <>
       <Image
-        source={{ uri: backgroundImage || 'https://picsum.photos/701' }}
+        source={{
+          uri: backgroundImage
+            ? `${backgroundImage}?${new Date().getTime()}`
+            : 'https://picsum.photos/701',
+        }}
         style={{ width: '100%', height: 200 }}
         resizeMode="cover"
       />
