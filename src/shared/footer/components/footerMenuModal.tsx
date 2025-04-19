@@ -88,7 +88,7 @@ const FooterMenuModal: FC<Props> = ({ close }) => {
         <TouchableOpacity
           onPress={() => {
             close();
-            router.push('/(chats)/chat/1');
+            router.push('/chats');
           }}
         >
           <Card.Title
