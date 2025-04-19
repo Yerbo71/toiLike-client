@@ -16,10 +16,20 @@ import {
   IconButton,
 } from 'react-native-paper';
 import { askChatGPT } from '@/src/core/api/chatgpt';
+import { generateGeminiResponse } from '@/src/core/api/gemini';
+import { useLocalSearchParams } from 'expo-router';
+
+type Role = 'user' | 'assistant';
+
+interface Message {
+  role: Role;
+  content: string;
+}
 
 const ChatPage = () => {
+  const { model } = useLocalSearchParams<{ model: 'gpt' | 'gemini' }>();
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: 'Привет! Чем могу помочь?' },
   ]);
   const scrollRef = useRef<ScrollView>(null);
@@ -28,13 +38,41 @@ const ChatPage = () => {
   const handleSend = async () => {
     if (!input.trim()) return;
 
-    const newMessages = [...messages, { role: 'user', content: input }];
-    setMessages(newMessages);
-    setInput('');
-    scrollRef.current?.scrollToEnd({ animated: true });
+    const userMessage: Message = {
+      role: 'user',
+      content: input,
+    };
 
-    const reply = await askChatGPT(input);
-    setMessages([...newMessages, { role: 'assistant', content: reply }]);
+    setMessages((prev) => [...prev, userMessage]);
+    setInput('');
+
+    setTimeout(() => {
+      scrollRef.current?.scrollToEnd({ animated: true });
+    }, 100);
+
+    try {
+      let reply: string;
+
+      if (model === 'gpt') {
+        reply = await askChatGPT(input);
+      } else {
+        reply = await generateGeminiResponse(input);
+      }
+
+      const assistantMessage: Message = {
+        role: 'assistant',
+        content: reply,
+      };
+
+      setMessages((prev) => [...prev, assistantMessage]);
+    } catch (error) {
+      console.error('API Error:', error);
+      const errorMessage: Message = {
+        role: 'assistant',
+        content: 'Произошла ошибка при обработке запроса',
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    }
   };
 
   return (

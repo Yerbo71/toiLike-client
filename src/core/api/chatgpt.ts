@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export const askChatGPT = async (message: string) => {
   const apiKey = process.env.EXPO_PUBLIC_API_CHAT_GPT_API_KEY;
-  console.log(process.env.EXPO_PUBLIC_API_CHAT_GPT_API_KEY);
   const response = await axios.post(
     'https://api.openai.com/v1/chat/completions',
     {

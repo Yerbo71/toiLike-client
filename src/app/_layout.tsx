@@ -7,6 +7,7 @@ import { AuthProvider } from '@/src/context/AuthContext';
 import { ThemeProviderApp, useTheme } from '@/src/context/ThemeContext';
 import { I18nProvider } from '@/src/context/LocaleContext';
 import Toast from 'react-native-toast-message';
+import { EventProvider } from '@/src/context/EventContext';
 
 function RootLayoutContent() {
   const { theme, paperTheme } = useTheme();
@@ -15,19 +16,24 @@ function RootLayoutContent() {
     <PaperProvider theme={paperTheme}>
       <ThemeProvider value={paperTheme}>
         <AuthProvider>
-          <StatusBar
-            barStyle={theme === 'Dark' ? 'light-content' : 'dark-content'}
-            backgroundColor={theme === 'Dark' ? '#2b2732' : '#f3edf6'}
-          />
-          <Stack>
-            <Stack.Screen
-              name="(application)"
-              options={{ headerShown: false }}
+          <EventProvider>
+            <StatusBar
+              barStyle={theme === 'Dark' ? 'light-content' : 'dark-content'}
+              backgroundColor={theme === 'Dark' ? '#2b2732' : '#f3edf6'}
             />
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(ordering)" options={{ headerShown: false }} />
-            <Stack.Screen name="(chats)" options={{ headerShown: false }} />
-          </Stack>
+            <Stack>
+              <Stack.Screen
+                name="(application)"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="(ordering)"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="(chats)" options={{ headerShown: false }} />
+            </Stack>
+          </EventProvider>
           <Toast />
         </AuthProvider>
       </ThemeProvider>

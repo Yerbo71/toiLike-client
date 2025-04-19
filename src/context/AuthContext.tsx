@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { operations } from '@/src/types/api2';
 import { getCurrentUser } from '@/src/core/rest/user/getCurrentUser';
 
-type User = operations['getCurrentUser']['responses'][200]['content'];
+type User = operations['getCurrentUser']['responses'][200]['content']['*/*'];
 
 interface AuthContextType {
   isAuthenticated: boolean;

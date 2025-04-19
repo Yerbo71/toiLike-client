@@ -13,7 +13,7 @@ const ChatHeader = () => {
 
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-      <Avatar.Icon size={40} icon="robot-happy" />
+      <Avatar.Image size={40} source={chat.image} />
       <View>
         <Text variant="titleMedium">{chat.title}</Text>
         <Text style={{ fontSize: 12, color: 'gray' }}>{chat.time}</Text>

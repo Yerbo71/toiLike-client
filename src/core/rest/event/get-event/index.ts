@@ -2,14 +2,14 @@ import axios from 'axios';
 import type { operations } from '@/src/types/api2';
 import { EVENT_BASE_URL } from '@/src/constants/api/apiConst';
 
-type GetCurrentUserResponse =
-  operations['getCurrentUser']['responses'][200]['content']['*/*'];
+type GetEventResponse = operations['getEvent']['responses'][200]['content'];
 
-export const getCurrentUser = async (
+export const getEvent = async (
+  id: number,
   token: string,
-): Promise<GetCurrentUserResponse> => {
+): Promise<GetEventResponse> => {
   const response = await axios.get(
-    `${EVENT_BASE_URL}/event-service/user/get-current-user`,
+    `${EVENT_BASE_URL}/event-service/event/get-event/${id}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

@@ -17,10 +17,16 @@ const ChatsPage = () => {
           <List.Item
             title={item.title}
             description={item.lastMessage}
-            left={() => <Avatar.Icon icon="robot-happy" />}
+            left={() => <Avatar.Image size={40} source={item.image} />}
             right={() => <Text>{item.time}</Text>}
             onPress={() => {
-              router.push(`/chat/${item.id}`);
+              router.push({
+                pathname: '/chat/[id]',
+                params: {
+                  id: item.id,
+                  model: item.model,
+                },
+              });
             }}
           />
         )}

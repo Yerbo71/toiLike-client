@@ -25,20 +25,16 @@ const ProfileBackgroundImage: React.FC<ProfileBackgroundImageProps> = ({
     }
 
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images, // Разрешаем только изображения
-      allowsEditing: true, // Включаем редактирование
-      aspect: [4, 3], // Пропорции для обрезки
-      quality: 1, // Качество изображения
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
-
     console.log(result);
 
-    // Если пользователь выбрал изображение (не отменил)
     if (!result.canceled && result.assets?.[0]?.uri) {
       const fileUri = result.assets[0].uri;
-      setBackgroundImage(fileUri); // Обновить фоновое изображение
-
-      // Если есть токен, загрузить изображение на сервер
+      setBackgroundImage(fileUri);
       if (token) {
         try {
           await postUploadBackgroundUser(token, fileUri);

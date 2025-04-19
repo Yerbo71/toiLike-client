@@ -3,12 +3,14 @@ import { Menu, Surface } from 'react-native-paper';
 import { ChevronButton } from '@/src/shared/chevronButton';
 import { useI18n } from '@/src/context/LocaleContext';
 import { router } from 'expo-router';
+import { useEvent } from '@/src/context/EventContext';
 
 const ProfileSettings = () => {
   const { locale, setLocale, t } = useI18n();
   const [menuVisible, setMenuVisible] = useState(false);
   const stringLocale =
     locale === 'ru' ? 'Русский' : locale === 'kz' ? 'Қазақша' : 'English';
+  const { event } = useEvent();
 
   const toggleMenu = () => setMenuVisible(!menuVisible);
   const closeMenu = () => setMenuVisible(false);
@@ -33,7 +35,7 @@ const ProfileSettings = () => {
         leftIcon="city"
         leftTitle={t('system.city')}
         rightIcon="chevron-right"
-        rightTitle={t('system.choose')}
+        rightTitle={event.city || t('system.choose')}
         onPress={() => {
           router.push('/(ordering)/countryChoose');
         }}
