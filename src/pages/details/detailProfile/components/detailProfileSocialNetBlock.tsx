@@ -16,15 +16,24 @@ const DetailProfileSocialNetBlock = () => {
           gap: 10,
         }}
       >
-        <Button mode="contained" icon="instagram">
+        <Button
+          mode="contained"
+          icon="instagram"
+          style={{ backgroundColor: '#E1306C' }}
+        >
           Instagram
         </Button>
-        <Button mode="contained" icon="whatsapp">
+        <Button
+          mode="contained"
+          icon="whatsapp"
+          style={{ backgroundColor: '#25D366' }}
+        >
           WhatsApp
         </Button>
         <Button
           mode="contained"
           icon={() => <FontAwesome5 name="telegram" size={18} color="white" />}
+          style={{ backgroundColor: '#0088CC' }}
         >
           Telegram
         </Button>

@@ -66,7 +66,14 @@ const HomeEventBlock = () => {
             image={{ uri: item.mainImage }}
             title={item.title}
             description={item.description || ''}
-            onPress={() => router.push(`/(application)/details/${item.id}`)}
+            onPress={() => {
+              router.push({
+                pathname: '/(application)/details/[id]',
+                params: {
+                  id: item.id,
+                },
+              });
+            }}
           />
         )}
       />

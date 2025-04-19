@@ -132,6 +132,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/event-service/user-vendor/search-user-vendors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["searchUserVendors"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/event-service/user-vendor/get-popular-vendors": {
         parameters: {
             query?: never;
@@ -148,7 +164,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/event-service/place/get-popular-vendors": {
+    "/event-service/place/get-popular-places": {
         parameters: {
             query?: never;
             header?: never;
@@ -172,6 +188,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["getEvent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/event-service/event/get-all-events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getAllEventsByUser"];
         put?: never;
         post?: never;
         delete?: never;
@@ -332,8 +364,15 @@ export interface components {
             username: string;
             email: string;
             socialMedia: components["schemas"]["SocialMedia"][];
-            avatarImage: string;
-            secondaryImage: string;
+            avatarImage?: string;
+            secondaryImage?: string;
+        };
+        PageableResponseUserVendorResponse: {
+            /** Format: int32 */
+            totalCount: number;
+            /** Format: int32 */
+            totalPages: number;
+            list: components["schemas"]["UserVendorResponse"][];
         };
         PlaceResponse: {
             /** Format: int64 */
@@ -342,7 +381,13 @@ export interface components {
             city?: string;
             street?: string;
             description?: string;
-            halls: components["schemas"]["HallResponse"][];
+        };
+        PageableResponseEventResponse: {
+            /** Format: int32 */
+            totalCount: number;
+            /** Format: int32 */
+            totalPages: number;
+            list: components["schemas"]["EventResponse"][];
         };
         EventVendorResponse: {
             /** Format: int64 */
@@ -351,8 +396,6 @@ export interface components {
             cost: number;
             event: components["schemas"]["EventResponse"];
             userVendor: components["schemas"]["UserVendorResponse"];
-            approvedByVendor: boolean;
-            approvedByUser: boolean;
         };
         PageableResponseEventVendorResponse: {
             /** Format: int32 */
@@ -367,7 +410,9 @@ export interface components {
             title: string;
             description?: string;
             mainImage?: string;
-            secondaryImage?: string;
+            location?: string;
+            /** Format: double */
+            rating?: number;
         };
         EventTemplateResponseList: {
             eventTemplates: components["schemas"]["EventTemplateResponse"][];
@@ -375,11 +420,11 @@ export interface components {
         EventTemplateRatingResponse: {
             /** Format: int64 */
             id: number;
-            /** Format: float */
+            /** Format: double */
             rating: number;
             comment: string;
             type: string;
-            userId: components["schemas"]["UserDetails"];
+            user: components["schemas"]["UserDetails"];
             /** Format: date */
             date: string;
         };
@@ -390,6 +435,8 @@ export interface components {
             description?: string;
             mainImage?: string;
             secondaryImage?: string;
+            /** Format: double */
+            rating?: number;
             services: components["schemas"]["UserVendorTemplateResponse"][];
             ratings: components["schemas"]["EventTemplateRatingResponse"][];
         };
@@ -615,6 +662,33 @@ export interface operations {
             };
         };
     };
+    searchUserVendors: {
+        parameters: {
+            query?: {
+                q?: string;
+                experience?: string;
+                serviceType?: "PRESENTERS" | "SINGERS" | "DANCERS" | "GROUP" | "OPERATORS" | "PHOTOGRAPH" | "MOBILOGRAPH" | "TRANSPORT" | "DECORATORS" | "ANIMATORS" | "TECHNICAL_STAFF" | "SECURITY" | "SOUND_ENGINEERS" | "MEDICAL_WORKERS" | "STYLISTS" | "TECHNICAL_EQUIPMENT" | "HAIR_DRESSERS" | "CLOTHING_SUPPLIERS" | "FLOWER_SUPPLIERS";
+                averageCost?: number;
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageableResponseUserVendorResponse"];
+                };
+            };
+        };
+    };
     getEvents: {
         parameters: {
             query?: never;
@@ -673,6 +747,26 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["EventResponse"];
+                };
+            };
+        };
+    };
+    getAllEventsByUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageableResponseEventResponse"];
                 };
             };
         };
