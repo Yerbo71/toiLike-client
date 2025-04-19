@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, Surface } from 'react-native-paper';
+import { Menu, Surface, useTheme } from 'react-native-paper';
 import { ChevronButton } from '@/src/shared/chevronButton';
 import { useI18n } from '@/src/context/LocaleContext';
 import { router } from 'expo-router';
@@ -8,6 +8,7 @@ import { useEvent } from '@/src/context/EventContext';
 const ProfileSettings = () => {
   const { locale, setLocale, t } = useI18n();
   const [menuVisible, setMenuVisible] = useState(false);
+  const theme = useTheme();
   const stringLocale =
     locale === 'ru' ? 'Русский' : locale === 'kz' ? 'Қазақша' : 'English';
   const { event } = useEvent();

@@ -34,7 +34,7 @@ const ProfilePage = () => {
             variant="titleLarge"
             style={{ alignSelf: 'center', marginTop: 40 }}
           >
-            {user?.username || 'User Name'}
+            {user?.username || 'Name is not defined'}
           </Text>
         </View>
       </View>
@@ -47,7 +47,7 @@ const ProfilePage = () => {
           marginBottom: 50,
         }}
       >
-        <DetailRateBlock />
+        <DetailRateBlock rating={5} />
         <ProfileSettings />
         <ProfileTechSupport />
         <Button

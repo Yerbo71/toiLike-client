@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Icon, Switch, Text } from 'react-native-paper';
+import { Icon, Switch, Text, useTheme } from 'react-native-paper';
 import {
   View,
   StyleSheet,
@@ -35,6 +35,7 @@ export const ChevronButton: FC<Props> = ({
   const colorScheme = useColorScheme();
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
+  const theme = useTheme();
 
   return (
     <TouchableOpacity
@@ -60,7 +61,7 @@ export const ChevronButton: FC<Props> = ({
       ) : (
         <View style={styles.side}>
           <Text variant="bodyMedium">{rightTitle}</Text>
-          <Icon size={20} source={rightIcon} />
+          <Icon size={20} source={rightIcon} color={theme.colors.primary} />
         </View>
       )}
     </TouchableOpacity>

@@ -28,12 +28,12 @@ export const DetailRateBlock: React.FC<DetailRateBlockProps> = ({
   showDetails = false,
 }) => {
   const theme = useTheme();
-  const roundedRating = Math.round(rating * 10) / 10; // Round to 1 decimal place
+  const roundedRating = Math.round(rating * 10) / 10;
 
   const getRatingColor = () => {
-    if (rating >= 8) return '#4CAF50'; // Green
-    if (rating >= 6) return '#FFC107'; // Yellow
-    return '#F44336'; // Red
+    if (rating >= 8) return '#4CAF50';
+    if (rating >= 6) return '#FFC107';
+    return '#F44336';
   };
 
   return (
