@@ -1,35 +1,34 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { Button, Text, useTheme, Surface } from 'react-native-paper';
-import { AuthContext } from '@/src/context/AuthContext';
 import { useForm } from 'react-hook-form';
 import { router } from 'expo-router';
 import { CTextInput } from '@/src/shared';
-import { login } from '@/src/core/rest/auth/login-in';
 import Toast from 'react-native-toast-message';
-import type { components } from '@/src/types/api';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function Login() {
-  const { signIn } = useContext(AuthContext);
+export default function ResetPasswordEmail() {
   const theme = useTheme();
-  const { control, handleSubmit } = useForm<
-    components['schemas']['LoginInRequest']
-  >({
+  const { control, handleSubmit } = useForm({
     mode: 'onSubmit',
     defaultValues: {
-      usernameOrEmail: '',
-      password: '',
+      email: '',
     },
   });
   const [isPending, setIsPending] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
 
-  const onSubmit = async (data: components['schemas']['LoginInRequest']) => {
+  const onSubmit = async (data: { email: string }) => {
     setIsPending(true);
     try {
-      const response = await login(data);
-      await signIn(response.accessToken);
-      router.replace('/(application)');
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      setEmailSent(true);
+      Toast.show({
+        type: 'success',
+        text1: 'Email Sent',
+        text2: 'Password reset link has been sent to your email',
+      });
     } catch (err) {
       Toast.show({
         type: 'error',
@@ -40,10 +39,12 @@ export default function Login() {
       setIsPending(false);
     }
   };
+
   const gradientColors: [string, string] = [
     theme.dark ? 'rgba(186, 0, 86, 0.8)' : 'rgba(240, 64, 129, 0.7)',
     theme.dark ? 'rgba(118, 64, 0, 0.8)' : 'rgba(255, 145, 0, 0.7)',
   ];
+
   return (
     <View style={styles.backgroundContainer}>
       <LinearGradient colors={gradientColors} style={styles.gradientOverlay}>
@@ -58,7 +59,7 @@ export default function Login() {
                 marginBottom: 5,
               }}
             >
-              Welcome Back!
+              {emailSent ? 'Check Your Email' : 'Reset Password'}
             </Text>
             <Text
               variant="titleMedium"
@@ -70,64 +71,52 @@ export default function Login() {
                 textAlign: 'center',
               }}
             >
-              Please enter your details to continue
+              {emailSent
+                ? `We've sent a password reset link to your email address. Please check your inbox.`
+                : 'Enter your email to receive a password reset link'}
             </Text>
           </View>
 
-          <View style={styles.inputsContainer}>
-            <CTextInput
-              control={control}
-              name="usernameOrEmail"
-              label="Username or email"
-              rules={{
-                required: 'Username or email is required',
-                minLength: {
-                  value: 4,
-                  message: 'Username or email must be at least 4 characters',
-                },
-              }}
-            />
-            <CTextInput
-              control={control}
-              name="password"
-              label="Password"
-              rules={{
-                required: 'Password is required',
-                minLength: {
-                  value: 6,
-                  message: 'Password must be at least 6 characters',
-                },
-              }}
-              secureTextEntry
-            />
-            <Text
-              variant="bodyMedium"
-              style={{
-                alignSelf: 'flex-end',
-                fontWeight: 'bold',
-                color: theme.colors.primary,
-                marginTop: 5,
-              }}
-              onPress={() => {
-                // @ts-ignore
-                router.push('/(auth)/reset-password-email');
-              }}
+          {!emailSent ? (
+            <>
+              <View style={styles.inputsContainer}>
+                <CTextInput
+                  control={control}
+                  name="email"
+                  label="Email"
+                  rules={{
+                    required: 'Email is required',
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: 'Invalid email address',
+                    },
+                  }}
+                />
+              </View>
+
+              <Button
+                mode="contained"
+                onPress={handleSubmit(onSubmit)}
+                loading={isPending}
+                disabled={isPending}
+                style={styles.actionButton}
+                contentStyle={styles.buttonContent}
+                labelStyle={styles.buttonLabel}
+              >
+                Send Reset Link
+              </Button>
+            </>
+          ) : (
+            <Button
+              mode="contained"
+              onPress={() => router.back()}
+              style={styles.actionButton}
+              contentStyle={styles.buttonContent}
+              labelStyle={styles.buttonLabel}
             >
-              Forgot your password?
-            </Text>
-          </View>
-
-          <Button
-            mode="contained"
-            onPress={handleSubmit(onSubmit)}
-            loading={isPending}
-            disabled={isPending}
-            style={styles.signInButton}
-            contentStyle={styles.buttonContent}
-            labelStyle={styles.buttonLabel}
-          >
-            Sign In
-          </Button>
+              Back to Login
+            </Button>
+          )}
 
           <Text
             variant="bodyMedium"
@@ -141,7 +130,7 @@ export default function Login() {
               router.push('/(auth)/registration');
             }}
           >
-            Create new account
+            Don't have an account? Sign up
           </Text>
         </Surface>
       </LinearGradient>
@@ -181,7 +170,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     gap: 15,
   },
-  signInButton: {
+  actionButton: {
     borderRadius: 12,
     marginTop: 10,
     elevation: 2,

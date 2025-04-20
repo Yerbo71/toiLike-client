@@ -10,6 +10,7 @@ const AuthLayout = () => {
     >
       <Stack.Screen name="login" options={{ headerTitle: '' }} />
       <Stack.Screen name="registration" options={{ headerTitle: '' }} />
+      <Stack.Screen name="reset-password-email" options={{ headerTitle: '' }} />
     </Stack>
   );
 };
