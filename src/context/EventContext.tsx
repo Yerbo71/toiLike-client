@@ -4,13 +4,21 @@ interface EventService {
   id: number;
 }
 
+interface Place {
+  id: number;
+  title: string;
+  city?: string;
+  street?: string;
+  description?: string;
+}
+
 interface Event {
-  city: string;
   title: string;
   startedAt: string;
   endedAt: string;
   description: string;
   hallId: number;
+  place?: Place;
   eventServices: EventService[];
 }
 
@@ -20,7 +28,6 @@ interface EventContextType {
 }
 
 const defaultEvent: Event = {
-  city: '',
   title: '',
   startedAt: new Date().toISOString(),
   endedAt: new Date().toISOString(),

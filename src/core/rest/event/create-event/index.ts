@@ -8,7 +8,7 @@ type PostEventRequestBody =
   operations['createEvent']['requestBody']['content']['application/json'];
 
 export const postCreateEvent = async (
-  token: string,
+  token: string | null,
   eventData: PostEventRequestBody,
 ): Promise<PostEventResponse> => {
   const response = await axios.post(

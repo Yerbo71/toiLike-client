@@ -22,7 +22,9 @@
     "orderItems2": "We will find a restaurant",
     "orderItems3": "We will organize a show program",
     "orderItems4": "We will control the entire process",
-    "orderNow": "Order now"
+    "orderNow": "Order now",
+    "successTitle": "Order confirmed!",
+    "successMessage": "Our manager will contact you shortly"
   },
   "orderModal": {
     "orderOne": {

@@ -1,5 +1,11 @@
-import React, { useContext } from 'react';
-import { View, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
+import React, { useCallback, useContext } from 'react';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  ActivityIndicator,
+  RefreshControl,
+} from 'react-native';
 import { Text, useTheme, Card, Button, Avatar } from 'react-native-paper';
 import { useQuery } from '@tanstack/react-query';
 import { getAllEvents } from '@/src/core/rest/event/get-all-events';
@@ -15,16 +21,31 @@ const MyApplicationsPage = () => {
     isLoading,
     error,
     refetch,
+    isRefetching,
   } = useQuery({
     queryKey: ['eventAllEvents'],
     queryFn: () => (token ? getAllEvents(token) : Promise.resolve(null)),
     staleTime: 5 * 60 * 1000,
   });
+
+  const [manualRefreshing, setManualRefreshing] = React.useState(false);
+
   const formatDate = (dateString: string) => {
     return format(new Date(dateString), 'dd MMM yyyy');
   };
 
-  if (isLoading) {
+  const onRefresh = useCallback(async () => {
+    setManualRefreshing(true);
+    try {
+      await refetch();
+    } finally {
+      setManualRefreshing(false);
+    }
+  }, [refetch]);
+
+  console.log(eventsData);
+
+  if (isLoading && !manualRefreshing) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator animating={true} size="large" />
@@ -35,18 +56,33 @@ const MyApplicationsPage = () => {
   if (error) {
     return (
       <View style={styles.errorContainer}>
-        <Text style={{ color: theme.colors.error }}>Error loading events</Text>
-        <Button mode="contained" onPress={() => refetch()}>
+        <MaterialCommunityIcons
+          name="alert-circle"
+          size={48}
+          color={theme.colors.error}
+        />
+        <Text style={{ color: theme.colors.error, marginVertical: 16 }}>
+          Error loading events
+        </Text>
+        <Button mode="contained" onPress={onRefresh} loading={isRefetching}>
           Retry
         </Button>
       </View>
     );
   }
-  console.log(token);
 
   if (!eventsData?.list?.length) {
     return (
-      <View style={styles.emptyContainer}>
+      <ScrollView
+        contentContainerStyle={styles.emptyContainer}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefetching}
+            onRefresh={onRefresh}
+            colors={[theme.colors.primary]}
+          />
+        }
+      >
         <MaterialCommunityIcons
           name="calendar-blank"
           size={48}
@@ -58,16 +94,25 @@ const MyApplicationsPage = () => {
         <Button
           mode="outlined"
           style={{ marginTop: 16 }}
-          onPress={() => refetch()}
+          onPress={onRefresh}
+          loading={isRefetching}
         >
           Refresh
         </Button>
-      </View>
+      </ScrollView>
     );
   }
-
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      refreshControl={
+        <RefreshControl
+          refreshing={isRefetching}
+          onRefresh={onRefresh}
+          colors={[theme.colors.primary]}
+        />
+      }
+    >
       <Text
         variant="titleLarge"
         style={[styles.header, { color: theme.colors.onSurface }]}
