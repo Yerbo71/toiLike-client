@@ -18,7 +18,12 @@
     "signOut": "Sign out",
     "cancel": "Cancel",
     "settings": "Settings",
-    "error": "Error"
+    "error": "Error",
+    "send": "Send",
+    "close": "Close",
+    "submit": "Submit",
+    "email": "Email",
+    "message": "Message"
   },
   "homePage": {
     "popularEvents": "Popular events",
@@ -66,5 +71,25 @@
       "title": "AI help",
       "description": "Entrust the organization to AI"
     }
+  },
+  "profileModals": {
+    "supportDescription": "Need help? Send us a message and we'll get back to you as soon as possible.",
+    "faq": "Frequently Asked Questions",
+    "faqQuestion1": "How do I reset my password?",
+    "faqAnswer1": "Go to the login screen and tap 'Forgot Password', then follow the instructions sent to your email.",
+    "faqQuestion2": "How do I update the app?",
+    "faqAnswer2": "Visit the App Store or Google Play Store and check for updates in the 'Updates' section.",
+    "appName": "Ravee",
+    "description": "Description",
+    "appDescription": "This is a multi-purpose application designed to help users manage their daily tasks efficiently and effectively.",
+    "developedBy": "Developed By",
+    "companyName": "Ravee",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "website": "Website",
+    "ratingDescription": "We value your feedback! Please rate your experience with our app.",
+    "feedback": "Your Feedback",
+    "feedbackPlaceholder": "Tell us what you think about the app...",
+    "rateOnStore": "Rate us on the app stores"
   }
 }

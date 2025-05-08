@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, FlatList, Text, TouchableOpacity } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { useI18n } from '@/src/context/LocaleContext';
-import { useEvent } from '@/src/context/EventContext';
+import { useGlobalFilters } from '@/src/context/GlobalFilterContext';
 
 interface Cities {
   en: string[];
@@ -19,7 +19,7 @@ const cities: Cities = {
 const CountryChoosePage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const { t, locale } = useI18n();
-  const { event, setEvent } = useEvent();
+  const { city: selectedCity, setCity } = useGlobalFilters();
 
   const filteredCities =
     cities[locale as keyof Cities]?.filter((city) =>
@@ -27,7 +27,7 @@ const CountryChoosePage: React.FC = () => {
     ) || [];
 
   const handleCitySelect = (city: string) => {
-    setEvent({ ...event, city });
+    setCity(city);
   };
 
   return (
@@ -42,7 +42,7 @@ const CountryChoosePage: React.FC = () => {
         keyExtractor={(item, index) => index.toString()}
         style={{ marginTop: 16 }}
         renderItem={({ item, index }) => {
-          const isSelected = event.city === item;
+          const isSelected = selectedCity === item;
 
           return (
             <TouchableOpacity onPress={() => handleCitySelect(item)}>

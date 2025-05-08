@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { CTextInput } from '@/src/shared';
 import { Button, Text, TextInput } from 'react-native-paper';
 import { DatePickerModal, TimePickerModal } from 'react-native-paper-dates';
-import { postCreateEvent } from '@/src/core/rest/event/create-event';
+import { postEvent } from '@/src/core/rest/event';
 import { AuthContext } from '@/src/context/AuthContext';
 import Toast from 'react-native-toast-message';
 import { router } from 'expo-router';
@@ -16,7 +16,7 @@ type FormData = {
   startedAt: string;
   endedAt: string;
   description: string;
-  hallId: number;
+  placeId: number;
   eventServices: {
     id: number;
   }[];
@@ -39,14 +39,14 @@ const ManualOrderingPage = () => {
       startedAt: new Date().toISOString(),
       endedAt: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
       description: '',
-      hallId: event.hallId || 0,
+      placeId: event.placeId || 0,
       eventServices: [],
     },
   });
 
   useEffect(() => {
-    setValue('hallId', event.hallId);
-  }, [event.hallId, setValue]);
+    setValue('placeId', event.placeId);
+  }, [event.placeId, setValue]);
 
   const startedAt = new Date(watch('startedAt'));
   const endedAt = new Date(watch('endedAt'));
@@ -112,7 +112,7 @@ const ManualOrderingPage = () => {
 
     setIsSubmitting(true);
     try {
-      const response = await postCreateEvent(token, data);
+      const response = await postEvent(token, data);
 
       Toast.show({
         type: 'success',
@@ -156,7 +156,7 @@ const ManualOrderingPage = () => {
       >
         <TextInput
           label="Hall"
-          value={event.hallId ? `Hall ${event.place?.title}` : 'Choose Hall'}
+          value={event.placeId ? `Place ${event.placeId}` : 'Choose place'}
           editable={false}
           mode="outlined"
           theme={{ roundness: 10 }}

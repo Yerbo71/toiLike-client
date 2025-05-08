@@ -3,7 +3,6 @@ import { Menu, Surface } from 'react-native-paper';
 import { ChevronButton } from '@/src/shared/chevronButton';
 import { useI18n } from '@/src/context/LocaleContext';
 import { router } from 'expo-router';
-import { useEvent } from '@/src/context/EventContext';
 import { Alert } from 'react-native';
 
 const ProfileSettings = () => {
@@ -12,7 +11,6 @@ const ProfileSettings = () => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const stringLocale =
     locale === 'ru' ? 'Русский' : locale === 'kz' ? 'Қазақша' : 'English';
-  const { event } = useEvent();
 
   const toggleMenu = () => setMenuVisible(!menuVisible);
   const closeMenu = () => setMenuVisible(false);
@@ -23,21 +21,15 @@ const ProfileSettings = () => {
   };
 
   const toggleNotifications = async () => {
-    // Simplified implementation without direct expo-notifications dependency
     try {
-      // For now, we'll just toggle the UI state
-      // In a real implementation, you would handle permissions here
       setNotificationsEnabled(!notificationsEnabled);
-
       if (!notificationsEnabled) {
-        // Show a message about enabling notifications
         Alert.alert(
           t('notifications.enabled'),
           t('notifications.enabledMessage'),
           [{ text: t('system.ok') }],
         );
       } else {
-        // Show a message about disabling notifications
         Alert.alert(
           t('notifications.disabled'),
           t('notifications.disabledMessage'),
@@ -66,7 +58,7 @@ const ProfileSettings = () => {
         leftIcon="city"
         leftTitle={t('system.city')}
         rightIcon="chevron-right"
-        rightTitle={event.place?.city || t('system.choose')}
+        rightTitle={t('system.choose')}
         onPress={() => {
           router.push('/(ordering)/countryChoose');
         }}

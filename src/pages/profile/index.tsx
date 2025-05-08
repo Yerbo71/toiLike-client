@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, StyleSheet } from 'react-native';
 import { Button, useTheme, Text } from 'react-native-paper';
 import { DetailAvatar, DetailRateBlock } from '@/src/shared';
 import ProfileSettings from '@/src/pages/profile/components/profileSettings';
@@ -12,55 +12,34 @@ const ProfilePage = () => {
   const theme = useTheme();
   const { t } = useI18n();
   const { signOut, user } = useContext(AuthContext);
+
   return (
-    <ScrollView>
-      <View style={{ position: 'relative' }}>
+    <ScrollView style={styles.container}>
+      <View style={styles.topSection}>
         <ProfileBackgroundImage initialBackgroundUri={user?.secondaryImage} />
+
         <View
-          style={{
-            borderTopLeftRadius: 10,
-            borderTopRightRadius: 10,
-            backgroundColor: theme.colors.surface,
-            position: 'absolute',
-            top: 190,
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 10,
-            padding: 15,
-          }}
+          style={[
+            styles.contentContainer,
+            { backgroundColor: theme.colors.surface },
+          ]}
         >
           <DetailAvatar initialBackgroundUri={user?.avatarImage} />
-          <Text
-            variant="titleLarge"
-            style={{ alignSelf: 'center', marginTop: 40 }}
-          >
-            {user?.username || 'Name is not defined'}
+          <Text variant="titleLarge" style={styles.nameText}>
+            {user?.username || t('profile.undefinedName')}
           </Text>
         </View>
       </View>
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 10,
-          marginTop: 80,
-          marginBottom: 50,
-        }}
-      >
+
+      <View style={styles.bottomSection}>
         <DetailRateBlock rating={5} />
         <ProfileSettings />
         <ProfileTechSupport />
         <Button
           mode="outlined"
           textColor={theme.colors.error}
-          style={{
-            borderColor: theme.colors.error,
-            marginLeft: 10,
-            marginRight: 10,
-            marginTop: 10,
-          }}
-          onPress={() => signOut()}
+          style={[styles.signOutButton, { borderColor: theme.colors.error }]}
+          onPress={signOut}
         >
           {t('system.signOut')}
         </Button>
@@ -68,5 +47,38 @@ const ProfilePage = () => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  topSection: {
+    position: 'relative',
+  },
+  contentContainer: {
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    position: 'absolute',
+    top: 190,
+    width: '100%',
+    flexDirection: 'column',
+    gap: 10,
+    padding: 15,
+  },
+  nameText: {
+    alignSelf: 'center',
+    marginTop: 40,
+  },
+  bottomSection: {
+    flexDirection: 'column',
+    gap: 10,
+    marginTop: 80,
+    marginBottom: 50,
+  },
+  signOutButton: {
+    marginHorizontal: 15,
+    marginTop: 15,
+  },
+});
 
 export default ProfilePage;

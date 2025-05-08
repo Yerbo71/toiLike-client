@@ -7,7 +7,7 @@ type PostEventResponse =
 type PostEventRequestBody =
   operations['createEvent']['requestBody']['content']['application/json'];
 
-export const postCreateEvent = async (
+export const postEvent = async (
   token: string | null,
   eventData: PostEventRequestBody,
 ): Promise<PostEventResponse> => {

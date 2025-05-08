@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '@/src/context/AuthContext';
 import { WithoutToken } from '@/src/shared/withoutToken';
-import HallChoosePage from '@/src/pages/hallChoose';
+import PlaceChoosePage from '@/src/pages/placeChoose';
 
-export default function HallChoose() {
+export default function PlaceChoose() {
   const { isAuthenticated } = useContext(AuthContext);
 
-  return <>{isAuthenticated ? <HallChoosePage /> : <WithoutToken />}</>;
+  return <>{isAuthenticated ? <PlaceChoosePage /> : <WithoutToken />}</>;
 }

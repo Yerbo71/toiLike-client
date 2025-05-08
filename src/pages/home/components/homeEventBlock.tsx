@@ -6,7 +6,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import { PreviewCard } from '@/src/shared/previewCard';
 import { router } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
-import { getPopularEventTemplates } from '@/src/core/rest/event/get-popular-event-templates';
+import { getPopularEventTemplates } from '../../../core/rest/templates/get-popular-event-templates';
 import { useI18n } from '@/src/context/LocaleContext';
 
 const HomeEventBlock = () => {

@@ -145,7 +145,7 @@ const MyApplicationsPage = () => {
               </Text>
             )}
 
-            {event.hall && (
+            {event.place && (
               <View
                 style={[
                   {
@@ -180,7 +180,7 @@ const MyApplicationsPage = () => {
                     Venue:
                   </Text>
                   <Text variant="bodyMedium" style={styles.detailValue}>
-                    {event.hall.title}
+                    {event.place.title}
                   </Text>
                 </View>
 
@@ -188,19 +188,19 @@ const MyApplicationsPage = () => {
                   <Text variant="labelMedium" style={styles.detailLabel}>
                     Location:
                   </Text>
-                  <Text variant="bodyMedium" style={styles.detailValue}>
-                    {event.hall.placeInfoDto?.street},{'Test '}
-                    {event.hall.placeInfoDto?.city}
-                  </Text>
+                  {/*<Text variant="bodyMedium" style={styles.detailValue}>*/}
+                  {/*  {event.place.placeInfoDto?.street},{'Test '}*/}
+                  {/*  {event.place.placeInfoDto?.city}*/}
+                  {/*</Text>*/}
                 </View>
 
                 <View style={styles.detailItem}>
                   <Text variant="labelMedium" style={styles.detailLabel}>
                     Cost:
                   </Text>
-                  <Text variant="bodyMedium" style={styles.detailValue}>
-                    {event.hall.cost?.toLocaleString()}T
-                  </Text>
+                  {/*<Text variant="bodyMedium" style={styles.detailValue}>*/}
+                  {/*  {event.place.?.toLocaleString()}T*/}
+                  {/*</Text>*/}
                 </View>
               </View>
             )}

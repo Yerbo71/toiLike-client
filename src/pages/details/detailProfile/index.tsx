@@ -12,7 +12,7 @@ import DetailProfileDescriptionBlock from './components/detailProfileDescription
 import DetailProfileSocialNetBlock from './components/detailProfileSocialNetBlock';
 import { DetailRateBlock } from '@/src/shared';
 import { useQuery } from '@tanstack/react-query';
-import { getPopularEventByIDTemplates } from '@/src/core/rest/event/get-popular-event-templates-id';
+import { getPopularEventByIDTemplates } from '@/src/core/rest/templates';
 import { useLocalSearchParams } from 'expo-router';
 import DetailProfileCommentBlock from '@/src/pages/details/detailProfile/components/detailProfileCommentBlock';
 import DetailProfileServiceBlocks from '@/src/pages/details/detailProfile/components/detailProfileServiceBlocks';

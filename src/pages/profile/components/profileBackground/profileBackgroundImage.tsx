@@ -2,9 +2,8 @@ import React, { useState, useContext } from 'react';
 import { Image } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
-import { postUploadBackgroundUser } from '@/src/core/rest/user/postUploadBackgroundUser';
 import { AuthContext } from '@/src/context/AuthContext';
-import { getCurrentUser } from '@/src/core/rest/user/getCurrentUser';
+import { postUploadSecondaryUser, getCurrentUser } from '@/src/core/rest/user';
 
 interface ProfileBackgroundImageProps {
   initialBackgroundUri?: string;
@@ -13,7 +12,7 @@ interface ProfileBackgroundImageProps {
 const ProfileBackgroundImage: React.FC<ProfileBackgroundImageProps> = ({
   initialBackgroundUri,
 }) => {
-  const { token } = useContext(AuthContext);
+  const { token, updateUser } = useContext(AuthContext);
   const [backgroundImage, setBackgroundImage] = useState<string | null>(
     initialBackgroundUri || null,
   );
@@ -37,8 +36,10 @@ const ProfileBackgroundImage: React.FC<ProfileBackgroundImageProps> = ({
       setBackgroundImage(fileUri);
       if (token) {
         try {
-          await postUploadBackgroundUser(token, fileUri);
+          await postUploadSecondaryUser(token, fileUri);
           console.log('Image uploaded successfully!');
+          const updatedUser = await getCurrentUser(token);
+          updateUser(updatedUser);
         } catch (error) {
           console.error('Failed to upload image:', error);
         }

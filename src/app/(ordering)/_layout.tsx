@@ -11,7 +11,7 @@ const OrderLayout = () => {
       <Stack.Screen name="staffOrdering" options={{ headerTitle: '' }} />
       <Stack.Screen name="countryChoose" options={{ headerTitle: '' }} />
       <Stack.Screen name="manualOrdering" options={{ headerTitle: '' }} />
-      <Stack.Screen name="hallChoose" options={{ headerTitle: '' }} />
+      <Stack.Screen name="placeChoose" options={{ headerTitle: '' }} />
     </Stack>
   );
 };

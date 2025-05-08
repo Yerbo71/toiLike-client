@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { operations } from '@/src/types/api2';
 import { EVENT_BASE_URL } from '@/src/constants/api/apiConst';
 
-export const postUploadBackgroundUser = async (
+export const postUploadSecondaryUser = async (
   token: string,
   fileUri: string,
 ): Promise<

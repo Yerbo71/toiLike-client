@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import {
   Text,
@@ -8,59 +8,42 @@ import {
   Chip,
 } from 'react-native-paper';
 import { router } from 'expo-router';
-import Toast from 'react-native-toast-message';
 import { LinearGradient } from 'expo-linear-gradient';
 // @ts-ignore
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AuthContext } from '@/src/context/AuthContext';
 import { useEvent } from '@/src/context/EventContext';
-import { getPlaces } from '@/src/core/rest/place/get-places';
+import { getPopularPlaces } from '@/src/core/rest/place';
+import { useQuery } from '@tanstack/react-query';
+import Toast from 'react-native-toast-message';
 
-const HallChoosePage = () => {
+const PlaceChoosePage = () => {
   const { token } = useContext(AuthContext);
   const { event, setEvent } = useEvent();
   const theme = useTheme();
-  const [places, setPlaces] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  useEffect(() => {
-    const fetchPlaces = async () => {
-      try {
-        const data = await getPlaces(token!);
-        setPlaces(data);
-        setSelectedId(event.hallId);
-      } catch (error) {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: 'Failed to load places',
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
+  const {
+    data: places,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['popularPlaces'],
+    queryFn: () => getPopularPlaces(token!),
+    enabled: !!token,
+    staleTime: 5 * 60 * 1000,
+  });
 
-    fetchPlaces();
-  }, [token, event.hallId]);
-
-  const handleSelectPlace = (place: any) => {
-    setSelectedId(place.id);
+  const handleSelectPlace = (placeId: number) => {
+    setSelectedId(placeId);
     setEvent({
       ...event,
-      hallId: place.id,
-      place: {
-        id: place.id,
-        title: place.title,
-        city: place.city,
-        street: place.street,
-        description: place.description,
-      },
+      placeId: placeId,
     });
     router.back();
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator
@@ -70,6 +53,15 @@ const HallChoosePage = () => {
         />
       </View>
     );
+  }
+
+  if (error) {
+    Toast.show({
+      type: 'error',
+      text1: 'Error',
+      text2: 'Failed to load places',
+    });
+    return null;
   }
 
   return (
@@ -87,10 +79,10 @@ const HallChoosePage = () => {
           </Text>
         </View>
 
-        {places.map((place) => (
+        {places?.map((place) => (
           <TouchableOpacity
             key={place.id}
-            onPress={() => handleSelectPlace(place)}
+            onPress={() => handleSelectPlace(place.id)}
             activeOpacity={0.9}
           >
             <Card
@@ -102,9 +94,9 @@ const HallChoosePage = () => {
                 },
               ]}
             >
-              {place.image && (
+              {place.mainImage && (
                 <Card.Cover
-                  source={{ uri: place.image }}
+                  source={{ uri: place.mainImage }}
                   style={styles.cardImage}
                 />
               )}
@@ -135,18 +127,18 @@ const HallChoosePage = () => {
                   </Text>
                 )}
 
-                <View style={styles.tagsContainer}>
-                  {place.capacity && (
-                    <Chip icon="account-group" style={styles.tag}>
-                      {place.capacity} people
-                    </Chip>
-                  )}
-                  {place.type && (
-                    <Chip icon="home-city" style={styles.tag}>
-                      {place.type}
-                    </Chip>
-                  )}
-                </View>
+                {/*<View style={styles.tagsContainer}>*/}
+                {/*  {place. && (*/}
+                {/*    <Chip icon="account-group" style={styles.tag}>*/}
+                {/*      {place.capacity} people*/}
+                {/*    </Chip>*/}
+                {/*  )}*/}
+                {/*  {place.type && (*/}
+                {/*    <Chip icon="home-city" style={styles.tag}>*/}
+                {/*      {place.type}*/}
+                {/*    </Chip>*/}
+                {/*  )}*/}
+                {/*</View>*/}
               </Card.Content>
             </Card>
           </TouchableOpacity>
@@ -235,4 +227,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HallChoosePage;
+export default PlaceChoosePage;
