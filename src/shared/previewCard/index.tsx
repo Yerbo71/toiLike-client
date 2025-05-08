@@ -90,6 +90,8 @@ const styles = StyleSheet.create({
   },
   cover: {
     height: 180,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
   },
   content: {
     padding: 12,

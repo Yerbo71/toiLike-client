@@ -148,6 +148,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/event-service/user-vendor/get-user-vendor/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getUserVendorById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/event-service/user-vendor/get-rating/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getUserVendorRating"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/event-service/user-vendor/get-popular-vendors": {
         parameters: {
             query?: never;
@@ -155,7 +187,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["getEvents"];
+        get: operations["getUserVendor"];
         put?: never;
         post?: never;
         delete?: never;
@@ -171,7 +203,23 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["getEvents_1"];
+        get: operations["getEvents"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/event-service/place/get-place/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getPlace"];
         put?: never;
         post?: never;
         delete?: never;
@@ -288,7 +336,7 @@ export interface components {
             endedAt?: string;
             description?: string;
             /** Format: int64 */
-            hallId: number;
+            placeId: number;
             eventServices: components["schemas"]["EventServiceRequest"][];
         };
         EventServiceRequest: {
@@ -304,25 +352,20 @@ export interface components {
             /** Format: date-time */
             endedAt?: string;
             description?: string;
-            hall?: components["schemas"]["HallResponse"];
+            place?: components["schemas"]["PlaceResponse"];
             eventServices: components["schemas"]["UserVendorResponse"][];
         };
-        HallResponse: {
-            /** Format: int64 */
-            id: number;
-            title: string;
-            description?: string;
-            /** Format: double */
-            cost?: number;
-            placeInfoDto?: components["schemas"]["PlaceInfoDto"];
-        };
-        PlaceInfoDto: {
+        PlaceResponse: {
             /** Format: int64 */
             id: number;
             title: string;
             city?: string;
             street?: string;
             description?: string;
+            mainImage?: string;
+            secondaryImage?: string;
+            /** Format: float */
+            rating?: number;
         };
         UserVendorResponse: {
             /** Format: int64 */
@@ -332,8 +375,11 @@ export interface components {
             experience?: string;
             /** Format: float */
             averageCost?: number;
-            /** @enum {string} */
-            serviceType: "PRESENTERS" | "SINGERS" | "DANCERS" | "GROUP" | "OPERATORS" | "PHOTOGRAPH" | "MOBILOGRAPH" | "TRANSPORT" | "DECORATORS" | "ANIMATORS" | "TECHNICAL_STAFF" | "SECURITY" | "SOUND_ENGINEERS" | "MEDICAL_WORKERS" | "STYLISTS" | "TECHNICAL_EQUIPMENT" | "HAIR_DRESSERS" | "CLOTHING_SUPPLIERS" | "FLOWER_SUPPLIERS";
+            serviceType: string;
+            /** Format: float */
+            rating?: number;
+            mainImage?: string;
+            secondaryImage?: string;
         };
         ApiResponse: {
             /** @enum {string} */
@@ -374,13 +420,26 @@ export interface components {
             totalPages: number;
             list: components["schemas"]["UserVendorResponse"][];
         };
-        PlaceResponse: {
+        PageableResponseRatingResponse: {
+            /** Format: int32 */
+            totalCount: number;
+            /** Format: int32 */
+            totalPages: number;
+            list: components["schemas"]["RatingResponse"][];
+        };
+        RatingResponse: {
             /** Format: int64 */
             id: number;
-            title: string;
-            city?: string;
-            street?: string;
-            description?: string;
+            /** Format: float */
+            rating: number;
+            comment: string;
+            user: components["schemas"]["UserDetails"];
+        };
+        UserDetails: {
+            /** Format: int64 */
+            id: number;
+            username: string;
+            avatarUrl?: string;
         };
         PageableResponseEventResponse: {
             /** Format: int32 */
@@ -435,15 +494,17 @@ export interface components {
             description?: string;
             mainImage?: string;
             secondaryImage?: string;
+            phoneNumber?: string;
             /** Format: double */
             rating?: number;
+            socialMedia: components["schemas"]["SocialMediaEventTemplate"][];
             services: components["schemas"]["UserVendorTemplateResponse"][];
             ratings: components["schemas"]["EventTemplateRatingResponse"][];
         };
-        UserDetails: {
-            /** Format: int64 */
-            id: number;
-            username: string;
+        SocialMediaEventTemplate: {
+            url: string;
+            /** @enum {string} */
+            socialMediaType: "WHATS_UP" | "TELEGRAM" | "INSTAGRAM" | "OTHERS";
         };
         UserVendorTemplateResponse: {
             /** Format: int64 */
@@ -689,7 +750,54 @@ export interface operations {
             };
         };
     };
-    getEvents: {
+    getUserVendorById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["UserVendorResponse"];
+                };
+            };
+        };
+    };
+    getUserVendorRating: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageableResponseRatingResponse"];
+                };
+            };
+        };
+    };
+    getUserVendor: {
         parameters: {
             query?: never;
             header?: never;
@@ -709,7 +817,7 @@ export interface operations {
             };
         };
     };
-    getEvents_1: {
+    getEvents: {
         parameters: {
             query?: never;
             header?: never;
@@ -725,6 +833,28 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["PlaceResponse"][];
+                };
+            };
+        };
+    };
+    getPlace: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PlaceResponse"];
                 };
             };
         };

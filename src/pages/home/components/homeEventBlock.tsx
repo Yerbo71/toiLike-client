@@ -7,9 +7,11 @@ import { PreviewCard } from '@/src/shared/previewCard';
 import { router } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
 import { getPopularEventTemplates } from '@/src/core/rest/event/get-popular-event-templates';
+import { useI18n } from '@/src/context/LocaleContext';
 
 const HomeEventBlock = () => {
   const theme = useTheme();
+  const { t } = useI18n();
   const {
     data: events,
     isLoading,
@@ -17,7 +19,7 @@ const HomeEventBlock = () => {
   } = useQuery({
     queryKey: ['popularEventTemplates'],
     queryFn: getPopularEventTemplates,
-    staleTime: 5 * 60 * 1000,
+    // staleTime: 5 * 60 * 1000,
   });
 
   if (isLoading) {
@@ -47,10 +49,10 @@ const HomeEventBlock = () => {
           alignItems: 'center',
         }}
       >
-        <Text variant="titleLarge">Popular Events</Text>
+        <Text variant="titleLarge">{t('homePage.popularEvents')}</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text variant="titleMedium" style={{ color: theme.colors.primary }}>
-            All
+            {t('system.all')}
           </Text>
           <Entypo name="chevron-right" size={18} color={theme.colors.primary} />
         </View>
@@ -66,6 +68,7 @@ const HomeEventBlock = () => {
             image={{ uri: item.mainImage }}
             title={item.title}
             description={item.description || ''}
+            rating={item.rating}
             onPress={() => {
               router.push({
                 pathname: '/(application)/details/[id]',

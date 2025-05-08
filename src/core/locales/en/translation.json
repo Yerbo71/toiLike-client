@@ -13,7 +13,29 @@
     "aboutApp": "About application",
     "rating": "Rating",
     "theme": "Theme",
-    "search": "Search"
+    "search": "Search",
+    "all": "All",
+    "signOut": "Sign out",
+    "cancel": "Cancel",
+    "settings": "Settings",
+    "error": "Error"
+  },
+  "homePage": {
+    "popularEvents": "Popular events",
+    "popularVendors": "Popular vendors"
+  },
+  "detailsPage": {
+    "contact": "Contact",
+    "includedServices": "Included services",
+    "customersReviews": "Customers reviews",
+    "addToContacts": "Add to contacts",
+    "contactAdded": "Contact added",
+    "contactAddedMessage": "The number has been added to your phone book",
+    "permissionDenied": "Permission denied",
+    "contactPermissionMessage": "Please grant access to your phone book to add the contact",
+    "error": "Error",
+    "contactAddError": "Failed to add contact",
+    "noPhoneNumber": "Phone number not provided"
   },
   "staffOrderingPage": {
     "title": "Trust the EventApp Team",
@@ -25,6 +47,11 @@
     "orderNow": "Order now",
     "successTitle": "Order confirmed!",
     "successMessage": "Our manager will contact you shortly"
+  },
+  "notifications": {
+    "permissionDenied": "Permission not granted",
+    "enableInSettings": "Please enable notifications in the app settings",
+    "toggleError": "Failed to update notification settings"
   },
   "orderModal": {
     "orderOne": {

@@ -13,7 +13,29 @@
     "aboutApp": "Қосымша жайлы",
     "rating": "Рейтинг",
     "theme": "Тема",
-    "search": "Іздеу"
+    "search": "Іздеу",
+    "all": "Барлығы",
+    "signOut": "Шығу",
+    "cancel": "Болдырмау",
+    "settings": "Параметрлер",
+    "error": "Қате"
+  },
+  "homePage": {
+    "popularEvents": "Танымал іс-шаралар",
+    "popularVendors": "Танымал жеткізушілер"
+  },
+  "detailsPage": {
+    "contact": "Байланыс",
+    "includedServices": "Қызметтер тізімі",
+    "customersReviews": "Тұтынушылардың пікірлері",
+    "addToContacts": "Контактілерге қосу",
+    "contactAdded": "Контакт қосылды",
+    "contactAddedMessage": "Нөмір сіздің телефон кітапшаңызға қосылды",
+    "permissionDenied": "Құқық жоқ",
+    "contactPermissionMessage": "Контактіні қосу үшін телефон кітапшасына қол жеткізуге рұқсат беріңіз",
+    "error": "Қате",
+    "contactAddError": "Контактіні қосу мүмкін болмады",
+    "noPhoneNumber": "Телефон нөмірі көрсетілмеген"
   },
   "staffOrderingPage": {
     "title": "EventApp командасына сенім арт",
@@ -23,6 +45,11 @@
     "orderItems3": "Шоу-бағдарламаны ұйымдастырамыз",
     "orderItems4": "Бүкіл процесті бақылаймыз",
     "orderNow": "Өтініш қалдыру"
+  },
+  "notifications": {
+    "permissionDenied": "Рұқсат берілмеді",
+    "enableInSettings": "Қолданба параметрлерінен хабарламаларды қосыңыз",
+    "toggleError": "Хабарлама параметрлерін өзгерту сәтсіз аяқталды"
   },
   "orderModal": {
     "orderOne": {

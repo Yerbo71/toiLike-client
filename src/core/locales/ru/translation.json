@@ -13,7 +13,29 @@
     "aboutApp": "Про приложение",
     "rating": "Рейтинг",
     "theme": "Тема",
-    "search": "Поиск"
+    "search": "Поиск",
+    "all": "Всё",
+    "signOut": "Выйти",
+    "cancel": "Отмена",
+    "settings": "Настройки",
+    "error": "Ошибка"
+  },
+  "homePage": {
+    "popularEvents": "Популярные события",
+    "popularVendors": "Популярные поставщики"
+  },
+  "detailsPage": {
+    "contact": "Контакт",
+    "includedServices": "Включённые услуги",
+    "customersReviews": "Отзывы клиентов",
+    "addToContacts": "Добавить в контакты",
+    "contactAdded": "Контакт добавлен",
+    "contactAddedMessage": "Номер добавлен в вашу телефонную книгу",
+    "permissionDenied": "Доступ запрещен",
+    "contactPermissionMessage": "Для добавления контакта разрешите доступ к телефонной книге",
+    "error": "Ошибка",
+    "contactAddError": "Не удалось добавить контакт",
+    "noPhoneNumber": "Номер телефона не указан"
   },
   "staffOrderingPage": {
     "title": "Доверьтесь команде EventApp",
@@ -23,6 +45,11 @@
     "orderItems3": "Организуем шоу-программу",
     "orderItems4": "Проконтролируем весь процесс",
     "orderNow": "Оставить заявку"
+  },
+  "notifications": {
+    "permissionDenied": "Разрешение не предоставлено",
+    "enableInSettings": "Пожалуйста, включите уведомления в настройках приложения",
+    "toggleError": "Не удалось изменить настройки уведомлений"
   },
   "orderModal": {
     "orderOne": {

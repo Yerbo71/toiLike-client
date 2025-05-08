@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Menu, Surface, useTheme } from 'react-native-paper';
+import { Menu, Surface } from 'react-native-paper';
 import { ChevronButton } from '@/src/shared/chevronButton';
 import { useI18n } from '@/src/context/LocaleContext';
 import { router } from 'expo-router';
 import { useEvent } from '@/src/context/EventContext';
+import { Alert } from 'react-native';
 
 const ProfileSettings = () => {
   const { locale, setLocale, t } = useI18n();
   const [menuVisible, setMenuVisible] = useState(false);
-  const theme = useTheme();
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const stringLocale =
     locale === 'ru' ? 'Русский' : locale === 'kz' ? 'Қазақша' : 'English';
   const { event } = useEvent();
@@ -20,6 +21,35 @@ const ProfileSettings = () => {
     setLocale(newLocale);
     closeMenu();
   };
+
+  const toggleNotifications = async () => {
+    // Simplified implementation without direct expo-notifications dependency
+    try {
+      // For now, we'll just toggle the UI state
+      // In a real implementation, you would handle permissions here
+      setNotificationsEnabled(!notificationsEnabled);
+
+      if (!notificationsEnabled) {
+        // Show a message about enabling notifications
+        Alert.alert(
+          t('notifications.enabled'),
+          t('notifications.enabledMessage'),
+          [{ text: t('system.ok') }],
+        );
+      } else {
+        // Show a message about disabling notifications
+        Alert.alert(
+          t('notifications.disabled'),
+          t('notifications.disabledMessage'),
+          [{ text: t('system.ok') }],
+        );
+      }
+    } catch (error) {
+      console.error('Error toggling notifications:', error);
+      Alert.alert(t('system.error'), t('notifications.toggleError'));
+    }
+  };
+
   return (
     <Surface
       style={{
@@ -36,11 +66,12 @@ const ProfileSettings = () => {
         leftIcon="city"
         leftTitle={t('system.city')}
         rightIcon="chevron-right"
-        rightTitle={event.city || t('system.choose')}
+        rightTitle={event.place?.city || t('system.choose')}
         onPress={() => {
           router.push('/(ordering)/countryChoose');
         }}
       />
+
       <Menu
         visible={menuVisible}
         onDismiss={closeMenu}
@@ -63,10 +94,14 @@ const ProfileSettings = () => {
         <Menu.Item onPress={() => changeLanguage('kz')} title="Қазақша" />
         <Menu.Item onPress={() => changeLanguage('en')} title="English" />
       </Menu>
+
       <ChevronButton
         leftIcon="bell"
         leftTitle={t('system.notifications')}
-        isToggled
+        isToggled={true}
+        onPress={toggleNotifications}
+        isSwitchOn={notificationsEnabled}
+        onToggleSwitch={toggleNotifications}
       />
     </Surface>
   );

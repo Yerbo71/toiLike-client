@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   Dimensions,
 } from 'react-native';
-import { Avatar, Button, Text, useTheme } from 'react-native-paper';
+import { Avatar, Text, useTheme } from 'react-native-paper';
 import DetailProfileDescriptionBlock from './components/detailProfileDescriptionBlock';
 import DetailProfileSocialNetBlock from './components/detailProfileSocialNetBlock';
 import { DetailRateBlock } from '@/src/shared';
@@ -16,6 +16,7 @@ import { getPopularEventByIDTemplates } from '@/src/core/rest/event/get-popular-
 import { useLocalSearchParams } from 'expo-router';
 import DetailProfileCommentBlock from '@/src/pages/details/detailProfile/components/detailProfileCommentBlock';
 import DetailProfileServiceBlocks from '@/src/pages/details/detailProfile/components/detailProfileServiceBlocks';
+import DetailProfileContactBlock from '@/src/pages/details/detailProfile/components/detailProfileContactBlock';
 
 const { width } = Dimensions.get('window');
 
@@ -100,21 +101,19 @@ const DetailProfile = () => {
           commentCount={event.ratings?.length || 0}
         />
 
-        <Button
-          mode="contained"
-          icon="chat"
-          style={styles.messageButton}
-          labelStyle={styles.buttonLabel}
-        >
-          Contact Organizer
-        </Button>
+        <DetailProfileContactBlock
+          phoneNumber={event.phoneNumber}
+          contactName={event.title}
+        />
 
-        {/* Social Networks - Now with proper horizontal scrolling */}
         <View style={styles.socialContainer}>
-          <DetailProfileSocialNetBlock />
+          <DetailProfileSocialNetBlock socialMedia={event.socialMedia} />
         </View>
+
         <DetailProfileDescriptionBlock description={event.description} />
+
         <DetailProfileServiceBlocks services={event.services} />
+
         <DetailProfileCommentBlock
           commentCount={event.ratings.length}
           ratings={event.ratings}

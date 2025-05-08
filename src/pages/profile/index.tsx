@@ -6,9 +6,11 @@ import ProfileSettings from '@/src/pages/profile/components/profileSettings';
 import ProfileTechSupport from '@/src/pages/profile/components/profileTechSupport';
 import { AuthContext } from '@/src/context/AuthContext';
 import ProfileBackgroundImage from '@/src/pages/profile/components/profileBackground/profileBackgroundImage';
+import { useI18n } from '@/src/context/LocaleContext';
 
 const ProfilePage = () => {
   const theme = useTheme();
+  const { t } = useI18n();
   const { signOut, user } = useContext(AuthContext);
   return (
     <ScrollView>
@@ -60,7 +62,7 @@ const ProfilePage = () => {
           }}
           onPress={() => signOut()}
         >
-          Sign out
+          {t('system.signOut')}
         </Button>
       </View>
     </ScrollView>

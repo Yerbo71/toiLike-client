@@ -1,8 +1,9 @@
 import React from 'react';
-import { Image, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import HomeSearchBar from '@/src/pages/home/components/homeSearchBar';
 import HomeCarousel from '@/src/pages/home/components/homeCarousel';
 import HomeEventBlock from '@/src/pages/home/components/homeEventBlock';
+import HomeServicesBlock from '@/src/pages/home/components/homeServicesBlock';
 
 const HomePage = () => {
   return (
@@ -10,6 +11,7 @@ const HomePage = () => {
       <HomeSearchBar />
       <HomeCarousel />
       <HomeEventBlock />
+      <HomeServicesBlock />
     </ScrollView>
   );
 };

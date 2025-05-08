@@ -1,14 +1,16 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text, useTheme } from 'react-native-paper';
+import { Avatar, Text, useTheme } from 'react-native-paper';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { useI18n } from '@/src/context/LocaleContext';
 
 interface Rating {
   rating: number;
   comment?: string;
   user?: {
     username: string;
+    avatarUrl?: string;
   };
   date?: string;
 }
@@ -23,8 +25,8 @@ const DetailProfileCommentBlock: React.FC<DetailRateBlockProps> = ({
   commentCount = 0,
 }) => {
   const theme = useTheme();
+  const { t } = useI18n();
 
-  // Function to format date
   const formatDate = (dateString?: string) => {
     if (!dateString) return '';
     const date = new Date(dateString);
@@ -39,7 +41,7 @@ const DetailProfileCommentBlock: React.FC<DetailRateBlockProps> = ({
     <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
       <View style={styles.header}>
         <Text style={[styles.sectionTitle, { color: theme.colors.onSurface }]}>
-          Customer Reviews
+          {t('detailsPage.customersReviews')}
         </Text>
         <View style={styles.commentCount}>
           <AntDesign name="message1" size={16} color={theme.colors.primary} />
@@ -61,12 +63,19 @@ const DetailProfileCommentBlock: React.FC<DetailRateBlockProps> = ({
           >
             <View style={styles.reviewHeader}>
               <View style={styles.userInfo}>
-                <MaterialIcons
-                  name="person"
-                  size={20}
-                  color={theme.colors.primary}
-                  style={styles.userIcon}
-                />
+                {review.user?.avatarUrl ? (
+                  <Avatar.Image
+                    source={{ uri: review.user?.avatarUrl }}
+                    size={30}
+                  />
+                ) : (
+                  <MaterialIcons
+                    name="person"
+                    size={20}
+                    color={theme.colors.primary}
+                    style={styles.userIcon}
+                  />
+                )}
                 <Text
                   style={[styles.reviewUser, { color: theme.colors.onSurface }]}
                 >
@@ -172,6 +181,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 15,
     flexShrink: 1,
+    marginLeft: 8,
   },
   ratingContainer: {
     flexDirection: 'row',
