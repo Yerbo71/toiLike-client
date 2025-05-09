@@ -52,6 +52,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/event-service/user-vendor/rate-user-vendor": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["rateUserVendor"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/event-service/user-vendor/create-user-vendor": {
         parameters: {
             query?: never;
@@ -62,6 +78,22 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["createUserVendor"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/event-service/place/rate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["rateUserVendor_1"];
         delete?: never;
         options?: never;
         head?: never;
@@ -188,6 +220,38 @@ export interface paths {
             cookie?: never;
         };
         get: operations["getUserVendor"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/event-service/place/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["searchUserVendors_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/event-service/place/get-rating/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getUserVendorRating_1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -386,6 +450,13 @@ export interface components {
             status: "SUCCESS" | "FAIL";
             message: string;
         };
+        RateRequest: {
+            /** Format: int64 */
+            id: number;
+            comment: string;
+            /** Format: float */
+            rating: number;
+        };
         UserVendorRequest: {
             title: string;
             description?: string;
@@ -440,6 +511,13 @@ export interface components {
             id: number;
             username: string;
             avatarUrl?: string;
+        };
+        PageableResponsePlaceResponse: {
+            /** Format: int32 */
+            totalCount: number;
+            /** Format: int32 */
+            totalPages: number;
+            list: components["schemas"]["PlaceResponse"][];
         };
         PageableResponseEventResponse: {
             /** Format: int32 */
@@ -605,6 +683,30 @@ export interface operations {
             };
         };
     };
+    rateUserVendor: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RateRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponse"];
+                };
+            };
+        };
+    };
     createUserVendor: {
         parameters: {
             query: {
@@ -623,6 +725,30 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["UserVendorResponse"];
+                };
+            };
+        };
+    };
+    rateUserVendor_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RateRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponse"];
                 };
             };
         };
@@ -813,6 +939,57 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["UserVendorResponse"][];
+                };
+            };
+        };
+    };
+    searchUserVendors_1: {
+        parameters: {
+            query?: {
+                q?: string;
+                city?: string;
+                street?: string;
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageableResponsePlaceResponse"];
+                };
+            };
+        };
+    };
+    getUserVendorRating_1: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageableResponseRatingResponse"];
                 };
             };
         };
