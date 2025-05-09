@@ -3,7 +3,7 @@ import { ScrollView } from 'react-native';
 import HomeSearchBar from '@/src/pages/home/components/homeSearchBar';
 import HomeCarousel from '@/src/pages/home/components/homeCarousel';
 import HomeEventBlock from '@/src/pages/home/components/homeEventBlock';
-import HomeServicesBlock from '@/src/pages/home/components/homeServicesBlock';
+import HomeVendorsBlock from '@/src/pages/home/components/homeVendorsBlock';
 
 const HomePage = () => {
   return (
@@ -11,7 +11,7 @@ const HomePage = () => {
       <HomeSearchBar />
       <HomeCarousel />
       <HomeEventBlock />
-      <HomeServicesBlock />
+      <HomeVendorsBlock />
     </ScrollView>
   );
 };

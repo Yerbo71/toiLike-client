@@ -1,4 +1,3 @@
-// HomeEventBlock.tsx
 import React from 'react';
 import { ActivityIndicator, FlatList, View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
@@ -9,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getPopularVendors } from '@/src/core/rest/userVendor/get-popular-vendors';
 import { useI18n } from '@/src/context/LocaleContext';
 
-const HomeServicesBlock = () => {
+const HomeVendorsBlock = () => {
   const theme = useTheme();
   const { t } = useI18n();
   const {
@@ -19,7 +18,7 @@ const HomeServicesBlock = () => {
   } = useQuery({
     queryKey: ['popularVendors'],
     queryFn: getPopularVendors,
-    // staleTime: 5 * 60 * 1000,
+    staleTime: 5 * 60 * 1000,
   });
 
   if (isLoading) {
@@ -34,7 +33,7 @@ const HomeServicesBlock = () => {
     return (
       <View style={{ padding: 20 }}>
         <Text style={{ color: theme.colors.error }}>
-          Failed to load services
+          {t('system.failedLoad')}
         </Text>
       </View>
     );
@@ -71,6 +70,9 @@ const HomeServicesBlock = () => {
             title={item.title}
             description={item.description || ''}
             rating={item.rating}
+            experience={item.experience}
+            averageCost={item.averageCost}
+            serviceType={item.serviceType}
             onPress={() => {
               router.push({
                 pathname: '/(application)/details/[id]',
@@ -86,4 +88,4 @@ const HomeServicesBlock = () => {
   );
 };
 
-export default HomeServicesBlock;
+export default HomeVendorsBlock;

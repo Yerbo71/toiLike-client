@@ -23,7 +23,8 @@
     "close": "Жабу",
     "submit": "Жіберу",
     "email": "Электрондық пошта",
-    "message": "Хабарлама"
+    "message": "Хабарлама",
+    "failedLoad": "Жүктеу сәтсіз аяқталды"
   },
   "notifications": {
     "permissionDenied": "Рұқсат берілмеді",
@@ -63,6 +64,11 @@
     "feedback": "Сіздің пікіріңіз",
     "feedbackPlaceholder": "Қосымша туралы не ойлайтыныңызды айтыңыз...",
     "rateOnStore": "Бізді қосымша дүкендерінде бағалаңыз"
+  },
+  "withoutToken": {
+    "title": "Аккаунтыңызға кіріңіз",
+    "description": "Осы беттегі деректерді көру үшін кіріңіз.",
+    "loginButton": "Кіру"
   },
   "loginPage": {
     "welcome": "Қайта оралдыңыз!",

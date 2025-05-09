@@ -23,7 +23,8 @@
     "close": "Close",
     "submit": "Submit",
     "email": "Email",
-    "message": "Message"
+    "message": "Message",
+    "failedLoad": "Failed to load"
   },
   "notifications": {
     "permissionDenied": "Permission not granted",
@@ -43,6 +44,11 @@
       "title": "AI help",
       "description": "Entrust the organization to AI"
     }
+  },
+  "withoutToken": {
+    "title": "Log in to your account",
+    "description": "Log in to view the data on this page.",
+    "loginButton": "Login"
   },
   "profileModals": {
     "supportDescription": "Need help? Send us a message and we'll get back to you as soon as possible.",
