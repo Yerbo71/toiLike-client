@@ -24,7 +24,9 @@
     "submit": "Жіберу",
     "email": "Электрондық пошта",
     "message": "Хабарлама",
-    "failedLoad": "Жүктеу сәтсіз аяқталды"
+    "failedLoad": "Жүктеу сәтсіз аяқталды",
+    "notFound": "Жоқ",
+    "plus": "Қосу"
   },
   "notifications": {
     "permissionDenied": "Рұқсат берілмеді",

@@ -75,7 +75,7 @@ const HomeVendorsBlock = () => {
             serviceType={item.serviceType}
             onPress={() => {
               router.push({
-                pathname: '/(application)/details/[id]',
+                pathname: '/(application)/vendorDetails/[id]',
                 params: {
                   id: item.id,
                 },

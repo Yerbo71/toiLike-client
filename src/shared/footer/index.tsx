@@ -142,6 +142,13 @@ export const Footer = () => {
             headerShown: false,
           }}
         />
+        <Tabs.Screen
+          name="vendorDetails/[id]"
+          options={{
+            href: null,
+            headerShown: false,
+          }}
+        />
       </Tabs>
       {modalOpen && <FooterMenuModal close={close} />}
     </>

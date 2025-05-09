@@ -20,7 +20,7 @@ interface DetailRateBlockProps {
   commentCount: number;
 }
 
-const DetailProfileCommentBlock: React.FC<DetailRateBlockProps> = ({
+const DetailsCommentBlock: React.FC<DetailRateBlockProps> = ({
   ratings = [],
   commentCount = 0,
 }) => {
@@ -212,4 +212,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailProfileCommentBlock;
+export default DetailsCommentBlock;

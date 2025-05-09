@@ -6,9 +6,9 @@ interface DetailProfileAddInfoBlockProps {
   description?: string;
 }
 
-const DetailProfileDescriptionBlock: React.FC<
-  DetailProfileAddInfoBlockProps
-> = ({ description }) => {
+const DetailsDescriptionBlock: React.FC<DetailProfileAddInfoBlockProps> = ({
+  description,
+}) => {
   const theme = useTheme();
 
   return (
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailProfileDescriptionBlock;
+export default DetailsDescriptionBlock;

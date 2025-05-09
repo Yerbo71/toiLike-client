@@ -7,54 +7,62 @@ import {
   Dimensions,
   RefreshControl,
 } from 'react-native';
-import { Avatar, Text, useTheme } from 'react-native-paper';
-import DetailsDescriptionBlock from '../components/detailsDescriptionBlock';
-import DetailProfileSocialNetBlock from './components/detailProfileSocialNetBlock';
+import { Avatar, Button, Text, useTheme } from 'react-native-paper';
+import DetailsDescriptionBlock from '@/src/pages/details/components/detailsDescriptionBlock';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useLocalSearchParams } from 'expo-router';
+import { getRatingId, getUserVendorId } from '@/src/core/rest/userVendor';
+import { useI18n } from '@/src/context/LocaleContext';
 import {
   DetailRateBlock,
   EmptyView,
   ErrorView,
   LoadingView,
 } from '@/src/shared';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getPopularEventByIDTemplates } from '@/src/core/rest/templates';
-import { useLocalSearchParams } from 'expo-router';
 import DetailsCommentBlock from '@/src/pages/details/components/detailsCommentBlock';
-import DetailProfileServiceBlocks from '@/src/pages/details/detailProfile/components/detailProfileServiceBlocks';
-import DetailProfileContactBlock from '@/src/pages/details/detailProfile/components/detailProfileContactBlock';
 
 const { width } = Dimensions.get('window');
 
-const DetailProfilePage = () => {
+const VendorDetailsPage = () => {
   const theme = useTheme();
   const { id } = useLocalSearchParams<{ id: string }>();
+  const { t } = useI18n();
   const queryClient = useQueryClient();
   const {
-    data: event,
-    isLoading,
-    error,
-    refetch,
+    data: vendor,
+    isLoading: vendorIsLoading,
+    error: vendorError,
     isRefetching,
   } = useQuery({
-    queryKey: ['eventDetails', id],
-    queryFn: () => getPopularEventByIDTemplates(Number(id)),
+    queryKey: ['vendorDetails', id],
+    queryFn: () => getUserVendorId(Number(id)),
+    staleTime: 5 * 60 * 1000,
+  });
+  const {
+    data: rating,
+    isLoading: ratingIsLoading,
+    error: ratingError,
+  } = useQuery({
+    queryKey: ['ratingDetails', id],
+    queryFn: () => getRatingId(Number(id)),
     staleTime: 5 * 60 * 1000,
   });
 
   const onRefresh = useCallback(() => {
-    refetch();
-    queryClient.invalidateQueries({ queryKey: ['eventDetails', id] });
-  }, [id, refetch, queryClient]);
+    queryClient.invalidateQueries({
+      queryKey: ['vendorDetails', 'ratingDetails'],
+    });
+  }, [id, queryClient]);
 
-  if (isLoading && !isRefetching) {
+  if (vendorIsLoading || ratingIsLoading || isRefetching) {
     return <LoadingView />;
   }
 
-  if (error) {
+  if (vendorError || ratingError) {
     return <ErrorView />;
   }
 
-  if (!event) {
+  if (!vendor || !rating) {
     return <EmptyView />;
   }
 
@@ -72,7 +80,7 @@ const DetailProfilePage = () => {
       }
     >
       <Image
-        source={{ uri: event.secondaryImage || 'https://picsum.photos/701' }}
+        source={{ uri: vendor?.secondaryImage || 'https://picsum.photos/701' }}
         style={styles.headerImage}
         resizeMode="cover"
       />
@@ -87,7 +95,7 @@ const DetailProfilePage = () => {
             style={[styles.avatarBorder, { borderColor: theme.colors.primary }]}
           >
             <Avatar.Image
-              source={{ uri: event.mainImage || 'https://picsum.photos/100' }}
+              source={{ uri: vendor?.mainImage || 'https://picsum.photos/100' }}
               size={100}
               style={styles.avatarImage}
             />
@@ -98,31 +106,31 @@ const DetailProfilePage = () => {
           variant="titleLarge"
           style={[styles.title, { color: theme.colors.onSurface }]}
         >
-          {event.title || 'No title'}
+          {vendor?.title || 'No title'}
         </Text>
 
         <DetailRateBlock
-          rating={event.rating || 0}
-          ratings={event.ratings}
-          commentCount={event.ratings?.length || 0}
+          rating={vendor.rating || 0}
+          commentCount={rating?.totalCount || 0}
         />
 
-        <DetailProfileContactBlock
-          phoneNumber={event.phoneNumber}
-          contactName={event.title}
-        />
+        <Button
+          mode="contained"
+          icon="plus"
+          style={[
+            styles.messageButton,
+            { backgroundColor: theme.colors.primary },
+          ]}
+          labelStyle={styles.buttonLabel}
+        >
+          {t('system.plus')}
+        </Button>
 
-        <View style={styles.socialContainer}>
-          <DetailProfileSocialNetBlock socialMedia={event.socialMedia} />
-        </View>
-
-        <DetailsDescriptionBlock description={event.description} />
-
-        <DetailProfileServiceBlocks services={event.services} />
+        <DetailsDescriptionBlock description={vendor?.description} />
 
         <DetailsCommentBlock
-          commentCount={event.ratings.length}
-          ratings={event.ratings}
+          commentCount={rating.totalCount || 0}
+          ratings={rating.list || []}
         />
       </View>
     </ScrollView>
@@ -132,17 +140,6 @@ const DetailProfilePage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
   },
   headerImage: {
     width: '100%',
@@ -214,4 +211,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailProfilePage;
+export default VendorDetailsPage;

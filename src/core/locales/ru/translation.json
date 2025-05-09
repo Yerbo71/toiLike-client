@@ -24,7 +24,9 @@
     "submit": "Отправить",
     "email": "Электронная почта",
     "message": "Сообщение",
-    "failedLoad": "Ошибка загрузки"
+    "failedLoad": "Ошибка загрузки",
+    "notFound": "Не найдено",
+    "plus": "Плюс"
   },
   "notifications": {
     "permissionDenied": "Разрешение не предоставлено",

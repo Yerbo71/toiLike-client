@@ -24,7 +24,9 @@
     "submit": "Submit",
     "email": "Email",
     "message": "Message",
-    "failedLoad": "Failed to load"
+    "failedLoad": "Failed to load",
+    "notFound": "Not found",
+    "plus": "Plus"
   },
   "notifications": {
     "permissionDenied": "Permission not granted",
