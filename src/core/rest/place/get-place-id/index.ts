@@ -3,7 +3,7 @@ import type { operations } from '@/src/types/api2';
 import { EVENT_BASE_URL } from '@/src/constants/api/apiConst';
 
 type GetPopularEventByIDTemplates =
-  operations['getById']['responses'][200]['content']['*/*'];
+  operations['getPlace']['responses'][200]['content']['*/*'];
 
 export const getPlace = async (
   id: number,

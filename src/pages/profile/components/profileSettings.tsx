@@ -4,6 +4,7 @@ import { ChevronButton } from '@/src/shared/chevronButton';
 import { useI18n } from '@/src/context/LocaleContext';
 import { router } from 'expo-router';
 import { Alert } from 'react-native';
+import { useGlobalFilters } from '@/src/context/GlobalFilterContext';
 
 const ProfileSettings = () => {
   const { locale, setLocale, t } = useI18n();
@@ -11,6 +12,7 @@ const ProfileSettings = () => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const stringLocale =
     locale === 'ru' ? 'Русский' : locale === 'kz' ? 'Қазақша' : 'English';
+  const { city } = useGlobalFilters();
 
   const toggleMenu = () => setMenuVisible(!menuVisible);
   const closeMenu = () => setMenuVisible(false);
@@ -58,7 +60,7 @@ const ProfileSettings = () => {
         leftIcon="city"
         leftTitle={t('system.city')}
         rightIcon="chevron-right"
-        rightTitle={t('system.choose')}
+        rightTitle={city || t('system.choose')}
         onPress={() => {
           router.push('/(ordering)/countryChoose');
         }}

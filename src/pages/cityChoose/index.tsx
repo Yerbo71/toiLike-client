@@ -16,7 +16,7 @@ const cities: Cities = {
   kk: ['Алматы', 'Астана', 'Шымкент'],
 };
 
-const CountryChoosePage: React.FC = () => {
+const CityChoosePage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const { t, locale } = useI18n();
   const { city: selectedCity, setCity } = useGlobalFilters();
@@ -73,4 +73,4 @@ const CountryChoosePage: React.FC = () => {
   );
 };
 
-export default CountryChoosePage;
+export default CityChoosePage;

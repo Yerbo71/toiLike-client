@@ -33,7 +33,6 @@ export const DetailAvatar: React.FC<ProfileAvatarImageProps> = ({
       if (token) {
         try {
           await postUploadAvatarUser(token, fileUri);
-          console.log('Avatar uploaded successfully!');
           const updatedUser = await getCurrentUser(token);
           updateUser(updatedUser);
         } catch (error) {

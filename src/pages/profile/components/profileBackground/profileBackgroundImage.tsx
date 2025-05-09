@@ -20,7 +20,6 @@ const ProfileBackgroundImage: React.FC<ProfileBackgroundImageProps> = ({
   const handleChoosePhoto = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') {
-      console.log('Permission to access gallery denied');
       return;
     }
 
@@ -37,7 +36,6 @@ const ProfileBackgroundImage: React.FC<ProfileBackgroundImageProps> = ({
       if (token) {
         try {
           await postUploadSecondaryUser(token, fileUri);
-          console.log('Image uploaded successfully!');
           const updatedUser = await getCurrentUser(token);
           updateUser(updatedUser);
         } catch (error) {
@@ -45,7 +43,6 @@ const ProfileBackgroundImage: React.FC<ProfileBackgroundImageProps> = ({
         }
       }
     } else {
-      console.log('User cancelled image picker');
     }
   };
 

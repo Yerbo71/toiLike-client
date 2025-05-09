@@ -151,11 +151,11 @@ const ManualOrderingPage = () => {
         multiline
       />
       <TouchableOpacity
-        onPress={() => router.push('/(ordering)/hallChoose')}
+        onPress={() => router.push('/(ordering)/placeChoose')}
         style={styles.placeInput}
       >
         <TextInput
-          label="Hall"
+          label="Place"
           value={event.placeId ? `Place ${event.placeId}` : 'Choose place'}
           editable={false}
           mode="outlined"

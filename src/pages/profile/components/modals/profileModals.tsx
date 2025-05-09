@@ -27,7 +27,6 @@ export const TechSupportModal = ({ visible, onDismiss }: ModalProps) => {
   const [email, setEmail] = useState('');
 
   const handleSendSupport = () => {
-    console.log('Support request sent:', { message, email });
     setMessage('');
     setEmail('');
     onDismiss();
@@ -219,7 +218,6 @@ export const RatingModal = ({ visible, onDismiss }: ModalProps) => {
   const [feedback, setFeedback] = useState('');
 
   const handleSubmitRating = () => {
-    console.log('Rating submitted:', { rating, feedback });
     setRating(0);
     setFeedback('');
     onDismiss();

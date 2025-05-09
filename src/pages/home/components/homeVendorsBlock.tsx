@@ -5,7 +5,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import { PreviewCard } from '@/src/shared/previewCard';
 import { router } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
-import { getPopularVendors } from '@/src/core/rest/userVendor/get-popular-vendors';
+import { getPopularVendors } from '@/src/core/rest/userVendor';
 import { useI18n } from '@/src/context/LocaleContext';
 
 const HomeVendorsBlock = () => {
@@ -50,7 +50,7 @@ const HomeVendorsBlock = () => {
           alignItems: 'center',
         }}
       >
-        <Text variant="titleLarge">{t('homePage.popularVendors')}</Text>
+        <Text variant="titleMedium">{t('homePage.popularVendors')}</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text variant="titleMedium" style={{ color: theme.colors.primary }}>
             {t('system.all')}

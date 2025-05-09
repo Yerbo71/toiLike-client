@@ -4,14 +4,9 @@ import { EVENT_BASE_URL } from '@/src/constants/api/apiConst';
 
 type GetPlaces = operations['getEvents']['responses'][200]['content']['*/*'];
 
-export const getPopularPlaces = async (token: string): Promise<GetPlaces> => {
+export const getPopularPlaces = async (): Promise<GetPlaces> => {
   const response = await axios.get(
     `${EVENT_BASE_URL}/event-service/place/get-popular-places`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
   );
   return response.data;
 };

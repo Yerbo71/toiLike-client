@@ -43,8 +43,6 @@ const MyApplicationsPage = () => {
     }
   }, [refetch]);
 
-  console.log(eventsData);
-
   if (isLoading && !manualRefreshing) {
     return (
       <View style={styles.loadingContainer}>
