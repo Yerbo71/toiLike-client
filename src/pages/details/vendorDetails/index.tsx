@@ -20,6 +20,7 @@ import {
   LoadingView,
 } from '@/src/shared';
 import DetailsCommentBlock from '@/src/pages/details/components/detailsCommentBlock';
+import VendorBasicBlock from '@/src/pages/details/vendorDetails/components/vendorBasicBlock';
 
 const { width } = Dimensions.get('window');
 
@@ -123,10 +124,16 @@ const VendorDetailsPage = () => {
           ]}
           labelStyle={styles.buttonLabel}
         >
-          {t('system.plus')}
+          {t('system.add')}
         </Button>
 
         <DetailsDescriptionBlock description={vendor?.description} />
+
+        <VendorBasicBlock
+          experience={vendor.experience}
+          averageCost={vendor.averageCost}
+          serviceType={vendor.serviceType}
+        />
 
         <DetailsCommentBlock
           commentCount={rating.totalCount || 0}

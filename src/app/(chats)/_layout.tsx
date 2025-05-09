@@ -29,7 +29,7 @@ const ChatsLayout = () => {
         headerTitle: () => <ChatHeader />,
       }}
     >
-      <Stack.Screen name="chat/[id]" />
+      <Stack.Screen name="chat/[id]/index" />
     </Stack>
   );
 };

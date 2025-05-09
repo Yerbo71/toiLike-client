@@ -26,7 +26,12 @@
     "message": "Хабарлама",
     "failedLoad": "Жүктеу сәтсіз аяқталды",
     "notFound": "Жоқ",
-    "plus": "Қосу"
+    "plus": "Қосу",
+    "year": "Жыл",
+    "years": "Жылдар",
+    "experience": "Тәжірибе",
+    "avg_cost": "Орташа бағасы",
+    "add": "Қосу"
   },
   "notifications": {
     "permissionDenied": "Рұқсат берілмеді",

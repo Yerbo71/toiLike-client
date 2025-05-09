@@ -26,7 +26,12 @@
     "message": "Message",
     "failedLoad": "Failed to load",
     "notFound": "Not found",
-    "plus": "Plus"
+    "plus": "Plus",
+    "year": "year",
+    "years": "years",
+    "experience": "experience",
+    "avg_cost": "average cost",
+    "add": "Add"
   },
   "notifications": {
     "permissionDenied": "Permission not granted",

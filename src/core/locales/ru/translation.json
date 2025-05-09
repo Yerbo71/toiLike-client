@@ -26,7 +26,12 @@
     "message": "Сообщение",
     "failedLoad": "Ошибка загрузки",
     "notFound": "Не найдено",
-    "plus": "Плюс"
+    "plus": "Плюс",
+    "year": "Год",
+    "years": "Лет",
+    "experience": "Опыт",
+    "avg_cost": "Средняя стоимость",
+    "add": "Добавить",
   },
   "notifications": {
     "permissionDenied": "Разрешение не предоставлено",
