@@ -25,32 +25,6 @@
     "email": "Электронная почта",
     "message": "Сообщение"
   },
-  "homePage": {
-    "popularEvents": "Популярные события",
-    "popularVendors": "Популярные поставщики"
-  },
-  "detailsPage": {
-    "contact": "Контакт",
-    "includedServices": "Включённые услуги",
-    "customersReviews": "Отзывы клиентов",
-    "addToContacts": "Добавить в контакты",
-    "contactAdded": "Контакт добавлен",
-    "contactAddedMessage": "Номер добавлен в вашу телефонную книгу",
-    "permissionDenied": "Доступ запрещен",
-    "contactPermissionMessage": "Для добавления контакта разрешите доступ к телефонной книге",
-    "error": "Ошибка",
-    "contactAddError": "Не удалось добавить контакт",
-    "noPhoneNumber": "Номер телефона не указан"
-  },
-  "staffOrderingPage": {
-    "title": "Доверьтесь команде EventApp",
-    "description": "Предоставим официальный договор, гарантию качества",
-    "orderItems1": "Консультация организатора 24/7",
-    "orderItems2": "Подберём ресторан",
-    "orderItems3": "Организуем шоу-программу",
-    "orderItems4": "Проконтролируем весь процесс",
-    "orderNow": "Оставить заявку"
-  },
   "notifications": {
     "permissionDenied": "Разрешение не предоставлено",
     "enableInSettings": "Пожалуйста, включите уведомления в настройках приложения",
@@ -89,5 +63,81 @@
     "feedback": "Ваш отзыв",
     "feedbackPlaceholder": "Расскажите, что вы думаете о приложении...",
     "rateOnStore": "Оцените нас в магазинах приложений"
+  },
+  "loginPage": {
+    "welcome": "С возвращением!",
+    "instruction":"Пожалуйста, введите свои данные для продолжения",
+    "usernameOrEmail": "Имя пользователя или почта",
+    "password": "Пароль",
+    "forgotPassword": "Забыли пароль?",
+    "signIn": "Войти",
+    "createAccount": "Создать новый аккаунт",
+    "usernameOrEmailRequired": "Имя пользователя или почта обязательны",
+    "usernameOrEmailMin": "Имя пользователя или почта должны содержать минимум 4 символа",
+    "passwordRequired": "Пароль обязателен",
+    "passwordMin": "Пароль должен содержать минимум 6 символов"
+  },
+  "registrationPage": {
+    "title": "Присоединяйтесь к нашему сообществу",
+    "subtitle": "Создайте аккаунт, чтобы открывать для себя удивительные события",
+    "username": "Имя пользователя",
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "usernameRequired": "Имя пользователя обязательно",
+    "usernameMin": "Имя пользователя должно быть не менее 4 символов",
+    "emailRequired": "Электронная почта обязательна",
+    "emailInvalid": "Введите корректный адрес электронной почты",
+    "passwordRequired": "Пароль обязателен",
+    "passwordMin": "Пароль должен быть не менее 6 символов",
+    "confirmPasswordRequired": "Подтверждение пароля обязательно",
+    "passwordsDontMatch": "Пароли не совпадают",
+    "createAccount": "Создать аккаунт",
+    "creatingAccount": "Создание аккаунта...",
+    "alreadyHaveAccount": "Уже есть аккаунт? Войти",
+    "successTitle": "Регистрация успешна",
+    "successSubtitle": "Теперь вы можете войти!",
+    "errorTitle": "Ошибка регистрации"
+  },
+  "resetPassword": {
+    "title": "Сброс пароля",
+    "description": "Введите свою почту, чтобы получить ссылку для сброса пароля",
+    "sentTitle": "Проверьте почту",
+    "sentDescription": "Мы отправили ссылку для сброса пароля на вашу электронную почту. Пожалуйста, проверьте почтовый ящик.",
+    "emailLabel": "Электронная почта",
+    "sendButton": "Отправить ссылку",
+    "backToLogin": "Назад ко входу",
+    "noAccount": "Нет аккаунта? Зарегистрируйтесь",
+    "emailRequired": "Электронная почта обязательна",
+    "invalidEmail": "Некорректный адрес электронной почты",
+    "successTitle": "Письмо отправлено",
+    "successMessage": "Ссылка для сброса пароля отправлена на вашу почту",
+    "errorTitle": "Ошибка"
+  },
+  "homePage": {
+    "popularEvents": "Популярные события",
+    "popularVendors": "Популярные поставщики"
+  },
+  "detailsPage": {
+    "contact": "Контакт",
+    "includedServices": "Включённые услуги",
+    "customersReviews": "Отзывы клиентов",
+    "addToContacts": "Добавить в контакты",
+    "contactAdded": "Контакт добавлен",
+    "contactAddedMessage": "Номер добавлен в вашу телефонную книгу",
+    "permissionDenied": "Доступ запрещен",
+    "contactPermissionMessage": "Для добавления контакта разрешите доступ к телефонной книге",
+    "error": "Ошибка",
+    "contactAddError": "Не удалось добавить контакт",
+    "noPhoneNumber": "Номер телефона не указан"
+  },
+  "staffOrderingPage": {
+    "title": "Доверьтесь команде EventApp",
+    "description": "Предоставим официальный договор, гарантию качества",
+    "orderItems1": "Консультация организатора 24/7",
+    "orderItems2": "Подберём ресторан",
+    "orderItems3": "Организуем шоу-программу",
+    "orderItems4": "Проконтролируем весь процесс",
+    "orderNow": "Оставить заявку"
   }
 }

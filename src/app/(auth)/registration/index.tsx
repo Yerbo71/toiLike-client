@@ -7,6 +7,7 @@ import { CTextInput } from '@/src/shared';
 import { signUp, SignUpRequest } from '@/src/core/rest/auth/sign-up';
 import Toast from 'react-native-toast-message';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useI18n } from '@/src/context/LocaleContext';
 
 type FormData = {
   username: string;
@@ -18,6 +19,7 @@ type FormData = {
 export default function Registration() {
   const theme = useTheme();
   const [isPending, setIsPending] = useState(false);
+  const { t } = useI18n();
   const { control, handleSubmit, watch, reset } = useForm<FormData>({
     mode: 'onSubmit',
     defaultValues: {
@@ -36,15 +38,15 @@ export default function Registration() {
       await signUp(requestData);
       Toast.show({
         type: 'success',
-        text1: 'Registration Successful',
-        text2: 'You can now log in!',
+        text1: t('registrationPage.successTitle'),
+        text2: t('registrationPage.successSubtitle'),
       });
       reset();
       router.push('/(auth)/login');
     } catch (err) {
       Toast.show({
         type: 'error',
-        text1: 'Registration Failed',
+        text1: t('registrationPage.errorTitle'),
         text2: (err as Error).message,
       });
     } finally {
@@ -71,7 +73,7 @@ export default function Registration() {
                 marginBottom: 5,
               }}
             >
-              Join Our Community
+              {t('registrationPage.title')}
             </Text>
             <Text
               variant="titleMedium"
@@ -83,7 +85,7 @@ export default function Registration() {
                 textAlign: 'center',
               }}
             >
-              Create your account to discover amazing events
+              {t('registrationPage.subtitle')}
             </Text>
           </View>
 
@@ -91,49 +93,50 @@ export default function Registration() {
             <CTextInput
               control={control}
               name="username"
-              label="Username"
+              label={t('registrationPage.username')}
               rules={{
-                required: 'Username is required',
+                required: t('registrationPage.usernameRequired'),
                 minLength: {
                   value: 4,
-                  message: 'Username must be at least 4 characters',
+                  message: t('registrationPage.usernameMin'),
                 },
               }}
             />
             <CTextInput
               control={control}
               name="email"
-              label="Email"
+              label={t('registrationPage.email')}
               rules={{
-                required: 'Email is required',
+                required: t('registrationPage.emailRequired'),
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                  message: 'Enter a valid email',
+                  message: t('registrationPage.emailInvalid'),
                 },
               }}
             />
             <CTextInput
               control={control}
               name="password"
-              label="Password"
+              label={t('registrationPage.password')}
               secureTextEntry
               rules={{
-                required: 'Password is required',
+                required: t('registrationPage.passwordRequired'),
                 minLength: {
                   value: 6,
-                  message: 'Password must be at least 6 characters',
+                  message: t('registrationPage.passwordMin'),
                 },
               }}
             />
             <CTextInput
               control={control}
               name="confirmPassword"
-              label="Confirm password"
+              label={t('registrationPage.confirmPassword')}
               secureTextEntry
               rules={{
-                required: 'Confirm Password is required',
+                required: t('registrationPage.confirmPasswordRequired'),
                 validate: (value: string | undefined) =>
-                  value === watch('password') || 'Passwords do not match',
+                  value === watch('password') ||
+                  t('registrationPage.passwordsDontMatch'),
               }}
             />
           </View>
@@ -148,7 +151,9 @@ export default function Registration() {
             labelStyle={styles.buttonLabel}
             buttonColor={theme.colors.primary}
           >
-            {isPending ? 'Creating Account...' : 'Create Account'}
+            {isPending
+              ? t('registrationPage.creatingAccount')
+              : t('registrationPage.createAccount')}
           </Button>
 
           <Text
@@ -161,7 +166,7 @@ export default function Registration() {
             }}
             onPress={() => router.push('/(auth)/login')}
           >
-            Already have an account? Sign In
+            {t('registrationPage.alreadyHaveAccount')}
           </Text>
         </Surface>
       </LinearGradient>

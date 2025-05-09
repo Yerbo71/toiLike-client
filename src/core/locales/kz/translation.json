@@ -25,32 +25,6 @@
     "email": "Электрондық пошта",
     "message": "Хабарлама"
   },
-  "homePage": {
-    "popularEvents": "Танымал іс-шаралар",
-    "popularVendors": "Танымал жеткізушілер"
-  },
-  "detailsPage": {
-    "contact": "Байланыс",
-    "includedServices": "Қызметтер тізімі",
-    "customersReviews": "Тұтынушылардың пікірлері",
-    "addToContacts": "Контактілерге қосу",
-    "contactAdded": "Контакт қосылды",
-    "contactAddedMessage": "Нөмір сіздің телефон кітапшаңызға қосылды",
-    "permissionDenied": "Құқық жоқ",
-    "contactPermissionMessage": "Контактіні қосу үшін телефон кітапшасына қол жеткізуге рұқсат беріңіз",
-    "error": "Қате",
-    "contactAddError": "Контактіні қосу мүмкін болмады",
-    "noPhoneNumber": "Телефон нөмірі көрсетілмеген"
-  },
-  "staffOrderingPage": {
-    "title": "EventApp командасына сенім арт",
-    "description": "Ресми келісімшарт пен сапа кепілдігін ұсынамыз",
-    "orderItems1": "Ұйымдастырушының 24/7 кеңесі",
-    "orderItems2": "Мейрамхананы таңдап береміз",
-    "orderItems3": "Шоу-бағдарламаны ұйымдастырамыз",
-    "orderItems4": "Бүкіл процесті бақылаймыз",
-    "orderNow": "Өтініш қалдыру"
-  },
   "notifications": {
     "permissionDenied": "Рұқсат берілмеді",
     "enableInSettings": "Қолданба параметрлерінен хабарламаларды қосыңыз",
@@ -89,5 +63,81 @@
     "feedback": "Сіздің пікіріңіз",
     "feedbackPlaceholder": "Қосымша туралы не ойлайтыныңызды айтыңыз...",
     "rateOnStore": "Бізді қосымша дүкендерінде бағалаңыз"
+  },
+  "loginPage": {
+    "welcome": "Қайта оралдыңыз!",
+    "instruction":"Жалғастыру үшін деректеріңізді енгізіңіз",
+    "usernameOrEmail": "Пайдаланушы аты немесе пошта",
+    "password": "Құпия сөз",
+    "forgotPassword": "Құпия сөзді ұмыттыңыз ба?",
+    "signIn": "Кіру",
+    "createAccount": "Жаңа тіркелгі жасау",
+    "usernameOrEmailRequired": "Пайдаланушы аты немесе пошта қажет",
+    "usernameOrEmailMin": "Пайдаланушы аты немесе пошта кемінде 4 таңбадан тұруы керек",
+    "passwordRequired": "Құпия сөз қажет",
+    "passwordMin": "Құпия сөз кемінде 6 таңбадан тұруы керек"
+  },
+  "registrationPage": {
+    "title": "Қоғамдастыққа қосылыңыз",
+    "subtitle": "Керемет іс-шараларды табу үшін аккаунт жасаңыз",
+    "username": "Пайдаланушы аты",
+    "email": "Электрондық пошта",
+    "password": "Құпиясөз",
+    "confirmPassword": "Құпиясөзді растау",
+    "usernameRequired": "Пайдаланушы аты қажет",
+    "usernameMin": "Пайдаланушы аты кемінде 4 таңбадан тұруы керек",
+    "emailRequired": "Электрондық пошта қажет",
+    "emailInvalid": "Жарамды электрондық поштаны енгізіңіз",
+    "passwordRequired": "Құпиясөз қажет",
+    "passwordMin": "Құпиясөз кемінде 6 таңбадан тұруы керек",
+    "confirmPasswordRequired": "Құпиясөзді растау қажет",
+    "passwordsDontMatch": "Құпиясөздер сәйкес келмейді",
+    "createAccount": "Аккаунт жасау",
+    "creatingAccount": "Аккаунт жасалуда...",
+    "alreadyHaveAccount": "Аккаунтыңыз бар ма? Кіру",
+    "successTitle": "Тіркелу сәтті аяқталды",
+    "successSubtitle": "Енді кіре аласыз!",
+    "errorTitle": "Тіркелу сәтсіз аяқталды"
+  },
+  "resetPassword": {
+    "title": "Құпиясөзді қалпына келтіру",
+    "description": "Құпиясөзді қалпына келтіру сілтемесін алу үшін поштаңызды енгізіңіз",
+    "sentTitle": "Поштаңызды тексеріңіз",
+    "sentDescription": "Құпиясөзді қалпына келтіру сілтемесі поштаңызға жіберілді. Поштаны тексеріңіз.",
+    "emailLabel": "Электрондық пошта",
+    "sendButton": "Сілтеме жіберу",
+    "backToLogin": "Кіруге оралу",
+    "noAccount": "Аккаунтыңыз жоқ па? Тіркеліңіз",
+    "emailRequired": "Электрондық пошта қажет",
+    "invalidEmail": "Жарамсыз электрондық пошта",
+    "successTitle": "Пошта жіберілді",
+    "successMessage": "Құпиясөзді қалпына келтіру сілтемесі поштаңызға жіберілді",
+    "errorTitle": "Қате"
+  },
+  "homePage": {
+    "popularEvents": "Танымал іс-шаралар",
+    "popularVendors": "Танымал жеткізушілер"
+  },
+  "detailsPage": {
+    "contact": "Байланыс",
+    "includedServices": "Қызметтер тізімі",
+    "customersReviews": "Тұтынушылардың пікірлері",
+    "addToContacts": "Контактілерге қосу",
+    "contactAdded": "Контакт қосылды",
+    "contactAddedMessage": "Нөмір сіздің телефон кітапшаңызға қосылды",
+    "permissionDenied": "Құқық жоқ",
+    "contactPermissionMessage": "Контактіні қосу үшін телефон кітапшасына қол жеткізуге рұқсат беріңіз",
+    "error": "Қате",
+    "contactAddError": "Контактіні қосу мүмкін болмады",
+    "noPhoneNumber": "Телефон нөмірі көрсетілмеген"
+  },
+  "staffOrderingPage": {
+    "title": "EventApp командасына сенім арт",
+    "description": "Ресми келісімшарт пен сапа кепілдігін ұсынамыз",
+    "orderItems1": "Ұйымдастырушының 24/7 кеңесі",
+    "orderItems2": "Мейрамхананы таңдап береміз",
+    "orderItems3": "Шоу-бағдарламаны ұйымдастырамыз",
+    "orderItems4": "Бүкіл процесті бақылаймыз",
+    "orderNow": "Өтініш қалдыру"
   }
 }

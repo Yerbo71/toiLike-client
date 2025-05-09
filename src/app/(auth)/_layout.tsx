@@ -8,9 +8,12 @@ const AuthLayout = () => {
         headerTitle: '',
       }}
     >
-      <Stack.Screen name="login" options={{ headerTitle: '' }} />
-      <Stack.Screen name="registration" options={{ headerTitle: '' }} />
-      <Stack.Screen name="reset-password-email" options={{ headerTitle: '' }} />
+      <Stack.Screen name="login/index" options={{ headerTitle: '' }} />
+      <Stack.Screen name="registration/index" options={{ headerTitle: '' }} />
+      <Stack.Screen
+        name="reset-password-email/index"
+        options={{ headerTitle: '' }}
+      />
     </Stack>
   );
 };

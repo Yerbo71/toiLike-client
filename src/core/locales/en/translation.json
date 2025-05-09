@@ -25,34 +25,6 @@
     "email": "Email",
     "message": "Message"
   },
-  "homePage": {
-    "popularEvents": "Popular events",
-    "popularVendors": "Popular vendors"
-  },
-  "detailsPage": {
-    "contact": "Contact",
-    "includedServices": "Included services",
-    "customersReviews": "Customers reviews",
-    "addToContacts": "Add to contacts",
-    "contactAdded": "Contact added",
-    "contactAddedMessage": "The number has been added to your phone book",
-    "permissionDenied": "Permission denied",
-    "contactPermissionMessage": "Please grant access to your phone book to add the contact",
-    "error": "Error",
-    "contactAddError": "Failed to add contact",
-    "noPhoneNumber": "Phone number not provided"
-  },
-  "staffOrderingPage": {
-    "title": "Trust the EventApp Team",
-    "description": "We provide an official contract and quality guarantee",
-    "orderItems1": "24/7 organizer consultation",
-    "orderItems2": "We will find a restaurant",
-    "orderItems3": "We will organize a show program",
-    "orderItems4": "We will control the entire process",
-    "orderNow": "Order now",
-    "successTitle": "Order confirmed!",
-    "successMessage": "Our manager will contact you shortly"
-  },
   "notifications": {
     "permissionDenied": "Permission not granted",
     "enableInSettings": "Please enable notifications in the app settings",
@@ -91,5 +63,83 @@
     "feedback": "Your Feedback",
     "feedbackPlaceholder": "Tell us what you think about the app...",
     "rateOnStore": "Rate us on the app stores"
+  },
+  "loginPage": {
+    "welcome": "Welcome Back!",
+    "instruction":"Please enter your details to continue",
+    "usernameOrEmail": "Username or email",
+    "password": "Password",
+    "forgotPassword": "Forgot your password?",
+    "signIn": "Sign In",
+    "createAccount": "Create new account",
+    "usernameOrEmailRequired": "Username or email is required",
+    "usernameOrEmailMin": "Username or email must be at least 4 characters",
+    "passwordRequired": "Password is required",
+    "passwordMin": "Password must be at least 6 characters"
+  },
+  "registrationPage": {
+    "title": "Join Our Community",
+    "subtitle": "Create your account to discover amazing events",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "usernameRequired": "Username is required",
+    "usernameMin": "Username must be at least 4 characters",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Enter a valid email",
+    "passwordRequired": "Password is required",
+    "passwordMin": "Password must be at least 6 characters",
+    "confirmPasswordRequired": "Confirm Password is required",
+    "passwordsDontMatch": "Passwords do not match",
+    "createAccount": "Create Account",
+    "creatingAccount": "Creating Account...",
+    "alreadyHaveAccount": "Already have an account? Sign In",
+    "successTitle": "Registration Successful",
+    "successSubtitle": "You can now log in!",
+    "errorTitle": "Registration Failed"
+  },
+  "resetPassword": {
+    "title": "Reset Password",
+    "description": "Enter your email to receive a password reset link",
+    "sentTitle": "Check Your Email",
+    "sentDescription": "We've sent a password reset link to your email address. Please check your inbox.",
+    "emailLabel": "Email",
+    "sendButton": "Send Reset Link",
+    "backToLogin": "Back to Login",
+    "noAccount": "Don't have an account? Sign up",
+    "emailRequired": "Email is required",
+    "invalidEmail": "Invalid email address",
+    "successTitle": "Email Sent",
+    "successMessage": "Password reset link has been sent to your email",
+    "errorTitle": "Error"
+  },
+  "homePage": {
+    "popularEvents": "Popular events",
+    "popularVendors": "Popular vendors"
+  },
+  "detailsPage": {
+    "contact": "Contact",
+    "includedServices": "Included services",
+    "customersReviews": "Customers reviews",
+    "addToContacts": "Add to contacts",
+    "contactAdded": "Contact added",
+    "contactAddedMessage": "The number has been added to your phone book",
+    "permissionDenied": "Permission denied",
+    "contactPermissionMessage": "Please grant access to your phone book to add the contact",
+    "error": "Error",
+    "contactAddError": "Failed to add contact",
+    "noPhoneNumber": "Phone number not provided"
+  },
+  "staffOrderingPage": {
+    "title": "Trust the EventApp Team",
+    "description": "We provide an official contract and quality guarantee",
+    "orderItems1": "24/7 organizer consultation",
+    "orderItems2": "We will find a restaurant",
+    "orderItems3": "We will organize a show program",
+    "orderItems4": "We will control the entire process",
+    "orderNow": "Order now",
+    "successTitle": "Order confirmed!",
+    "successMessage": "Our manager will contact you shortly"
   }
 }

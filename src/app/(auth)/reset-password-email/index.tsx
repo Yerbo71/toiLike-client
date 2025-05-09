@@ -6,9 +6,11 @@ import { router } from 'expo-router';
 import { CTextInput } from '@/src/shared';
 import Toast from 'react-native-toast-message';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useI18n } from '@/src/context/LocaleContext';
 
 export default function ResetPasswordEmail() {
   const theme = useTheme();
+  const { t } = useI18n();
   const { control, handleSubmit } = useForm({
     mode: 'onSubmit',
     defaultValues: {
@@ -26,13 +28,13 @@ export default function ResetPasswordEmail() {
       setEmailSent(true);
       Toast.show({
         type: 'success',
-        text1: 'Email Sent',
-        text2: 'Password reset link has been sent to your email',
+        text1: t('resetPassword.successTitle'),
+        text2: t('resetPassword.successMessage'),
       });
     } catch (err) {
       Toast.show({
         type: 'error',
-        text1: 'Error',
+        text1: t('resetPassword.errorTitle'),
         text2: (err as Error).message,
       });
     } finally {
@@ -59,7 +61,9 @@ export default function ResetPasswordEmail() {
                 marginBottom: 5,
               }}
             >
-              {emailSent ? 'Check Your Email' : 'Reset Password'}
+              {emailSent
+                ? t('resetPassword.sentTitle')
+                : t('resetPassword.title')}
             </Text>
             <Text
               variant="titleMedium"
@@ -72,8 +76,8 @@ export default function ResetPasswordEmail() {
               }}
             >
               {emailSent
-                ? `We've sent a password reset link to your email address. Please check your inbox.`
-                : 'Enter your email to receive a password reset link'}
+                ? t('resetPassword.sentDescription')
+                : t('resetPassword.description')}
             </Text>
           </View>
 
@@ -83,12 +87,12 @@ export default function ResetPasswordEmail() {
                 <CTextInput
                   control={control}
                   name="email"
-                  label="Email"
+                  label={t('resetPassword.emailLabel')}
                   rules={{
-                    required: 'Email is required',
+                    required: t('resetPassword.emailRequired'),
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: 'Invalid email address',
+                      message: t('resetPassword.invalidEmail'),
                     },
                   }}
                 />
@@ -103,7 +107,7 @@ export default function ResetPasswordEmail() {
                 contentStyle={styles.buttonContent}
                 labelStyle={styles.buttonLabel}
               >
-                Send Reset Link
+                {t('resetPassword.sendButton')}
               </Button>
             </>
           ) : (
@@ -114,7 +118,7 @@ export default function ResetPasswordEmail() {
               contentStyle={styles.buttonContent}
               labelStyle={styles.buttonLabel}
             >
-              Back to Login
+              {t('resetPassword.backToLogin')}
             </Button>
           )}
 
@@ -130,7 +134,7 @@ export default function ResetPasswordEmail() {
               router.push('/(auth)/registration');
             }}
           >
-            Don't have an account? Sign up
+            {t('resetPassword.noAccount')}
           </Text>
         </Surface>
       </LinearGradient>
