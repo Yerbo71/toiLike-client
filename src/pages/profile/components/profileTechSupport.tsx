@@ -8,6 +8,7 @@ import {
   AboutAppModal,
   RatingModal,
 } from './modals/profileModals';
+import { router } from 'expo-router';
 
 const ProfileTechSupport = () => {
   const { setThemeMode, themeMode } = useTheme();
@@ -66,6 +67,14 @@ const ProfileTechSupport = () => {
           rightIcon="chevron-right"
           rightTitle={themeMode}
           onPress={toggleThemeMode}
+        />
+        <ChevronButton
+          leftIcon="lock-reset"
+          leftTitle={t('system.resetPassword')}
+          rightIcon="chevron-right"
+          onPress={() => {
+            router.push('/(auth)/send-reset-code');
+          }}
         />
       </Surface>
 

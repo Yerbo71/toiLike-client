@@ -116,8 +116,8 @@ const ManualOrderingPage = () => {
 
       Toast.show({
         type: 'success',
-        text1: 'Event Created',
-        text2: 'Your event has been successfully created',
+        text1: t('manualOrderingPage.eventCreated'),
+        text2: t('manualOrderingPage.eventCreatedSuccess'),
       });
 
       router.replace('/(application)');
@@ -125,7 +125,8 @@ const ManualOrderingPage = () => {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2: (err as Error).message || 'Failed to create event',
+        text2:
+          (err as Error).message || t('manualOrderingPage.eventCreationError'),
       });
     } finally {
       setIsSubmitting(false);
@@ -140,8 +141,10 @@ const ManualOrderingPage = () => {
       <CTextInput
         control={control}
         name="title"
-        label="Event Title"
-        rules={{ required: 'Title is required' }}
+        label={t('manualOrderingPage.eventTitle')}
+        rules={{
+          required: t('manualOrderingPage.eventTitle') + ' is required',
+        }}
       />
       <CTextInput
         control={control}
@@ -157,6 +160,22 @@ const ManualOrderingPage = () => {
         <TextInput
           label="Place"
           value={event.placeId ? `Place ${event.placeId}` : 'Choose place'}
+          editable={false}
+          mode="outlined"
+          theme={{ roundness: 10 }}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => router.push('/(ordering)/vendorsChoose')}
+        style={styles.placeInput}
+      >
+        <TextInput
+          label="Vendors"
+          value={
+            event.eventServices
+              ? `Vendors ${event.eventServices.map((s) => s.id).join(', ')}`
+              : 'Choose vendors'
+          }
           editable={false}
           mode="outlined"
           theme={{ roundness: 10 }}

@@ -1,58 +1,49 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { Button, Text, useTheme, Surface } from 'react-native-paper';
 import { useForm } from 'react-hook-form';
 import { router } from 'expo-router';
 import { CTextInput } from '@/src/shared';
-import { signUp, SignUpRequest } from '@/src/core/rest/auth/sign-up';
 import Toast from 'react-native-toast-message';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useI18n } from '@/src/context/LocaleContext';
+import { sendResetCode } from '@/src/core/rest/auth';
+import { AuthContext } from '@/src/context/AuthContext';
 
-type FormData = {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword?: string;
-};
-
-export default function Registration() {
+export default function SendResetCode() {
   const theme = useTheme();
-  const [isPending, setIsPending] = useState(false);
   const { t } = useI18n();
-  const { control, handleSubmit, watch, reset } = useForm<FormData>({
+  const { user } = useContext(AuthContext);
+  const email = user?.email || '';
+  const { control, handleSubmit } = useForm({
     mode: 'onSubmit',
     defaultValues: {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      email: email,
     },
   });
+  const [isPending, setIsPending] = useState(false);
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: { email: string }) => {
     setIsPending(true);
     try {
-      const { confirmPassword, ...rest } = data;
-      const requestData: SignUpRequest = { ...rest, role: 'ROLE_USER' };
-      await signUp(requestData);
+      await sendResetCode({ email: data.email });
+
       Toast.show({
         type: 'success',
-        text1: t('registrationPage.successTitle'),
-        text2: t('registrationPage.successSubtitle'),
+        text1: t('resetPasswordEmail.emailSentTitle'),
+        text2: t('resetPasswordEmail.emailSentMessage'),
       });
-      reset();
+
       router.push({
-        pathname: '/(auth)/confirm-email',
+        pathname: '/(auth)/confirm-reset-code',
         params: { email: data.email },
       });
     } catch (err) {
       Toast.show({
         type: 'error',
-        text1: t('registrationPage.errorTitle'),
-        text2: (err as Error).message,
+        text1: t('resetPasswordEmail.errorTitle'),
+        text2: (err as Error).message || t('resetPasswordEmail.errorMessage'),
       });
-      console.log('registration error', err);
     } finally {
       setIsPending(false);
     }
@@ -77,7 +68,7 @@ export default function Registration() {
                 marginBottom: 5,
               }}
             >
-              {t('registrationPage.title')}
+              {t('resetPasswordEmail.resetTitle')}
             </Text>
             <Text
               variant="titleMedium"
@@ -89,58 +80,21 @@ export default function Registration() {
                 textAlign: 'center',
               }}
             >
-              {t('registrationPage.subtitle')}
+              {t('resetPasswordEmail.resetDescription')}
             </Text>
           </View>
 
           <View style={styles.inputsContainer}>
             <CTextInput
               control={control}
-              name="username"
-              label={t('registrationPage.username')}
-              rules={{
-                required: t('registrationPage.usernameRequired'),
-                minLength: {
-                  value: 4,
-                  message: t('registrationPage.usernameMin'),
-                },
-              }}
-            />
-            <CTextInput
-              control={control}
               name="email"
-              label={t('registrationPage.email')}
+              label={t('resetPasswordEmail.emailLabel')}
               rules={{
-                required: t('registrationPage.emailRequired'),
+                required: t('resetPassword.emailRequired'),
                 pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                  message: t('registrationPage.emailInvalid'),
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: t('resetPasswordEmail.invalidEmail'),
                 },
-              }}
-            />
-            <CTextInput
-              control={control}
-              name="password"
-              label={t('registrationPage.password')}
-              secureTextEntry
-              rules={{
-                required: t('registrationPage.passwordRequired'),
-                minLength: {
-                  value: 6,
-                  message: t('registrationPage.passwordMin'),
-                },
-              }}
-            />
-            <CTextInput
-              control={control}
-              name="confirmPassword"
-              label={t('registrationPage.confirmPassword')}
-              secureTextEntry
-              rules={{
-                required: t('registrationPage.confirmPasswordRequired'),
-                validate: (value: string | undefined) =>
-                  value === watch('password') ||
-                  t('registrationPage.passwordsDontMatch'),
               }}
             />
           </View>
@@ -150,14 +104,11 @@ export default function Registration() {
             onPress={handleSubmit(onSubmit)}
             loading={isPending}
             disabled={isPending}
-            style={styles.signUpButton}
+            style={styles.actionButton}
             contentStyle={styles.buttonContent}
             labelStyle={styles.buttonLabel}
-            buttonColor={theme.colors.primary}
           >
-            {isPending
-              ? t('registrationPage.creatingAccount')
-              : t('registrationPage.createAccount')}
+            {t('resetPasswordEmail.sendResetButton')}
           </Button>
 
           <Text
@@ -168,9 +119,11 @@ export default function Registration() {
               color: theme.colors.tertiary,
               marginTop: 20,
             }}
-            onPress={() => router.push('/(auth)/login')}
+            onPress={() => {
+              router.push('/(auth)/registration');
+            }}
           >
-            {t('registrationPage.alreadyHaveAccount')}
+            {t('resetPasswordEmail.noAccount')}
           </Text>
         </Surface>
       </LinearGradient>
@@ -192,15 +145,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '100%',
-    paddingHorizontal: 20,
   },
   formContainer: {
-    width: width > 500 ? 480 : width * 0.9,
+    width: width > 500 ? 450 : width * 0.85,
     padding: 25,
     borderRadius: 16,
     elevation: 4,
     justifyContent: 'center',
-    gap: 25,
+    gap: 20,
   },
   headerContainer: {
     gap: 10,
@@ -211,7 +163,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     gap: 15,
   },
-  signUpButton: {
+  disabledInput: {
+    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+  },
+  actionButton: {
     borderRadius: 12,
     marginTop: 10,
     elevation: 2,

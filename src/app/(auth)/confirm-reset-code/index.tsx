@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { Button, Text, useTheme, Surface } from 'react-native-paper';
 import { useForm } from 'react-hook-form';
@@ -7,35 +7,65 @@ import { CTextInput } from '@/src/shared';
 import Toast from 'react-native-toast-message';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useI18n } from '@/src/context/LocaleContext';
+import { confirmResetCode } from '@/src/core/rest/auth';
+import { AuthContext } from '@/src/context/AuthContext';
+import { useLocalSearchParams } from 'expo-router';
 
-export default function ResetPasswordEmail() {
+export default function ConfirmResetCode() {
   const theme = useTheme();
   const { t } = useI18n();
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, watch } = useForm({
     mode: 'onSubmit',
     defaultValues: {
-      email: '',
+      code: '',
+      newPassword: '',
+      confirmPassword: '',
     },
   });
   const [isPending, setIsPending] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
+  const { user } = useContext(AuthContext);
+  const params = useLocalSearchParams();
+  const emailParams = typeof params.email === 'string' ? params.email : '';
+  const email = emailParams || user?.email || '';
 
-  const onSubmit = async (data: { email: string }) => {
+  const onSubmit = async (data: {
+    code: string;
+    newPassword: string;
+    confirmPassword: string;
+  }) => {
+    if (data.newPassword !== data.confirmPassword) {
+      Toast.show({
+        type: 'error',
+        text1: t('resetPassword.errorTitle'),
+        text2: t('resetPassword.passwordsNotMatch'),
+      });
+      return;
+    }
+
     setIsPending(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      await confirmResetCode(
+        { email },
+        {
+          code: data.code,
+          newPassword: data.newPassword,
+        },
+      );
 
-      setEmailSent(true);
       Toast.show({
         type: 'success',
         text1: t('resetPassword.successTitle'),
         text2: t('resetPassword.successMessage'),
       });
+
+      setTimeout(() => {
+        router.push('/(auth)/login');
+      }, 1000);
     } catch (err) {
       Toast.show({
         type: 'error',
         text1: t('resetPassword.errorTitle'),
-        text2: (err as Error).message,
+        text2: (err as Error).message || t('resetPassword.errorMessage'),
       });
     } finally {
       setIsPending(false);
@@ -61,9 +91,7 @@ export default function ResetPasswordEmail() {
                 marginBottom: 5,
               }}
             >
-              {emailSent
-                ? t('resetPassword.sentTitle')
-                : t('resetPassword.title')}
+              {t('resetPassword.title')}
             </Text>
             <Text
               variant="titleMedium"
@@ -75,52 +103,59 @@ export default function ResetPasswordEmail() {
                 textAlign: 'center',
               }}
             >
-              {emailSent
-                ? t('resetPassword.sentDescription')
-                : t('resetPassword.description')}
+              {t('resetPassword.description')} {email}
             </Text>
           </View>
 
-          {!emailSent ? (
-            <>
-              <View style={styles.inputsContainer}>
-                <CTextInput
-                  control={control}
-                  name="email"
-                  label={t('resetPassword.emailLabel')}
-                  rules={{
-                    required: t('resetPassword.emailRequired'),
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: t('resetPassword.invalidEmail'),
-                    },
-                  }}
-                />
-              </View>
+          <View style={styles.inputsContainer}>
+            <CTextInput
+              control={control}
+              name="code"
+              label={t('resetPassword.codeLabel')}
+              rules={{
+                required: t('resetPassword.codeRequired'),
+              }}
+            />
 
-              <Button
-                mode="contained"
-                onPress={handleSubmit(onSubmit)}
-                loading={isPending}
-                disabled={isPending}
-                style={styles.actionButton}
-                contentStyle={styles.buttonContent}
-                labelStyle={styles.buttonLabel}
-              >
-                {t('resetPassword.sendButton')}
-              </Button>
-            </>
-          ) : (
-            <Button
-              mode="contained"
-              onPress={() => router.back()}
-              style={styles.actionButton}
-              contentStyle={styles.buttonContent}
-              labelStyle={styles.buttonLabel}
-            >
-              {t('resetPassword.backToLogin')}
-            </Button>
-          )}
+            <CTextInput
+              control={control}
+              name="newPassword"
+              label={t('resetPassword.newPasswordLabel')}
+              secureTextEntry
+              rules={{
+                required: t('resetPassword.passwordRequired'),
+                minLength: {
+                  value: 6,
+                  message: t('resetPassword.passwordMinLength'),
+                },
+              }}
+            />
+
+            <CTextInput
+              control={control}
+              name="confirmPassword"
+              label={t('resetPassword.confirmPasswordLabel')}
+              secureTextEntry
+              rules={{
+                required: t('resetPassword.confirmPasswordRequired'),
+                validate: (value: string) =>
+                  value === watch('newPassword') ||
+                  t('resetPassword.passwordsNotMatch'),
+              }}
+            />
+          </View>
+
+          <Button
+            mode="contained"
+            onPress={handleSubmit(onSubmit)}
+            loading={isPending}
+            disabled={isPending}
+            style={styles.actionButton}
+            contentStyle={styles.buttonContent}
+            labelStyle={styles.buttonLabel}
+          >
+            {t('resetPassword.resetButton')}
+          </Button>
 
           <Text
             variant="bodyMedium"

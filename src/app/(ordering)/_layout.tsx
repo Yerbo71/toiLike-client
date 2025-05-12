@@ -12,6 +12,7 @@ const OrderLayout = () => {
       <Stack.Screen name="cityChoose/index" options={{ headerTitle: '' }} />
       <Stack.Screen name="manualOrdering/index" options={{ headerTitle: '' }} />
       <Stack.Screen name="placeChoose/index" options={{ headerTitle: '' }} />
+      <Stack.Screen name="vendorsChoose/index" options={{ headerTitle: '' }} />
     </Stack>
   );
 };

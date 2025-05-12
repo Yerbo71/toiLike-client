@@ -11,6 +11,7 @@ interface CTextInputProps {
   rules?: object;
   multiline?: boolean;
   secureTextEntry?: boolean;
+  inputType?: import('react-native').KeyboardTypeOptions;
 }
 
 export const CTextInput: React.FC<CTextInputProps> = ({
@@ -20,6 +21,7 @@ export const CTextInput: React.FC<CTextInputProps> = ({
   rules,
   multiline,
   secureTextEntry,
+  inputType,
 }) => {
   const theme = useTheme();
   const [show, setShow] = useState(false);
@@ -45,6 +47,7 @@ export const CTextInput: React.FC<CTextInputProps> = ({
               multiline={multiline}
               numberOfLines={multiline ? 4 : 1}
               secureTextEntry={secureTextEntry && !show}
+              keyboardType={inputType || 'default'}
               right={
                 secureTextEntry ? (
                   <TextInput.Icon

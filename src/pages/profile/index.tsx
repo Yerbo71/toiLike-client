@@ -26,7 +26,7 @@ const ProfilePage = () => {
         >
           <DetailAvatar initialBackgroundUri={user?.avatarImage} />
           <Text variant="titleLarge" style={styles.nameText}>
-            {user?.username || t('profile.undefinedName')}
+            {user?.username || t('system.notFound')}
           </Text>
         </View>
       </View>
