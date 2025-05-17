@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import Entypo from '@expo/vector-icons/Entypo';
 import { PreviewCard } from '@/src/shared/previewCard';
@@ -46,12 +46,15 @@ const HomePlacesBlock = () => {
         }}
       >
         <Text variant="titleMedium">{t('homePage.popularPlaces')}</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <TouchableOpacity
+          onPress={() => router.push('/(ordering)/placeChoose')}
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+        >
           <Text variant="titleMedium" style={{ color: theme.colors.primary }}>
             {t('system.all')}
           </Text>
           <Entypo name="chevron-right" size={18} color={theme.colors.primary} />
-        </View>
+        </TouchableOpacity>
       </View>
       <FlatList
         data={places}

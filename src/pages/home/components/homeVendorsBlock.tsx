@@ -1,5 +1,10 @@
 import React from 'react';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import Entypo from '@expo/vector-icons/Entypo';
 import { PreviewCard } from '@/src/shared/previewCard';
@@ -51,12 +56,15 @@ const HomeVendorsBlock = () => {
         }}
       >
         <Text variant="titleMedium">{t('homePage.popularVendors')}</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <TouchableOpacity
+          onPress={() => router.push('/(ordering)/vendorsChoose')}
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+        >
           <Text variant="titleMedium" style={{ color: theme.colors.primary }}>
             {t('system.all')}
           </Text>
           <Entypo name="chevron-right" size={18} color={theme.colors.primary} />
-        </View>
+        </TouchableOpacity>
       </View>
       <FlatList
         data={vendors}
@@ -70,7 +78,7 @@ const HomeVendorsBlock = () => {
             title={item.title}
             description={item.description || ''}
             rating={item.rating}
-            experience={item.experience}
+            experience={String(item.experience)}
             averageCost={item.averageCost}
             serviceType={item.serviceType}
             onPress={() => {
