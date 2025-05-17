@@ -48,7 +48,10 @@
     "searchVenues": "Орындарды іздеу",
     "filters": "Фильтрлер",
     "total": "Жалпы",
-    "apply": "Қолдану"
+    "apply": "Қолдану",
+    "deselect": "Бас тарту",
+    "details": "Тұрғылары",
+    "isRequired": "Болу керек"
   },
   "notifications": {
     "permissionDenied": "Рұқсат берілмеді",
@@ -230,8 +233,7 @@
     "minExperience": "Мин Тәжірибе",
     "maxExperience": "Макс Тәжірибе",
     "costRange": "Баға аралығы",
-    "experienceRange": "Тәжірибе аралығы",
-    "filters": "Фильтрлер"
+    "experienceRange": "Тәжірибе аралығы"
   },
   "manualOrderingPage": {
     "headerTitle": "Қолмен тапсырыс беру",

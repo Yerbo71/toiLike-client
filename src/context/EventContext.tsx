@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useCallback,
+} from 'react';
 
 interface EventService {
   id: number;
@@ -16,6 +22,7 @@ interface Event {
 interface EventContextType {
   event: Event;
   setEvent: (event: Event) => void;
+  resetEvent: () => void;
 }
 
 const defaultEvent: Event = {
@@ -32,8 +39,12 @@ const EventContext = createContext<EventContextType | undefined>(undefined);
 export const EventProvider = ({ children }: { children: ReactNode }) => {
   const [event, setEvent] = useState<Event>(defaultEvent);
 
+  const resetEvent = useCallback(() => {
+    setEvent(defaultEvent);
+  }, []);
+
   return (
-    <EventContext.Provider value={{ event, setEvent }}>
+    <EventContext.Provider value={{ event, setEvent, resetEvent }}>
       {children}
     </EventContext.Provider>
   );

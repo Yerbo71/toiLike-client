@@ -10,7 +10,7 @@ import Toast from 'react-native-toast-message';
 import { EventProvider } from '@/src/context/EventContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GlobalFilterProvider } from '@/src/context/GlobalFilterContext';
-
+import { Theme } from '@react-navigation/native';
 const queryClient = new QueryClient();
 
 function RootLayoutContent() {
@@ -18,7 +18,7 @@ function RootLayoutContent() {
 
   return (
     <PaperProvider theme={paperTheme}>
-      <ThemeProvider value={paperTheme}>
+      <ThemeProvider value={paperTheme as unknown as Theme}>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
             <EventProvider>

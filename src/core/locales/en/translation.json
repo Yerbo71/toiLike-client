@@ -49,7 +49,10 @@
     "resetPassword": "Reset password",
     "filters": "Filters",
     "total": "Total",
-    "apply": "Apply"
+    "apply": "Apply",
+    "deselect": "Deselect",
+    "details": "Details",
+    "isRequired": "Required"
   },
   "notifications": {
     "permissionDenied": "Permission denied",
@@ -231,8 +234,7 @@
     "minExperience": "Min Experience",
     "maxExperience": "Max Experience",
     "costRange": "Cost Range",
-    "experienceRange": "Experience Range",
-    "filters": "Filters"
+    "experienceRange": "Experience Range"
   },
   "manualOrderingPage": {
     "headerTitle": "Manual ordering",
@@ -255,7 +257,7 @@
     "createEvent": "Create Event",
     "eventCreated": "Event Created",
     "eventCreatedSuccess": "Your event has been successfully created",
-    "eventCreationError": "Failed to create event"
+    "eventCreationError": "Failed to create event",
   },
   "confirmEmail": {
     "title": "Confirm your email",

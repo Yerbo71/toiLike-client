@@ -10,7 +10,15 @@ import {
 import { useI18n } from '@/src/context/LocaleContext';
 import { useForm } from 'react-hook-form';
 import { CTextInput } from '@/src/shared';
-import { Button, Icon, Surface, Text, TextInput } from 'react-native-paper';
+import {
+  Button,
+  HelperText,
+  Icon,
+  Surface,
+  Text,
+  TextInput,
+  useTheme,
+} from 'react-native-paper';
 import { DatePickerModal, TimePickerModal } from 'react-native-paper-dates';
 import { postEvent } from '@/src/core/rest/event';
 import { AuthContext } from '@/src/context/AuthContext';
@@ -33,14 +41,22 @@ type FormData = {
 const ManualOrderingPage = () => {
   const { t, locale } = useI18n();
   const { token } = useContext(AuthContext);
-  const { event } = useEvent();
+  const { event, resetEvent } = useEvent();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [startDatePickerVisible, setStartDatePickerVisible] = useState(false);
   const [startTimePickerVisible, setStartTimePickerVisible] = useState(false);
   const [endDatePickerVisible, setEndDatePickerVisible] = useState(false);
   const [endTimePickerVisible, setEndTimePickerVisible] = useState(false);
 
-  const { control, handleSubmit, setValue, watch } = useForm<FormData>({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    getValues,
+    formState: { errors },
+  } = useForm<FormData>({
     mode: 'onSubmit',
     defaultValues: {
       title: '',
@@ -51,13 +67,26 @@ const ManualOrderingPage = () => {
       eventServices: event.eventServices || [],
     },
   });
-
-  useEffect(() => {
-    setValue('placeId', event.placeId);
-  }, [event.placeId, setValue]);
+  console.log('eventPlaceID: ', event.placeId);
+  console.log('eventServicesID: ', event.eventServices);
 
   const startedAt = new Date(watch('startedAt'));
   const endedAt = new Date(watch('endedAt'));
+  const placeId = watch('placeId');
+  const eventServices = watch('eventServices');
+
+  useEffect(() => {
+    if (event.placeId) {
+      setValue('placeId', event.placeId);
+    }
+    if (event.eventServices.length > 0) {
+      setValue('eventServices', event.eventServices);
+    }
+  }, [event.placeId, event.eventServices]);
+
+  console.log('form place id: ', getValues('placeId'));
+  console.log('form event services id: ', getValues('eventServices'));
+
   const createSafeDate = (date?: Date | string | number) => {
     try {
       const d = date ? new Date(date) : new Date();
@@ -75,12 +104,14 @@ const ManualOrderingPage = () => {
     }),
     dateObj: date,
   });
+  console.log('place id: ', placeId);
+  console.log('event ids: ', eventServices);
 
   const handleStartDateChange = (date: Date) => {
     const current = formatDateTime(createSafeDate(startedAt));
     const newDate = new Date(date);
     newDate.setHours(current.dateObj.getHours(), current.dateObj.getMinutes());
-    setValue('startedAt', newDate.toISOString());
+    setValue('startedAt', newDate.toISOString(), { shouldValidate: true });
   };
 
   const handleStartTimeChange = ({
@@ -93,13 +124,14 @@ const ManualOrderingPage = () => {
     const current = formatDateTime(createSafeDate(startedAt));
     const newDate = new Date(current.dateObj);
     newDate.setHours(hours, minutes);
-    setValue('startedAt', newDate.toISOString());
+    setValue('startedAt', newDate.toISOString(), { shouldValidate: true });
   };
+
   const handleEndDateChange = (date: Date) => {
     const current = formatDateTime(createSafeDate(endedAt));
     const newDate = new Date(date);
     newDate.setHours(current.dateObj.getHours(), current.dateObj.getMinutes());
-    setValue('endedAt', newDate.toISOString());
+    setValue('endedAt', newDate.toISOString(), { shouldValidate: true });
   };
 
   const handleEndTimeChange = ({
@@ -112,7 +144,7 @@ const ManualOrderingPage = () => {
     const current = formatDateTime(createSafeDate(endedAt));
     const newDate = new Date(current.dateObj);
     newDate.setHours(hours, minutes);
-    setValue('endedAt', newDate.toISOString());
+    setValue('endedAt', newDate.toISOString(), { shouldValidate: true });
   };
 
   const onSubmit = async (data: FormData) => {
@@ -128,6 +160,8 @@ const ManualOrderingPage = () => {
       });
 
       router.replace('/(application)');
+      reset();
+      resetEvent();
     } catch (err) {
       Toast.show({
         type: 'error',
@@ -187,14 +221,22 @@ const ManualOrderingPage = () => {
             name="title"
             label={t('manualOrderingPage.eventTitle')}
             rules={{
-              required: t('manualOrderingPage.eventTitle') + ' is required',
+              required:
+                t('manualOrderingPage.eventTitle') +
+                ' ' +
+                t('system.isRequired'),
             }}
           />
           <CTextInput
             control={control}
             name="description"
-            label="Description"
-            rules={{ required: 'Description is required' }}
+            label={t('manualOrderingPage.description')}
+            rules={{
+              required:
+                t('manualOrderingPage.description') +
+                ' ' +
+                t('system.isRequired'),
+            }}
             multiline
           />
           <Text style={styles.sectionHeader}>
@@ -205,28 +247,40 @@ const ManualOrderingPage = () => {
           <TouchableOpacity
             onPress={() => router.push('/(ordering)/placeChoose')}
           >
-            <TextInput
-              label="Place"
-              value={event.placeId ? `Place ${event.placeId}` : 'Choose place'}
+            <CTextInput
+              control={control}
+              name="placeId"
+              label={t('manualOrderingPage.place')}
+              rules={{
+                required:
+                  t('manualOrderingPage.place') + ' ' + t('system.isRequired'),
+                validate: (value: number) =>
+                  value > 0 ||
+                  t('manualOrderingPage.place') + ' ' + t('system.isRequired'),
+              }}
               editable={false}
-              mode="outlined"
-              theme={{ roundness: 10 }}
             />
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => router.push('/(ordering)/vendorsChoose')}
           >
-            <TextInput
-              label="Vendors"
-              value={
-                event.eventServices
-                  ? `Vendors ${event.eventServices.map((s) => s.id).join(', ')}`
-                  : 'Choose vendors'
-              }
+            <CTextInput
+              control={control}
+              name="eventServices"
+              label={t('manualOrderingPage.vendors')}
+              rules={{
+                required:
+                  t('manualOrderingPage.vendors') +
+                  ' ' +
+                  t('system.isRequired'),
+                validate: (value: number[]) =>
+                  value.length > 0 ||
+                  t('manualOrderingPage.vendors') +
+                    ' ' +
+                    t('system.isRequired'),
+              }}
               editable={false}
-              mode="outlined"
-              theme={{ roundness: 10 }}
             />
           </TouchableOpacity>
 
@@ -285,6 +339,9 @@ const ManualOrderingPage = () => {
               </TouchableOpacity>
             </View>
           </View>
+          {errors.endedAt && (
+            <HelperText type="error">{errors.endedAt.message}</HelperText>
+          )}
           <Button
             mode="contained"
             onPress={handleSubmit(onSubmit)}

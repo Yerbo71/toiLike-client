@@ -38,7 +38,9 @@ const VendorsChoosePage = () => {
   const { event, setEvent } = useEvent();
   const theme = useTheme();
   const { t } = useI18n();
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [selectedIds, setSelectedIds] = useState<number[]>(
+    event.eventServices.map((service) => service.id),
+  );
   const [filterModal, setFilterModal] = useState(false);
   const [searchParams, setSearchParams] = useState<SearchParams>({
     page: 0,
@@ -95,8 +97,23 @@ const VendorsChoosePage = () => {
   const currentPage = searchParams.page || 0;
 
   const handleSelectVendor = (vendorId: number) => {
-    setSelectedId(vendorId);
-    setEvent({ ...event, vendorId } as any);
+    let newSelectedIds: number[];
+    let newEventServices: { id: number }[];
+
+    if (selectedIds.includes(vendorId)) {
+      // Deselect vendor
+      newSelectedIds = selectedIds.filter((id) => id !== vendorId);
+      newEventServices = event.eventServices.filter(
+        (service) => service.id !== vendorId,
+      );
+    } else {
+      // Select vendor
+      newSelectedIds = [...selectedIds, vendorId];
+      newEventServices = [...event.eventServices, { id: vendorId }];
+    }
+
+    setSelectedIds(newSelectedIds);
+    setEvent({ ...event, eventServices: newEventServices });
   };
 
   const handleViewDetails = (vendorId: number) => {
@@ -167,7 +184,12 @@ const VendorsChoosePage = () => {
             {t('system.filters')}
           </Button>
 
-          {(searchParams.q || searchParams.serviceType) && (
+          {(searchParams.q ||
+            searchParams.serviceType ||
+            searchParams.minCost ||
+            searchParams.maxCost ||
+            searchParams.minExperience ||
+            searchParams.maxExperience) && (
             <Button
               mode="outlined"
               onPress={clearAllFilters}
@@ -182,7 +204,6 @@ const VendorsChoosePage = () => {
         {isLoading && !vendors.length && <LoadingView />}
         {error && <ErrorView />}
 
-        {/* Vendors List */}
         {vendors.map((vendor) => (
           <Card key={vendor.id} style={styles.card}>
             {vendor.mainImage && (
@@ -196,7 +217,7 @@ const VendorsChoosePage = () => {
                 <Text variant="titleLarge" style={styles.placeTitle}>
                   {vendor.title}
                 </Text>
-                {selectedId === vendor.id && (
+                {selectedIds.includes(vendor.id) && (
                   <Icon
                     name="check-circle"
                     size={24}
@@ -266,14 +287,18 @@ const VendorsChoosePage = () => {
                   onPress={() => handleViewDetails(vendor.id)}
                   style={styles.actionButton}
                 >
-                  {t('vendorsPage.details')}
+                  {t('system.details')}
                 </Button>
                 <Button
-                  mode="contained"
+                  mode={
+                    selectedIds.includes(vendor.id) ? 'outlined' : 'contained'
+                  }
                   onPress={() => handleSelectVendor(vendor.id)}
                   style={styles.actionButton}
                 >
-                  {t('vendorsPage.select')}
+                  {selectedIds.includes(vendor.id)
+                    ? t('system.deselect')
+                    : t('system.select')}
                 </Button>
               </View>
             </Card.Content>
@@ -337,13 +362,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginBottom: 16,
     gap: 8,
-  },
-  inputFilterContainer: {
-    flex: 1,
-    minWidth: 120,
-  },
-  inputFilter: {
-    backgroundColor: 'white',
   },
   filterButton: {
     marginRight: 8,

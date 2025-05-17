@@ -75,7 +75,7 @@ const VendorDetailsPage = () => {
       eventServices: [{ id: vendorId as number }],
     });
     // @ts-ignore
-    router.back();
+    router.push('/(ordering)/vendorsChoose');
   };
 
   return (

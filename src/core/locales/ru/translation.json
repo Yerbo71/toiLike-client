@@ -49,7 +49,10 @@
     "next": "Вперед",
     "filters": "Фильтры",
     "total": "Всего",
-    "apply": "Применить"
+    "apply": "Применить",
+    "deselect": "Отменить выбор",
+    "details": "Подробнеe",
+    "isRequired": "Это поле обязательно"
   },
   "notifications": {
     "permissionDenied": "Разрешение не предоставлено",
@@ -244,8 +247,7 @@
       "minExperience": "Мин Опыт",
       "maxExperience": "Макс Опыт",
       "costRange": "Диапазон цен",
-      "experienceRange": "Диапазон опыта",
-      "filters": "Фильтры"
+      "experienceRange": "Диапазон опыта"
     },
     "experience": "Опыт работы",
     "averageCost": "Средняя стоимость",
