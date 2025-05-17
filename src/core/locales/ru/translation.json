@@ -191,9 +191,13 @@
     "failedToLoadPlaces": "Не удалось загрузить площадки"
   },
   "manualOrderingPage": {
-    "eventTitle": "Название мероприятия",
+    "headerTitle": "Ручной заказ",
+    "headerDescription": "Создайте ручной запрос на организацию мероприятия",
     "description": "Описание",
     "place": "Место",
+    "choosingDate": "Выберите дату",
+    "notSelected": "Не выбрано",
+    "choosingServices": "Выберите услуги",
     "choosePlace": "Выберите место",
     "vendors": "Поставщики",
     "chooseVendors": "Выберите поставщиков",

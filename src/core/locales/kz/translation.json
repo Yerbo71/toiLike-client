@@ -190,10 +190,14 @@
     "failedToLoadPlaces": "Орындарды жүктеу сәтсіз аяқталды"
   },
   "manualOrderingPage": {
-    "eventTitle": "Оқиға атауы",
+    "headerTitle": "Қолмен тапсырыс беру",
+    "headerDescription": "Іс-шараны ұйымдастыру үшін қолмен сұраныс жасаңыз",
     "description": "Сипаттама",
     "place": "Орын",
+    "choosingServices": "Қызметтерді таңдаңыз",
     "choosePlace": "Орын таңдаңыз",
+    "notSelected": "Таңдалмады",
+    "choosingDate": "Уақыты таңдаңыз",
     "vendors": "Жеткізушілер",
     "chooseVendors": "Жеткізушілерді таңдаңыз",
     "startDateTime": "Басталу күні мен уақыты",

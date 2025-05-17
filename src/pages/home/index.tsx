@@ -5,10 +5,12 @@ import HomeCarousel from '@/src/pages/home/components/homeCarousel';
 import HomeEventsBlock from '@/src/pages/home/components/homeEventsBlock';
 import HomeVendorsBlock from '@/src/pages/home/components/homeVendorsBlock';
 import HomePlacesBlock from '@/src/pages/home/components/homePlacesBlock';
+import HomeHeader from '@/src/pages/home/components/homeHeader';
 
 const HomePage = () => {
   return (
-    <ScrollView>
+    <ScrollView stickyHeaderIndices={[0]}>
+      <HomeHeader />
       <HomeSearchBar />
       <HomeCarousel />
       <HomeEventsBlock />

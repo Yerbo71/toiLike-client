@@ -19,7 +19,7 @@ const HomeSearchBar = () => {
     >
       <Controller
         control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
+        render={({ field: { onChange, value } }) => (
           <Searchbar
             placeholder={t('system.search')}
             onChangeText={onChange}

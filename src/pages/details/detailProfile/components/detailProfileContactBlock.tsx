@@ -1,9 +1,8 @@
 import React from 'react';
 import { Button, useTheme } from 'react-native-paper';
 import { useI18n } from '@/src/context/LocaleContext';
-import { StyleSheet, Alert, Platform } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import * as Contacts from 'expo-contacts';
-import * as Permissions from 'expo-permissions';
 
 interface DetailProfileContactBlockProps {
   phoneNumber?: string;
@@ -25,19 +24,9 @@ const DetailProfileContactBlock: React.FC<DetailProfileContactBlockProps> = ({
 
     try {
       // 1. Запрашиваем разрешения для Android и iOS
-      let permissionStatus;
+      const { status } = await Contacts.requestPermissionsAsync();
 
-      if (Platform.OS === 'android') {
-        // Для Android используем expo-permissions
-        const { status } = await Permissions.askAsync(Permissions.CONTACTS);
-        permissionStatus = status;
-      } else {
-        // Для iOS используем стандартный метод из expo-contacts
-        const { status } = await Contacts.requestPermissionsAsync();
-        permissionStatus = status;
-      }
-
-      if (permissionStatus !== 'granted') {
+      if (status !== 'granted') {
         Alert.alert(
           t('detailsPage.permissionDenied'),
           t('detailsPage.contactPermissionMessage'),

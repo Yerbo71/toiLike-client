@@ -59,7 +59,7 @@
   },
   "orderModal": {
     "orderOne": {
-      "title": "Place request",
+      "title": "Basic request",
       "description": "Make a manual request"
     },
     "orderTwo": {
@@ -181,7 +181,7 @@
     "orderItems2": "We'll select the restaurant",
     "orderItems3": "We'll organize the show program",
     "orderItems4": "We'll oversee the entire process",
-    "orderNow": "Place request",
+    "orderNow": "Send request",
     "successTitle": "Order confirmed!",
     "successMessage": "Our manager will contact you shortly"
   },
@@ -191,9 +191,14 @@
     "failedToLoadPlaces": "Failed to load venues"
   },
   "manualOrderingPage": {
+    "headerTitle": "Manual ordering",
+    "headerDescription": "Make a manual request for event organization",
     "eventTitle": "Event Title",
     "description": "Description",
     "place": "Place",
+    "choosingServices": "Choose services",
+    "choosingDate": "Choose date",
+    "notSelected": "Not selected",
     "choosePlace": "Choose place",
     "vendors": "Vendors",
     "chooseVendors": "Choose vendors",
