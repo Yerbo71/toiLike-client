@@ -35,11 +35,11 @@ export default function Registration() {
     try {
       const { confirmPassword, ...rest } = data;
       const requestData: SignUpRequest = { ...rest, role: 'ROLE_USER' };
-      await signUp(requestData);
+      const response = await signUp(requestData);
       Toast.show({
         type: 'success',
         text1: t('registrationPage.successTitle'),
-        text2: t('registrationPage.successSubtitle'),
+        text2: response.message || t('registrationPage.successSubtitle'),
       });
       reset();
       router.push({

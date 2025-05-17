@@ -112,7 +112,7 @@ export default function Login() {
               }}
               onPress={() => {
                 // @ts-ignore
-                router.push('/(auth)/reset-password-email');
+                router.push('(auth)/send-reset-code');
               }}
             >
               {t('loginPage.forgotPassword')}

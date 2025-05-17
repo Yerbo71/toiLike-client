@@ -41,21 +41,19 @@ export default function ConfirmResetCode() {
       });
       return;
     }
-
     setIsPending(true);
     try {
-      await confirmResetCode(
+      const response = await confirmResetCode(
         { email },
         {
           code: data.code,
           newPassword: data.newPassword,
         },
       );
-
       Toast.show({
         type: 'success',
         text1: t('resetPassword.successTitle'),
-        text2: t('resetPassword.successMessage'),
+        text2: response.message || t('resetPassword.successMessage'),
       });
 
       setTimeout(() => {

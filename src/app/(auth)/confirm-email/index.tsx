@@ -27,16 +27,16 @@ export default function ConfirmEmail() {
   const onSubmit = async (data: { code: string }) => {
     setIsPending(true);
     try {
-      await confirmEmail({ email }, { code: data.code });
+      const response = await confirmEmail({ email }, { code: data.code });
       setEmailConfirmed(true);
       Toast.show({
         type: 'success',
         text1: t('confirmEmail.successTitle'),
-        text2: t('confirmEmail.successMessage'),
+        text2: response.message || t('confirmEmail.successMessage'),
       });
       setTimeout(() => {
         router.push('/(auth)/login');
-      }, 1000);
+      }, 500);
     } catch (err) {
       Toast.show({
         type: 'error',
@@ -83,7 +83,7 @@ export default function ConfirmEmail() {
             >
               {emailConfirmed
                 ? t('confirmEmail.confirmedDescription')
-                : t('confirmEmail.description')}
+                : `${t('confirmEmail.description1')} ${email}`}
             </Text>
           </View>
 

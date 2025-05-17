@@ -210,7 +210,7 @@
   },
   "confirmEmail": {
     "title": "Confirm your email",
-    "description": "We've sent a confirmation code to {email}. Please enter it below.",
+    "description1": "We've sent a confirmation code to ",
     "confirmedTitle": "Email confirmed!",
     "confirmedDescription": "Your email has been successfully confirmed. You can now sign in.",
     "emailLabel": "Email",

@@ -26,14 +26,12 @@ export default function SendResetCode() {
   const onSubmit = async (data: { email: string }) => {
     setIsPending(true);
     try {
-      await sendResetCode({ email: data.email });
-
+      const response = await sendResetCode({ email: data.email });
       Toast.show({
         type: 'success',
         text1: t('resetPasswordEmail.emailSentTitle'),
-        text2: t('resetPasswordEmail.emailSentMessage'),
+        text2: response.message || t('resetPasswordEmail.emailSentMessage'),
       });
-
       router.push({
         pathname: '/(auth)/confirm-reset-code',
         params: { email: data.email },

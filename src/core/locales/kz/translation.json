@@ -209,7 +209,7 @@
   },
   "confirmEmail": {
     "title": "Email-ді растаңыз",
-    "description": "Біз растау кодын {email} мекенжайына жібердік. Оны төменге енгізіңіз.",
+    "description": "Біз растау кодын жібердік осы мекенжайға ",
     "confirmedTitle": "Email расталды!",
     "confirmedDescription": "Сіздің email сәтті расталды. Енді жүйеге кіре аласыз.",
     "emailLabel": "Email",

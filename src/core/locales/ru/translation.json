@@ -210,7 +210,7 @@
   },
   "confirmEmail": {
     "title": "Подтвердите ваш email",
-    "description": "Мы отправили код подтверждения на {email}. Пожалуйста, введите его ниже.",
+    "description": "Мы отправили код подтверждения на ",
     "confirmedTitle": "Email подтверждён!",
     "confirmedDescription": "Ваш email успешно подтверждён. Теперь вы можете войти в систему.",
     "emailLabel": "Email",
