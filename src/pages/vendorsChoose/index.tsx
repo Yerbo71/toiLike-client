@@ -6,10 +6,8 @@ import {
   ActivityIndicator,
   useTheme,
   Button,
-  Menu,
   Searchbar,
   Chip,
-  TextInput,
 } from 'react-native-paper';
 import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -21,27 +19,19 @@ import { getUserVendorsSearch } from '@/src/core/rest/userVendor';
 import { useQuery } from '@tanstack/react-query';
 import { useI18n } from '@/src/context/LocaleContext';
 import { ErrorView, LoadingView } from '@/src/shared';
+import { VendorServiceType } from '@/src/constants/mock/values';
+import { VendorsFilterModal } from '@/src/pages/vendorsChoose/components/vendorsFilterModal';
 
-type VendorServiceType =
-  | 'PRESENTERS'
-  | 'SINGERS'
-  | 'DANCERS'
-  | 'GROUP'
-  | 'OPERATORS'
-  | 'PHOTOGRAPH'
-  | 'MOBILOGRAPH'
-  | 'TRANSPORT'
-  | 'DECORATORS'
-  | 'ANIMATORS'
-  | 'TECHNICAL_STAFF'
-  | 'SECURITY'
-  | 'SOUND_ENGINEERS'
-  | 'MEDICAL_WORKERS'
-  | 'STYLISTS'
-  | 'TECHNICAL_EQUIPMENT'
-  | 'HAIR_DRESSERS'
-  | 'CLOTHING_SUPPLIERS'
-  | 'FLOWER_SUPPLIERS';
+type SearchParams = {
+  page: number;
+  size: number;
+  q: string;
+  serviceType?: VendorServiceType;
+  minCost?: number;
+  maxCost?: number;
+  minExperience?: number;
+  maxExperience?: number;
+};
 
 const VendorsChoosePage = () => {
   const { token } = useContext(AuthContext);
@@ -49,22 +39,25 @@ const VendorsChoosePage = () => {
   const theme = useTheme();
   const { t } = useI18n();
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  const [searchParams, setSearchParams] = useState({
+  const [filterModal, setFilterModal] = useState(false);
+  const [searchParams, setSearchParams] = useState<SearchParams>({
     page: 0,
     size: 10,
     q: '',
-    serviceType: undefined as VendorServiceType | undefined,
-    experience: undefined as string | undefined,
-    averageCost: undefined as number | undefined,
+    serviceType: undefined,
+    minCost: undefined,
+    maxCost: undefined,
+    minExperience: undefined,
+    maxExperience: undefined,
   });
   const [searchText, setSearchText] = useState('');
-  const [experienceInput, setExperienceInput] = useState('');
-  const [costInput, setCostInput] = useState('');
-  const [sizeMenuVisible, setSizeMenuVisible] = useState(false);
-  const [serviceTypeMenuVisible, setServiceTypeMenuVisible] = useState(false);
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
     null,
   );
+  const [sliderValues, setSliderValues] = useState({
+    cost: [0, 1000000],
+    experience: [0, 30],
+  });
 
   const debouncedSearch = useCallback(
     (text: string) => {
@@ -86,26 +79,6 @@ const VendorsChoosePage = () => {
     debouncedSearch(text);
   };
 
-  const handleExperienceChange = (text: string) => {
-    setExperienceInput(text);
-    const experience = text ? text : undefined;
-    setSearchParams((prev) => ({
-      ...prev,
-      experience,
-      page: 0,
-    }));
-  };
-
-  const handleCostChange = (text: string) => {
-    setCostInput(text);
-    const averageCost = text ? Number(text) : undefined;
-    setSearchParams((prev) => ({
-      ...prev,
-      averageCost,
-      page: 0,
-    }));
-  };
-
   const {
     data: vendorsResponse,
     isLoading,
@@ -124,7 +97,6 @@ const VendorsChoosePage = () => {
   const handleSelectVendor = (vendorId: number) => {
     setSelectedId(vendorId);
     setEvent({ ...event, vendorId } as any);
-    router.back();
   };
 
   const handleViewDetails = (vendorId: number) => {
@@ -140,68 +112,35 @@ const VendorsChoosePage = () => {
     }
   };
 
-  const handleSizeChange = (newSize: number) => {
-    setSizeMenuVisible(false);
-    setSearchParams((prev) => ({ ...prev, size: newSize, page: 0 }));
-  };
-
-  const handleServiceTypeChange = (type: VendorServiceType) => {
-    setServiceTypeMenuVisible(false);
+  const applyFilters = (
+    newParams: Partial<SearchParams>,
+    newSliderValues: { cost: number[]; experience: number[] },
+  ) => {
     setSearchParams((prev) => ({
       ...prev,
-      serviceType: type,
+      ...newParams,
       page: 0,
     }));
-  };
-
-  const clearServiceTypeFilter = () => {
-    setSearchParams((prev) => ({ ...prev, serviceType: undefined, page: 0 }));
-  };
-
-  const clearExperienceFilter = () => {
-    setExperienceInput('');
-    setSearchParams((prev) => ({ ...prev, experience: undefined, page: 0 }));
-  };
-
-  const clearCostFilter = () => {
-    setCostInput('');
-    setSearchParams((prev) => ({ ...prev, averageCost: undefined, page: 0 }));
+    setSliderValues(newSliderValues);
+    setFilterModal(false);
   };
 
   const clearAllFilters = () => {
     setSearchText('');
-    setExperienceInput('');
-    setCostInput('');
     setSearchParams({
       page: 0,
       size: 10,
       q: '',
       serviceType: undefined,
-      experience: undefined,
-      averageCost: undefined,
+      minCost: undefined,
+      maxCost: undefined,
+      minExperience: undefined,
+      maxExperience: undefined,
     });
-  };
-
-  const serviceTypeLabels = {
-    PRESENTERS: 'Ведущие',
-    SINGERS: 'Певцы',
-    DANCERS: 'Танцоры',
-    GROUP: 'Группы',
-    OPERATORS: 'Операторы',
-    PHOTOGRAPH: 'Фотографы',
-    MOBILOGRAPH: 'Видеографы',
-    TRANSPORT: 'Транспорт',
-    DECORATORS: 'Декораторы',
-    ANIMATORS: 'Аниматоры',
-    TECHNICAL_STAFF: 'Техперсонал',
-    SECURITY: 'Охрана',
-    SOUND_ENGINEERS: 'Звукорежиссеры',
-    MEDICAL_WORKERS: 'Медработники',
-    STYLISTS: 'Стилисты',
-    TECHNICAL_EQUIPMENT: 'Оборудование',
-    HAIR_DRESSERS: 'Визажисты',
-    CLOTHING_SUPPLIERS: 'Прокат одежды',
-    FLOWER_SUPPLIERS: 'Цветы',
+    setSliderValues({
+      cost: [0, 1000000],
+      experience: [0, 30],
+    });
   };
 
   return (
@@ -210,112 +149,32 @@ const VendorsChoosePage = () => {
       style={styles.gradientContainer}
     >
       <ScrollView contentContainerStyle={styles.container}>
-        {/* Search Bar */}
         <View style={styles.searchContainer}>
           <Searchbar
-            placeholder="Поиск по названию"
+            placeholder={t('system.search')}
             value={searchText}
             onChangeText={handleSearchTextChange}
           />
         </View>
 
-        {/* Filters */}
         <View style={styles.filterContainer}>
-          {/* Service Type Filter */}
-          <Menu
-            visible={serviceTypeMenuVisible}
-            onDismiss={() => setServiceTypeMenuVisible(false)}
-            anchor={
-              <Button
-                mode="outlined"
-                onPress={() => setServiceTypeMenuVisible(true)}
-                style={styles.filterButton}
-                icon="format-list-bulleted-type"
-              >
-                {searchParams.serviceType
-                  ? serviceTypeLabels[searchParams.serviceType]
-                  : 'Тип услуги'}
-              </Button>
-            }
+          <Button
+            mode="outlined"
+            onPress={() => setFilterModal(true)}
+            style={styles.filterButton}
+            icon="format-list-bulleted-type"
           >
-            {Object.entries(serviceTypeLabels).map(([key, label]) => (
-              <Menu.Item
-                key={key}
-                onPress={() =>
-                  handleServiceTypeChange(key as VendorServiceType)
-                }
-                title={label}
-              />
-            ))}
-          </Menu>
+            {t('system.filters')}
+          </Button>
 
-          {/* Experience Filter */}
-          <View style={styles.inputFilterContainer}>
-            <TextInput
-              label="Опыт работы (лет)"
-              value={experienceInput}
-              onChangeText={handleExperienceChange}
-              keyboardType="numeric"
-              style={styles.inputFilter}
-              right={
-                experienceInput ? (
-                  <TextInput.Icon
-                    icon="close"
-                    onPress={clearExperienceFilter}
-                  />
-                ) : null
-              }
-            />
-          </View>
-
-          {/* Average Cost Filter */}
-          <View style={styles.inputFilterContainer}>
-            <TextInput
-              label="Средняя стоимость"
-              value={costInput}
-              onChangeText={handleCostChange}
-              keyboardType="numeric"
-              style={styles.inputFilter}
-              right={
-                costInput ? (
-                  <TextInput.Icon icon="close" onPress={clearCostFilter} />
-                ) : null
-              }
-            />
-          </View>
-
-          {/* Page Size Filter */}
-          <Menu
-            visible={sizeMenuVisible}
-            onDismiss={() => setSizeMenuVisible(false)}
-            anchor={
-              <Button
-                mode="outlined"
-                onPress={() => setSizeMenuVisible(true)}
-                style={styles.filterButton}
-                icon="format-list-numbered"
-              >
-                Размер: {searchParams.size}
-              </Button>
-            }
-          >
-            <Menu.Item onPress={() => handleSizeChange(10)} title="10" />
-            <Menu.Item onPress={() => handleSizeChange(20)} title="20" />
-            <Menu.Item onPress={() => handleSizeChange(30)} title="30" />
-          </Menu>
-
-          {/* Clear All Button */}
-          {(searchParams.q ||
-            searchParams.serviceType ||
-            searchParams.experience ||
-            searchParams.averageCost) && (
+          {(searchParams.q || searchParams.serviceType) && (
             <Button
               mode="outlined"
               onPress={clearAllFilters}
               style={styles.filterButton}
               icon="close"
             >
-              Сбросить все
+              {t('vendorsPage.clearAll')}
             </Button>
           )}
         </View>
@@ -348,23 +207,49 @@ const VendorsChoosePage = () => {
 
               <View style={styles.tagsContainer}>
                 {vendor.serviceType && (
-                  <Chip icon="account" style={styles.tag}>
-                    {vendor.serviceType}
+                  <Chip
+                    icon="account"
+                    style={{
+                      ...styles.tag,
+                      backgroundColor: theme.colors.elevation.level4,
+                    }}
+                  >
+                    {t('vendorsPage.serviceType')}: {vendor.serviceType}
                   </Chip>
                 )}
                 {vendor.experience && (
-                  <Chip icon="calendar" style={styles.tag}>
-                    Опыт: {vendor.experience} лет
+                  <Chip
+                    icon="calendar"
+                    style={{
+                      ...styles.tag,
+                      backgroundColor: theme.colors.elevation.level4,
+                    }}
+                  >
+                    {t('vendorsPage.experience')}: {vendor.experience}{' '}
+                    {t('system.year')}
                   </Chip>
                 )}
                 {vendor.averageCost && (
-                  <Chip icon="cash" style={styles.tag}>
-                    Цена: {vendor.averageCost.toLocaleString()} ₸
+                  <Chip
+                    icon="cash"
+                    style={{
+                      ...styles.tag,
+                      backgroundColor: theme.colors.elevation.level4,
+                    }}
+                  >
+                    {t('vendorsPage.serviceType')}:{' '}
+                    {vendor.averageCost.toLocaleString()} ₸
                   </Chip>
                 )}
                 {vendor.rating && (
-                  <Chip icon="star" style={styles.tag}>
-                    Рейтинг: {vendor.rating}/10
+                  <Chip
+                    icon="star"
+                    style={{
+                      ...styles.tag,
+                      backgroundColor: theme.colors.elevation.level4,
+                    }}
+                  >
+                    {t('vendorsPage.rating')}: {vendor.rating}/10
                   </Chip>
                 )}
               </View>
@@ -381,38 +266,38 @@ const VendorsChoosePage = () => {
                   onPress={() => handleViewDetails(vendor.id)}
                   style={styles.actionButton}
                 >
-                  Подробнее
+                  {t('vendorsPage.details')}
                 </Button>
                 <Button
                   mode="contained"
                   onPress={() => handleSelectVendor(vendor.id)}
                   style={styles.actionButton}
                 >
-                  Выбрать
+                  {t('vendorsPage.select')}
                 </Button>
               </View>
             </Card.Content>
           </Card>
         ))}
 
-        {/* Pagination Controls */}
         <View style={styles.paginationContainer}>
           <Button
             mode="outlined"
             disabled={currentPage === 0}
             onPress={() => handlePageChange(currentPage - 1)}
           >
-            Назад
+            {t('system.previous')}
           </Button>
           <Text style={styles.pageText}>
-            Страница {currentPage + 1} из {totalPages}
+            {t('system.page')} {currentPage + 1} {t('system.total')}{' '}
+            {totalPages}
           </Text>
           <Button
             mode="outlined"
             disabled={currentPage >= totalPages - 1}
             onPress={() => handlePageChange(currentPage + 1)}
           >
-            Вперед
+            {t('system.next')}
           </Button>
         </View>
 
@@ -425,6 +310,13 @@ const VendorsChoosePage = () => {
           />
         )}
       </ScrollView>
+      <VendorsFilterModal
+        visible={filterModal}
+        onDismiss={() => setFilterModal(false)}
+        searchParams={searchParams}
+        sliderValues={sliderValues}
+        applyFilters={applyFilters}
+      />
     </LinearGradient>
   );
 };
@@ -462,10 +354,11 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     overflow: 'hidden',
     elevation: 2,
-    backgroundColor: '#fff',
   },
   cardImage: {
     height: 160,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
   },
   cardContent: {
     padding: 16,
@@ -487,8 +380,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   tag: {
-    marginRight: 8,
-    marginBottom: 8,
+    borderRadius: 12,
   },
   description: {
     color: '#666',

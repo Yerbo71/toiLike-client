@@ -10,7 +10,7 @@ import {
 import { Avatar, Button, Text, useTheme } from 'react-native-paper';
 import DetailsDescriptionBlock from '@/src/pages/details/components/detailsDescriptionBlock';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useI18n } from '@/src/context/LocaleContext';
 import {
   DetailRateBlock,
@@ -19,8 +19,8 @@ import {
   LoadingView,
 } from '@/src/shared';
 import DetailsCommentBlock from '@/src/pages/details/components/detailsCommentBlock';
-import VendorBasicBlock from '@/src/pages/details/vendorDetails/components/vendorBasicBlock';
 import { getPlace, getRatingPlace } from '@/src/core/rest/place';
+import { useEvent } from '@/src/context/EventContext';
 
 const { width } = Dimensions.get('window');
 
@@ -28,6 +28,7 @@ const PlaceDetailsPage = () => {
   const theme = useTheme();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { t } = useI18n();
+  const { event, setEvent } = useEvent();
   const queryClient = useQueryClient();
   const {
     data: vendor,
@@ -66,6 +67,14 @@ const PlaceDetailsPage = () => {
   if (!vendor || !rating) {
     return <EmptyView />;
   }
+
+  const handleSelectPlace = (placeId: number) => {
+    setEvent({
+      ...event,
+      placeId: placeId,
+    });
+    router.push('/manualOrdering');
+  };
 
   return (
     <ScrollView
@@ -123,6 +132,7 @@ const PlaceDetailsPage = () => {
             { backgroundColor: theme.colors.primary },
           ]}
           labelStyle={styles.buttonLabel}
+          onPress={() => handleSelectPlace(Number(id))}
         >
           {t('system.add')}
         </Button>

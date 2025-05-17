@@ -116,6 +116,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/event-service/event/ai-review/{eventId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["getEvents"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/event-service/event-vendor/request-event-service-by-vendor/{eventVendorId}": {
         parameters: {
             query?: never;
@@ -267,7 +283,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["getEvents"];
+        get: operations["getEvents_1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -436,7 +452,8 @@ export interface components {
             id: number;
             title: string;
             description?: string;
-            experience?: string;
+            /** Format: float */
+            experience?: number;
             /** Format: float */
             averageCost?: number;
             serviceType: string;
@@ -460,7 +477,8 @@ export interface components {
         UserVendorRequest: {
             title: string;
             description?: string;
-            experience?: string;
+            /** Format: float */
+            experience?: number;
             /** Format: float */
             averageCost?: number;
             /** @enum {string} */
@@ -777,6 +795,28 @@ export interface operations {
             };
         };
     };
+    getEvents: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eventId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
+                };
+            };
+        };
+    };
     requestEventServiceByVendor: {
         parameters: {
             query?: never;
@@ -853,9 +893,11 @@ export interface operations {
         parameters: {
             query?: {
                 q?: string;
-                experience?: string;
+                minExperience?: number;
+                maxExperience?: number;
                 serviceType?: "PRESENTERS" | "SINGERS" | "DANCERS" | "GROUP" | "OPERATORS" | "PHOTOGRAPH" | "MOBILOGRAPH" | "TRANSPORT" | "DECORATORS" | "ANIMATORS" | "TECHNICAL_STAFF" | "SECURITY" | "SOUND_ENGINEERS" | "MEDICAL_WORKERS" | "STYLISTS" | "TECHNICAL_EQUIPMENT" | "HAIR_DRESSERS" | "CLOTHING_SUPPLIERS" | "FLOWER_SUPPLIERS";
-                averageCost?: number;
+                minCost?: number;
+                maxCost?: number;
                 page?: number;
                 size?: number;
             };
@@ -994,7 +1036,7 @@ export interface operations {
             };
         };
     };
-    getEvents: {
+    getEvents_1: {
         parameters: {
             query?: never;
             header?: never;

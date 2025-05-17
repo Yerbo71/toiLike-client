@@ -10,14 +10,7 @@ import {
 import { useI18n } from '@/src/context/LocaleContext';
 import { useForm } from 'react-hook-form';
 import { CTextInput } from '@/src/shared';
-import {
-  Button,
-  Icon,
-  Surface,
-  Text,
-  TextInput,
-  useTheme,
-} from 'react-native-paper';
+import { Button, Icon, Surface, Text, TextInput } from 'react-native-paper';
 import { DatePickerModal, TimePickerModal } from 'react-native-paper-dates';
 import { postEvent } from '@/src/core/rest/event';
 import { AuthContext } from '@/src/context/AuthContext';
@@ -39,7 +32,6 @@ type FormData = {
 
 const ManualOrderingPage = () => {
   const { t, locale } = useI18n();
-  const theme = useTheme();
   const { token } = useContext(AuthContext);
   const { event } = useEvent();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -56,7 +48,7 @@ const ManualOrderingPage = () => {
       endedAt: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
       description: '',
       placeId: event.placeId || 0,
-      eventServices: [],
+      eventServices: event.eventServices || [],
     },
   });
 

@@ -58,7 +58,6 @@ const PlaceChoosePage = () => {
       if (searchTimeout) {
         clearTimeout(searchTimeout);
       }
-
       const timeout = setTimeout(() => {
         setSearchParams((prev) => ({
           ...prev,
@@ -141,10 +140,9 @@ const PlaceChoosePage = () => {
       style={styles.gradientContainer}
     >
       <ScrollView contentContainerStyle={styles.container}>
-        {/* Search Bar */}
         <View style={styles.searchContainer}>
           <Searchbar
-            placeholder={t('system.searchVenues')}
+            placeholder={t('system.search')}
             value={searchText}
             onChangeText={handleSearchTextChange}
           />
@@ -314,9 +312,6 @@ const styles = StyleSheet.create({
   searchContainer: {
     marginBottom: 16,
   },
-  searchInput: {
-    backgroundColor: '#fff',
-  },
   filterContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -331,11 +326,12 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderRadius: 12,
     overflow: 'hidden',
-    elevation: 2,
-    backgroundColor: '#fff',
+    elevation: 3,
   },
   cardImage: {
     height: 160,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
   },
   cardContent: {
     padding: 16,

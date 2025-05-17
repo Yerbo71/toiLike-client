@@ -62,7 +62,7 @@ const ProfileSettings = () => {
         rightIcon="chevron-right"
         rightTitle={city || t('system.choose')}
         onPress={() => {
-          router.push('/(ordering)/countryChoose');
+          router.push('/(ordering)/cityChoose');
         }}
       />
 

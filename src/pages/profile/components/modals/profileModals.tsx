@@ -49,7 +49,6 @@ export const TechSupportModal = ({ visible, onDismiss }: ModalProps) => {
             style={styles.closeButton}
           />
           <Text style={styles.title}>{t('system.techSupport')}</Text>
-          <View style={styles.placeholder} />
         </View>
         <Divider />
 

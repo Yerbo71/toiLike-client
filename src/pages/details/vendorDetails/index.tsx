@@ -10,7 +10,7 @@ import {
 import { Avatar, Button, Text, useTheme } from 'react-native-paper';
 import DetailsDescriptionBlock from '@/src/pages/details/components/detailsDescriptionBlock';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { getRatingId, getUserVendorId } from '@/src/core/rest/userVendor';
 import { useI18n } from '@/src/context/LocaleContext';
 import {
@@ -21,6 +21,7 @@ import {
 } from '@/src/shared';
 import DetailsCommentBlock from '@/src/pages/details/components/detailsCommentBlock';
 import VendorBasicBlock from '@/src/pages/details/vendorDetails/components/vendorBasicBlock';
+import { useEvent } from '@/src/context/EventContext';
 
 const { width } = Dimensions.get('window');
 
@@ -28,6 +29,7 @@ const VendorDetailsPage = () => {
   const theme = useTheme();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { t } = useI18n();
+  const { event, setEvent } = useEvent();
   const queryClient = useQueryClient();
   const {
     data: vendor,
@@ -66,6 +68,15 @@ const VendorDetailsPage = () => {
   if (!vendor || !rating) {
     return <EmptyView />;
   }
+
+  const handleSelectVendor = (vendorId: number) => {
+    setEvent({
+      ...event,
+      eventServices: [{ id: vendorId as number }],
+    });
+    // @ts-ignore
+    router.back();
+  };
 
   return (
     <ScrollView
@@ -123,6 +134,7 @@ const VendorDetailsPage = () => {
             { backgroundColor: theme.colors.primary },
           ]}
           labelStyle={styles.buttonLabel}
+          onPress={() => handleSelectVendor(vendor.id)}
         >
           {t('system.add')}
         </Button>
@@ -130,7 +142,7 @@ const VendorDetailsPage = () => {
         <DetailsDescriptionBlock description={vendor?.description} />
 
         <VendorBasicBlock
-          experience={vendor.experience}
+          experience={vendor.experience?.toString()}
           averageCost={vendor.averageCost}
           serviceType={vendor.serviceType}
         />
