@@ -55,7 +55,9 @@
     "retry": "Қайталау",
     "refresh": "Жаңарту",
     "manage": "Өзгерту",
-    "aiAnalysis": "AI анализ"
+    "aiAnalysis": "AI анализ",
+    "services": "Қызметтер",
+    "venue": "Тойхана"
   },
   "notifications": {
     "permissionDenied": "Рұқсат берілмеді",

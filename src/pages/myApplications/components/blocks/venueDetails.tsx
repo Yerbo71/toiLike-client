@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import type { components } from '@/src/types/api2';
+import { useI18n } from '@/src/context/LocaleContext';
 
 interface VenueDetailsProps {
   place: components['schemas']['PlaceResponse'];
@@ -10,6 +11,7 @@ interface VenueDetailsProps {
 
 export const VenueDetails: React.FC<VenueDetailsProps> = ({ place }) => {
   const theme = useTheme();
+  const { t } = useI18n();
   if (!place) return null;
 
   return (
@@ -22,7 +24,6 @@ export const VenueDetails: React.FC<VenueDetailsProps> = ({ place }) => {
         },
       ]}
     >
-      {/* Header */}
       <View style={styles.header}>
         <MaterialCommunityIcons
           name="office-building"
@@ -33,11 +34,10 @@ export const VenueDetails: React.FC<VenueDetailsProps> = ({ place }) => {
           variant="titleSmall"
           style={[styles.title, { color: theme.colors.primary }]}
         >
-          Venue Details
+          {t('system.venue')}
         </Text>
       </View>
 
-      {/* Venue Name */}
       <View style={styles.detailRow}>
         <MaterialCommunityIcons
           name="home-city"
@@ -49,7 +49,6 @@ export const VenueDetails: React.FC<VenueDetailsProps> = ({ place }) => {
         </Text>
       </View>
 
-      {/* Location */}
       {(place.city || place.street) && (
         <View style={styles.detailRow}>
           <MaterialCommunityIcons
@@ -63,7 +62,6 @@ export const VenueDetails: React.FC<VenueDetailsProps> = ({ place }) => {
         </View>
       )}
 
-      {/* Description */}
       {place.description && (
         <View style={styles.detailRow}>
           <MaterialCommunityIcons
@@ -77,7 +75,6 @@ export const VenueDetails: React.FC<VenueDetailsProps> = ({ place }) => {
         </View>
       )}
 
-      {/* Rating and Cost */}
       <View style={styles.footer}>
         {place.rating && (
           <View style={styles.footerItem}>

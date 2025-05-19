@@ -56,7 +56,9 @@
     "retry": "Retry",
     "refresh": "Refresh",
     "manage": "Manage",
-    "aiAnalysis": "AI Analysis"
+    "aiAnalysis": "AI Analysis",
+    "services": "Services",
+    "venue": "Venue"
   },
   "notifications": {
     "permissionDenied": "Permission denied",

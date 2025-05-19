@@ -7,6 +7,7 @@ import { ServiceList } from '@/src/pages/myApplications/components/blocks/servic
 import { VenueDetails } from '@/src/pages/myApplications/components/blocks/venueDetails';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useI18n } from '@/src/context/LocaleContext';
+import { router } from 'expo-router';
 
 interface EventCardProps {
   application: components['schemas']['EventResponse'];
@@ -76,6 +77,12 @@ export const ApplicationsCard: React.FC<EventCardProps> = ({ application }) => {
           style={styles.button}
           labelStyle={{ color: theme.colors.primary }}
           icon="circle-edit-outline"
+          onPress={() => {
+            router.push({
+              pathname: '/(ordering)/manualOrdering/[id]',
+              params: { id: application.id },
+            });
+          }}
         >
           {t('system.manage')}
         </Button>

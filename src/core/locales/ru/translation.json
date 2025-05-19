@@ -56,7 +56,9 @@
     "retry": "Повторить",
     "refresh": "Обновить",
     "manage": "Редактировать",
-    "aiAnalysis": "AI анализ"
+    "aiAnalysis": "AI анализ",
+    "services": "Услуги",
+    "venue": "Площадка"
   },
   "notifications": {
     "permissionDenied": "Разрешение не предоставлено",

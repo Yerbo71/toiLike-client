@@ -63,7 +63,6 @@ export const ServiceItem: React.FC<ServiceItemProps> = ({ service }) => {
         },
       ]}
     >
-      {/* Заголовок и статус */}
       <View style={styles.header}>
         <View style={styles.titleContainer}>
           <MaterialCommunityIcons
@@ -95,7 +94,6 @@ export const ServiceItem: React.FC<ServiceItemProps> = ({ service }) => {
         )}
       </View>
 
-      {/* Основная информация */}
       <View style={styles.detailsContainer}>
         {service.description && (
           <Text variant="bodyMedium" style={styles.description}>
@@ -118,7 +116,6 @@ export const ServiceItem: React.FC<ServiceItemProps> = ({ service }) => {
             </Text>
           </View>
 
-          {/* Опыт */}
           <View style={styles.detailItem}>
             <MaterialCommunityIcons
               name="chart-line"
@@ -134,7 +131,6 @@ export const ServiceItem: React.FC<ServiceItemProps> = ({ service }) => {
         </View>
 
         <View style={styles.detailsRow}>
-          {/* Рейтинг */}
           {service.rating && (
             <View style={styles.detailItem}>
               <MaterialCommunityIcons
@@ -148,7 +144,6 @@ export const ServiceItem: React.FC<ServiceItemProps> = ({ service }) => {
             </View>
           )}
 
-          {/* Тип сервиса */}
           <View style={styles.detailItem}>
             <MaterialCommunityIcons
               name="tag"

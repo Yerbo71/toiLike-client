@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import {
   TouchableOpacity,
   View,
@@ -25,6 +25,11 @@ import Toast from 'react-native-toast-message';
 import { router } from 'expo-router';
 import { useEvent } from '@/src/context/EventContext';
 import { LinearGradient } from 'expo-linear-gradient';
+import type { components } from '@/src/types/api2';
+
+interface Props {
+  eventData?: components['schemas']['EventResponse'];
+}
 
 type FormData = {
   title: string;
@@ -37,7 +42,7 @@ type FormData = {
   }[];
 };
 
-const ManualOrderingPage = () => {
+const ManualOrderingPage: FC<Props> = ({ eventData }) => {
   const { t, locale } = useI18n();
   const { token } = useContext(AuthContext);
   const { event, resetEvent } = useEvent();
@@ -57,14 +62,17 @@ const ManualOrderingPage = () => {
   } = useForm<FormData>({
     mode: 'onSubmit',
     defaultValues: {
-      title: '',
-      startedAt: new Date().toISOString(),
-      endedAt: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
-      description: '',
-      placeId: event.placeId || 0,
-      eventServices: event.eventServices || [],
+      title: eventData?.title || '',
+      description: eventData?.description || '',
+      startedAt: eventData?.startedAt || new Date().toISOString(),
+      endedAt:
+        eventData?.endedAt ||
+        new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
+      placeId: eventData?.place?.id || 0,
+      eventServices: eventData?.eventServices?.map((s) => ({ id: s.id })) || [],
     },
   });
+  console.log('eventData', eventData);
 
   const startedAt = new Date(watch('startedAt'));
   const endedAt = new Date(watch('endedAt'));

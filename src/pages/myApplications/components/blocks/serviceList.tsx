@@ -5,6 +5,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import type { components } from '@/src/types/api2';
 import { useTheme } from 'react-native-paper';
 import { ServiceItem } from '@/src/pages/myApplications/components/blocks/serviceItem';
+import { useI18n } from '@/src/context/LocaleContext';
 
 interface ServiceListProps {
   services: components['schemas']['EventVendorResponse'][];
@@ -12,6 +13,7 @@ interface ServiceListProps {
 
 export const ServiceList: React.FC<ServiceListProps> = ({ services }) => {
   const theme = useTheme();
+  const { t } = useI18n();
   if (!services?.length) return null;
 
   return (
@@ -34,7 +36,7 @@ export const ServiceList: React.FC<ServiceListProps> = ({ services }) => {
           variant="titleSmall"
           style={[styles.title, { color: theme.colors.tertiary }]}
         >
-          Included Services ({services.length})
+          {t('system.services')} ({services.length})
         </Text>
       </View>
 
