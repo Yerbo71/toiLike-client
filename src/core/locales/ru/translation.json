@@ -52,7 +52,11 @@
     "apply": "Применить",
     "deselect": "Отменить выбор",
     "details": "Подробнеe",
-    "isRequired": "Это поле обязательно"
+    "isRequired": "Это поле обязательно",
+    "retry": "Повторить",
+    "refresh": "Обновить",
+    "manage": "Редактировать",
+    "aiAnalysis": "AI анализ"
   },
   "notifications": {
     "permissionDenied": "Разрешение не предоставлено",

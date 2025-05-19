@@ -17,7 +17,6 @@ import {
   Surface,
   Text,
   TextInput,
-  useTheme,
 } from 'react-native-paper';
 import { DatePickerModal, TimePickerModal } from 'react-native-paper-dates';
 import { postEvent } from '@/src/core/rest/event';
@@ -54,7 +53,6 @@ const ManualOrderingPage = () => {
     setValue,
     watch,
     reset,
-    getValues,
     formState: { errors },
   } = useForm<FormData>({
     mode: 'onSubmit',
@@ -67,8 +65,6 @@ const ManualOrderingPage = () => {
       eventServices: event.eventServices || [],
     },
   });
-  console.log('eventPlaceID: ', event.placeId);
-  console.log('eventServicesID: ', event.eventServices);
 
   const startedAt = new Date(watch('startedAt'));
   const endedAt = new Date(watch('endedAt'));
@@ -83,9 +79,6 @@ const ManualOrderingPage = () => {
       setValue('eventServices', event.eventServices);
     }
   }, [event.placeId, event.eventServices]);
-
-  console.log('form place id: ', getValues('placeId'));
-  console.log('form event services id: ', getValues('eventServices'));
 
   const createSafeDate = (date?: Date | string | number) => {
     try {
@@ -104,8 +97,6 @@ const ManualOrderingPage = () => {
     }),
     dateObj: date,
   });
-  console.log('place id: ', placeId);
-  console.log('event ids: ', eventServices);
 
   const handleStartDateChange = (date: Date) => {
     const current = formatDateTime(createSafeDate(startedAt));

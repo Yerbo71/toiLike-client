@@ -2,7 +2,7 @@
   "system": {
     "home": "Home",
     "applications": "Applications",
-    "order": "Place Order",
+    "order": "Order",
     "chats": "Chats",
     "profile": "Profile",
     "language": "Language",
@@ -52,7 +52,11 @@
     "apply": "Apply",
     "deselect": "Deselect",
     "details": "Details",
-    "isRequired": "Required"
+    "isRequired": "Required",
+    "retry": "Retry",
+    "refresh": "Refresh",
+    "manage": "Manage",
+    "aiAnalysis": "AI Analysis"
   },
   "notifications": {
     "permissionDenied": "Permission denied",
@@ -257,7 +261,7 @@
     "createEvent": "Create Event",
     "eventCreated": "Event Created",
     "eventCreatedSuccess": "Your event has been successfully created",
-    "eventCreationError": "Failed to create event",
+    "eventCreationError": "Failed to create event"
   },
   "confirmEmail": {
     "title": "Confirm your email",

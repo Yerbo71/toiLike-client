@@ -132,23 +132,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/event-service/event-vendor/request-event-service-by-vendor/{eventVendorId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["requestEventServiceByVendor"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/event-service/event-vendor/request-event-service-by-user/{eventVendorId}": {
+    "/event-service/event-vendor/request/{eventVendorId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -158,6 +142,22 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["requestEventService"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/event-service/event-vendor/confirm/{eventVendorId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["confirmEventService"];
         delete?: never;
         options?: never;
         head?: never;
@@ -431,23 +431,13 @@ export interface components {
             startedAt?: string;
             /** Format: date-time */
             endedAt?: string;
+            /** Format: float */
+            totalCost: number;
             description?: string;
             place?: components["schemas"]["PlaceResponse"];
-            eventServices: components["schemas"]["UserVendorResponse"][];
+            eventServices: components["schemas"]["EventVendorResponse"][];
         };
-        PlaceResponse: {
-            /** Format: int64 */
-            id: number;
-            title: string;
-            city?: string;
-            street?: string;
-            description?: string;
-            mainImage?: string;
-            secondaryImage?: string;
-            /** Format: float */
-            rating?: number;
-        };
-        UserVendorResponse: {
+        EventVendorResponse: {
             /** Format: int64 */
             id: number;
             title: string;
@@ -461,6 +451,24 @@ export interface components {
             rating?: number;
             mainImage?: string;
             secondaryImage?: string;
+            /** Format: int64 */
+            eventVendorId: number;
+            /** @enum {string} */
+            status?: "CONFIRMED" | "PENDING" | "REJECTED";
+        };
+        PlaceResponse: {
+            /** Format: int64 */
+            id: number;
+            title: string;
+            city?: string;
+            street?: string;
+            description?: string;
+            mainImage?: string;
+            secondaryImage?: string;
+            /** Format: float */
+            rating?: number;
+            /** Format: float */
+            cost?: number;
         };
         ApiResponse: {
             /** @enum {string} */
@@ -483,6 +491,21 @@ export interface components {
             averageCost?: number;
             /** @enum {string} */
             serviceType: "PRESENTERS" | "SINGERS" | "DANCERS" | "GROUP" | "OPERATORS" | "PHOTOGRAPH" | "MOBILOGRAPH" | "TRANSPORT" | "DECORATORS" | "ANIMATORS" | "TECHNICAL_STAFF" | "SECURITY" | "SOUND_ENGINEERS" | "MEDICAL_WORKERS" | "STYLISTS" | "TECHNICAL_EQUIPMENT" | "HAIR_DRESSERS" | "CLOTHING_SUPPLIERS" | "FLOWER_SUPPLIERS";
+        };
+        UserVendorResponse: {
+            /** Format: int64 */
+            id: number;
+            title: string;
+            description?: string;
+            /** Format: float */
+            experience?: number;
+            /** Format: float */
+            averageCost?: number;
+            serviceType: string;
+            /** Format: float */
+            rating?: number;
+            mainImage?: string;
+            secondaryImage?: string;
         };
         EventVendorByUser: {
             /** Format: float */
@@ -544,7 +567,7 @@ export interface components {
             totalPages: number;
             list: components["schemas"]["EventResponse"][];
         };
-        EventVendorResponse: {
+        FullEventVendorResponse: {
             /** Format: int64 */
             id: number;
             /** Format: float */
@@ -552,12 +575,12 @@ export interface components {
             event: components["schemas"]["EventResponse"];
             userVendor: components["schemas"]["UserVendorResponse"];
         };
-        PageableResponseEventVendorResponse: {
+        PageableResponseFullEventVendorResponse: {
             /** Format: int32 */
             totalCount: number;
             /** Format: int32 */
             totalPages: number;
-            list: components["schemas"]["EventVendorResponse"][];
+            list: components["schemas"]["FullEventVendorResponse"][];
         };
         EventTemplateResponse: {
             /** Format: int64 */
@@ -817,7 +840,7 @@ export interface operations {
             };
         };
     };
-    requestEventServiceByVendor: {
+    requestEventService: {
         parameters: {
             query?: never;
             header?: never;
@@ -843,7 +866,7 @@ export interface operations {
             };
         };
     };
-    requestEventService: {
+    confirmEventService: {
         parameters: {
             query?: never;
             header?: never;
@@ -852,11 +875,7 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["EventVendorByUser"];
-            };
-        };
+        requestBody?: never;
         responses: {
             /** @description OK */
             200: {
@@ -864,7 +883,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": string;
+                    "*/*": components["schemas"]["ApiResponse"];
                 };
             };
         };
@@ -1138,7 +1157,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["PageableResponseEventVendorResponse"];
+                    "*/*": components["schemas"]["PageableResponseFullEventVendorResponse"];
                 };
             };
         };

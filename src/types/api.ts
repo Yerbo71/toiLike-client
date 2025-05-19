@@ -157,13 +157,13 @@ export interface components {
             email: string;
             password: string;
             /** @enum {string} */
-            role: "ROLE_USER" | "ROLE_RESTAURANT_OWNER" | "ROLE_SERVICE_VENDOR";
+            role: "ROLE_USER" | "ROLE_BUSINESS";
         };
         Role: {
             /** Format: int64 */
             id?: number;
             /** @enum {string} */
-            name?: "ROLE_USER" | "ROLE_RESTAURANT_OWNER" | "ROLE_SERVICE_VENDOR";
+            name?: "ROLE_USER" | "ROLE_BUSINESS";
         };
         User: {
             /** Format: int64 */
