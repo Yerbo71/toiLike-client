@@ -294,5 +294,11 @@
     "errorTitle": "Error",
     "errorMessage": "Failed to send reset code. Please try again.",
     "noAccount": "Don't have an account? Sign up"
+  },
+  "geminiChat": {
+    "welcomeWithEvent": "Event Analysis",
+    "missingData": "Event ID is required",
+    "defaultResponse": "Analysis completed",
+    "errorResponse": "Error loading analysis"
   }
 }

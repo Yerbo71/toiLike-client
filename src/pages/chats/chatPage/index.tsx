@@ -28,7 +28,7 @@ const ChatPage = () => {
   const { model } = useLocalSearchParams<{ model: 'gpt' | 'gemini' }>();
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: 'Привет! Чем могу помочь?' },
+    { role: 'assistant', content: 'Hello?' },
   ]);
   const scrollRef = useRef<ScrollView>(null);
   const theme = useTheme();

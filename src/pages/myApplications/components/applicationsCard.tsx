@@ -91,6 +91,12 @@ export const ApplicationsCard: React.FC<EventCardProps> = ({ application }) => {
           style={styles.button}
           labelStyle={{ color: theme.colors.onPrimary }}
           icon="robot"
+          onPress={() => {
+            router.push({
+              pathname: '/(chats)/chat/gemini/[eventId]',
+              params: { eventId: application.id },
+            });
+          }}
         >
           {t('system.aiAnalysis')}
         </Button>
