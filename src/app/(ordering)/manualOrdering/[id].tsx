@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import { AuthContext } from '@/src/context/AuthContext';
 import { WithoutToken } from '@/src/shared/withoutToken';
@@ -7,11 +7,13 @@ import ManualOrderingPage from '@/src/pages/manualOrdering';
 import { ActivityIndicator, Text } from 'react-native-paper';
 import { View } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
+import { useEvent } from '@/src/context/EventContext';
 
 export default function ManualOrdering() {
   const { isAuthenticated, token } = useContext(AuthContext);
   const params = useLocalSearchParams();
   const eventId = Number(params.id);
+  const { setEvent } = useEvent();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['event', eventId],
@@ -19,6 +21,19 @@ export default function ManualOrdering() {
     enabled: isAuthenticated && !!eventId,
     staleTime: 5 * 60 * 1000,
   });
+
+  useEffect(() => {
+    if (data) {
+      setEvent({
+        title: data.title,
+        startedAt: data.startedAt || '',
+        endedAt: data.endedAt || '',
+        description: data.description || '',
+        placeId: data.place?.id || 0,
+        eventServices: data.eventServices.map((s) => ({ id: s.id })),
+      });
+    }
+  }, [data, setEvent]);
 
   if (!isAuthenticated) {
     return <WithoutToken />;
@@ -39,6 +54,6 @@ export default function ManualOrdering() {
       </View>
     );
   }
-  console.log('everything', data);
+
   return <ManualOrderingPage eventData={data} />;
 }
