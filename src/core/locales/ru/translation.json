@@ -58,7 +58,42 @@
     "manage": "Редактировать",
     "aiAnalysis": "AI анализ",
     "services": "Услуги",
-    "venue": "Площадка"
+    "venue": "Площадка",
+    "yourSubscriptionsIs": "Ваша подписка ",
+    "replenishment": "Пополнение",
+    "templates": "Шаблоны"
+  },
+  "subscriptions": {
+    "title": "Подписки для клиентов",
+    "highlight": "Выберите подходящий тарифный план, чтобы получить больше заказов и расширенные возможности на нашей платформе.",
+    "current_plan": "Текущий план",
+    "select_plan": "Выбрать ",
+    "need_help": "Нужна помощь с выбором?",
+    "contact_us": "Свяжитесь с нами",
+    "popular": "ПОПУЛЯРНЫЙ",
+    "for_individuals": "Для ИП",
+    "for_legal_entities": "Для ТОО",
+    "successTitle": "Подписка активирована",
+    "successMessage": "Ваша подписка была успешно активирована.",
+    "errorTitle": "Ошибка активации подписки",
+    "errorMessage": "Не удалось активировать подписку. Пожалуйста, попробуйте ещё раз."
+  },
+  "addCache": {
+    "title": "Пополнение счёта",
+    "currentBalance": "Текущий баланс",
+    "amountLabel": "Сумма пополнения",
+    "addButton": "Пополнить счёт",
+    "success": "Успешно!",
+    "invalidAmount": "Некорректная сумма",
+    "note": "Средства зачисляются мгновенно",
+    "successTitle": "Пополнение успешно",
+    "successMessage": "Ваш счёт был успешно пополнен.",
+    "errorTitle": "Ошибка пополнения",
+    "errorMessage": "Не удалось пополнить счёт. Попробуйте снова."
+  },
+  "profileSubscription": {
+    "headerTitle": "Подписки",
+    "headerDescription": "Выберите подписку для доступа к премиум-функциям"
   },
   "notifications": {
     "permissionDenied": "Разрешение не предоставлено",
@@ -284,7 +319,9 @@
     "successTitle": "Успех",
     "successMessage": "Ваш email успешно подтверждён",
     "errorTitle": "Ошибка",
-    "errorMessage": "Не удалось подтвердить email. Пожалуйста, попробуйте снова."
+    "errorMessage": "Не удалось подтвердить email. Пожалуйста, попробуйте снова.",
+    "yourSubscriptionsIs": "Ваша подписка ",
+    "replenishment": "Пополнение"
   },
   "resetPasswordEmail": {
     "resetTitle": "Сброс пароля",
@@ -304,5 +341,15 @@
     "missingData": "Необходимо указать ID события",
     "defaultResponse": "Анализ завершен",
     "errorResponse": "Ошибка при загрузке анализа"
+  },
+  "templates": {
+    "preview": "Предпросмотр",
+    "select": "Выбрать",
+    "selected": "Выбрано",
+    "selecting": "Применяется...",
+    "successTitle": "Успешно",
+    "successMessage": "Шаблон изменён",
+    "errorTitle": "Ошибка",
+    "errorMessage": "Не удалось изменить шаблон"
   }
 }

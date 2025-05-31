@@ -57,7 +57,42 @@
     "manage": "Өзгерту",
     "aiAnalysis": "AI анализ",
     "services": "Қызметтер",
-    "venue": "Тойхана"
+    "venue": "Тойхана",
+    "yourSubscriptionsIs": "Сіздің жазылымыңыз ",
+    "replenishment": "Толтыру",
+    "templates": "Шаблондар"
+  },
+  "profileSubscription": {
+    "headerTitle": "Жазылымдар",
+    "headerDescription": "Жазылымдарды таңдаңыз және қызметтеріңізді жақсартыңыз"
+  },
+  "subscriptions": {
+    "title": "Клиенттерге арналған жазылымдар",
+    "highlight": "Платформада көбірек тапсырыс алып, кеңейтілген мүмкіндіктерге қол жеткізу үшін лайықты тарифті таңдаңыз.",
+    "current_plan": "Ағымдағы жоспар",
+    "select_plan": "Таңдау",
+    "need_help": "Таңдауда көмек керек пе?",
+    "contact_us": "Бізбен хабарласыңыз",
+    "popular": "ТАНЫМАЛ",
+    "for_individuals": "ЖК үшін",
+    "for_legal_entities": "ЖШС үшін",
+    "successTitle": "Жазылым қосылды",
+    "successMessage": "Сіздің жазылымыз сәтті қосылды.",
+    "errorTitle": "Жазылымды қосу сәтсіз аяқталды",
+    "errorMessage": "Жазылымды қосу кезінде қате пайда болды. Қайтадан көріңіз."
+  },
+  "addCache": {
+    "title": "Шотты толтыру",
+    "currentBalance": "Ағымдағы баланс",
+    "amountLabel": "Толтыру сомасы",
+    "addButton": "Толтыру",
+    "success": "Сәтті!",
+    "invalidAmount": "Қате сома",
+    "note": "Қаражат бірден есептеледі",
+    "successTitle": "Толтыру сәтті өтті",
+    "successMessage": "Сіздің шотыңыз сәтті толтырылды.",
+    "errorTitle": "Толтыру қатесі",
+    "errorMessage": "Шотты толтыру сәтсіз аяқталды. Қайталап көріңіз."
   },
   "notifications": {
     "permissionDenied": "Рұқсат берілмеді",
@@ -298,6 +333,16 @@
     "missingData": "Оқиға идентификаторы көрсетілуі керек",
     "defaultResponse": "Талдау аяқталды",
     "errorResponse": "Талдау жүктеу кезінде қате пайда болды"
+  },
+  "templates": {
+    "preview": "Алдын ала қарау",
+    "select": "Таңдау",
+    "selected": "Таңдалды",
+    "selecting": "Қолданылуда...",
+    "successTitle": "Сәтті",
+    "successMessage": "Үлгі өзгертілді",
+    "errorTitle": "Қате",
+    "errorMessage": "Үлгіні өзгерту сәтсіз аяқталды"
   }
 
 }

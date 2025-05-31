@@ -11,6 +11,7 @@ import { EventProvider } from '@/src/context/EventContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GlobalFilterProvider } from '@/src/context/GlobalFilterContext';
 import { Theme } from '@react-navigation/native';
+import { AxiosInterceptor } from '@/src/core/interceptor';
 const queryClient = new QueryClient();
 
 function RootLayoutContent() {
@@ -21,33 +22,37 @@ function RootLayoutContent() {
       <ThemeProvider value={paperTheme as unknown as Theme}>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
-            <EventProvider>
-              <GlobalFilterProvider>
-                <StatusBar
-                  barStyle={theme === 'Dark' ? 'light-content' : 'dark-content'}
-                  backgroundColor={theme === 'Dark' ? '#2b2732' : '#f3edf6'}
-                />
-                <Stack>
-                  <Stack.Screen
-                    name="(application)"
-                    options={{ headerShown: false }}
+            <AxiosInterceptor>
+              <EventProvider>
+                <GlobalFilterProvider>
+                  <StatusBar
+                    barStyle={
+                      theme === 'Dark' ? 'light-content' : 'dark-content'
+                    }
+                    backgroundColor={theme === 'Dark' ? '#2b2732' : '#f3edf6'}
                   />
-                  <Stack.Screen
-                    name="(auth)"
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="(ordering)"
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="(chats)"
-                    options={{ headerShown: false }}
-                  />
-                </Stack>
-              </GlobalFilterProvider>
-            </EventProvider>
-            <Toast />
+                  <Stack>
+                    <Stack.Screen
+                      name="(application)"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="(auth)"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="(ordering)"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="(chats)"
+                      options={{ headerShown: false }}
+                    />
+                  </Stack>
+                </GlobalFilterProvider>
+              </EventProvider>
+              <Toast />
+            </AxiosInterceptor>
           </AuthProvider>
         </QueryClientProvider>
       </ThemeProvider>

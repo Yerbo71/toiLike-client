@@ -46,12 +46,16 @@ export default function Registration() {
         pathname: '/(auth)/confirm-email',
         params: { email: data.email },
       });
-    } catch (err) {
+    } catch (err: any) {
+      const errorMessage =
+        err?.response?.data?.message || t('registrationPage.errorSubtitle');
+
       Toast.show({
         type: 'error',
         text1: t('registrationPage.errorTitle'),
-        text2: (err as Error).message,
+        text2: errorMessage,
       });
+
       console.log('registration error', err);
     } finally {
       setIsPending(false);
@@ -184,7 +188,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: '#f5f5f5',
   },
   gradientOverlay: {
     flex: 1,

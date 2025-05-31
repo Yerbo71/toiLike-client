@@ -3,17 +3,15 @@ import { View, FlatList, Text, TouchableOpacity } from 'react-native';
 import { Searchbar, useTheme } from 'react-native-paper';
 import { useI18n } from '@/src/context/LocaleContext';
 import { useGlobalFilters } from '@/src/context/GlobalFilterContext';
+import { CityEnum } from '@/src/context/GlobalFilterContext';
 
-interface Cities {
-  en: string[];
-  ru: string[];
-  kk: string[];
-}
-
-const cities: Cities = {
-  en: ['Almaty', 'Astana', 'Shymkent'],
-  ru: ['Алматы', 'Астана', 'Шымкент'],
-  kk: ['Алматы', 'Астана', 'Шымкент'],
+const localizedCities: Record<
+  CityEnum,
+  { en: string; ru: string; kz: string }
+> = {
+  ALMATY: { en: 'Almaty', ru: 'Алматы', kz: 'Алматы' },
+  ASTANA: { en: 'Astana', ru: 'Астана', kz: 'Астана' },
+  SHYMKENT: { en: 'Shymkent', ru: 'Шымкент', kz: 'Шымкент' },
 };
 
 const CityChoosePage: React.FC = () => {
@@ -22,13 +20,17 @@ const CityChoosePage: React.FC = () => {
   const { city: selectedCity, setCity } = useGlobalFilters();
   const theme = useTheme();
 
-  const filteredCities =
-    cities[locale as keyof Cities]?.filter((city) =>
-      city.toLowerCase().includes(searchQuery.toLowerCase()),
-    ) || [];
+  const cityList = (Object.keys(localizedCities) as CityEnum[])
+    .map((key) => ({
+      key,
+      label: localizedCities[key][locale as 'en' | 'ru' | 'kz'],
+    }))
+    .filter((city) =>
+      city.label.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
 
-  const handleCitySelect = (city: string) => {
-    setCity(city);
+  const handleCitySelect = (cityKey: CityEnum) => {
+    setCity(cityKey);
   };
 
   return (
@@ -51,20 +53,21 @@ const CityChoosePage: React.FC = () => {
         inputStyle={{ color: theme.colors.onSurface }}
       />
       <FlatList
-        data={filteredCities}
-        keyExtractor={(item, index) => index.toString()}
+        data={cityList}
+        keyExtractor={(item) => item.key}
         style={{ marginTop: 16 }}
         contentContainerStyle={{ paddingBottom: 16 }}
         renderItem={({ item, index }) => {
-          const isSelected = selectedCity === item;
+          const isSelected = selectedCity === item.key;
 
           return (
-            <TouchableOpacity onPress={() => handleCitySelect(item)}>
+            <TouchableOpacity
+              onPress={() => handleCitySelect(item.key as CityEnum)}
+            >
               <View
                 style={{
                   padding: 16,
-                  borderBottomWidth:
-                    index !== filteredCities.length - 1 ? 1 : 0,
+                  borderBottomWidth: index !== cityList.length - 1 ? 1 : 0,
                   borderBottomColor: theme.colors.outline,
                   backgroundColor: isSelected
                     ? theme.colors.primaryContainer
@@ -73,7 +76,6 @@ const CityChoosePage: React.FC = () => {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   borderRadius: 8,
-                  marginVertical: 4,
                 }}
               >
                 <Text
@@ -83,7 +85,7 @@ const CityChoosePage: React.FC = () => {
                     fontSize: 16,
                   }}
                 >
-                  {item}
+                  {item.label}
                 </Text>
                 {isSelected && (
                   <Text

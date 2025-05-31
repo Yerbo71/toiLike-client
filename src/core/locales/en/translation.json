@@ -58,7 +58,42 @@
     "manage": "Manage",
     "aiAnalysis": "AI Analysis",
     "services": "Services",
-    "venue": "Venue"
+    "venue": "Venue",
+    "yourSubscriptionsIs": "Your Subscriptions is ",
+    "replenishment": "Replenishment",
+    "templates": "Templates"
+  },
+  "subscriptions": {
+    "title": "Subscriptions for Clients",
+    "highlight": "Choose the right plan to get more orders and advanced features on our platform.",
+    "current_plan": "Current Plan",
+    "select_plan": "Select",
+    "need_help": "Need help choosing?",
+    "contact_us": "Contact Us",
+    "popular": "POPULAR",
+    "for_individuals": "For Individuals",
+    "for_legal_entities": "For Legal Entities",
+    "successTitle": "Subscription Activated",
+    "successMessage": "Your subscription has been successfully activated.",
+    "errorTitle": "Subscription Activation Failed",
+    "errorMessage": "Failed to activate subscription. Please try again."
+  },
+  "addCache": {
+    "title": "Top Up Balance",
+    "currentBalance": "Current Balance",
+    "amountLabel": "Top-Up Amount",
+    "addButton": "Top Up",
+    "success": "Success!",
+    "invalidAmount": "Invalid amount",
+    "note": "Funds are credited instantly",
+    "successTitle": "Top-Up Successful",
+    "successMessage": "Your balance has been successfully topped up.",
+    "errorTitle": "Top-Up Failed",
+    "errorMessage": "Failed to top up balance. Please try again."
+  },
+  "profileSubscription": {
+    "headerTitle": "Subscriptions",
+    "headerDescription": "Choose a subscription plan to access premium features"
   },
   "notifications": {
     "permissionDenied": "Permission denied",
@@ -300,5 +335,15 @@
     "missingData": "Event ID is required",
     "defaultResponse": "Analysis completed",
     "errorResponse": "Error loading analysis"
+  },
+  "templates": {
+    "preview": "Preview",
+    "select": "Select",
+    "selected": "Selected",
+    "selecting": "Applying...",
+    "successTitle": "Success",
+    "successMessage": "Template changed",
+    "errorTitle": "Error",
+    "errorMessage": "Failed to change template"
   }
 }

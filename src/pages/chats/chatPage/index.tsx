@@ -15,7 +15,6 @@ import {
   useTheme,
   IconButton,
 } from 'react-native-paper';
-import { useLocalSearchParams } from 'expo-router';
 
 type Role = 'user' | 'assistant';
 
@@ -25,7 +24,6 @@ interface Message {
 }
 
 const ChatPage = () => {
-  const { model } = useLocalSearchParams<{ model: 'gpt' | 'gemini' }>();
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: 'Hello?' },

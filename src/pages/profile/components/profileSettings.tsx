@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Menu, Surface } from 'react-native-paper';
 import { ChevronButton } from '@/src/shared/chevronButton';
 import { useI18n } from '@/src/context/LocaleContext';
 import { router } from 'expo-router';
 import { Alert } from 'react-native';
 import { useGlobalFilters } from '@/src/context/GlobalFilterContext';
+import { AuthContext } from '@/src/context/AuthContext';
 
 const ProfileSettings = () => {
   const { locale, setLocale, t } = useI18n();
+  const { user } = useContext(AuthContext);
   const [menuVisible, setMenuVisible] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const stringLocale =
     locale === 'ru' ? 'Русский' : locale === 'kz' ? 'Қазақша' : 'English';
   const { city } = useGlobalFilters();
+  const money = user?.cache ? user.cache.toLocaleString() : '0';
+  // @ts-ignore
+  const template = user?.template ? user.template.toLocaleString() : '1';
 
   const toggleMenu = () => setMenuVisible(!menuVisible);
   const closeMenu = () => setMenuVisible(false);
@@ -63,6 +68,26 @@ const ProfileSettings = () => {
         rightTitle={city || t('system.choose')}
         onPress={() => {
           router.push('/(ordering)/cityChoose');
+        }}
+      />
+      <ChevronButton
+        leftIcon="file-certificate-outline"
+        leftTitle={t('system.templates')}
+        rightIcon="chevron-right"
+        rightTitle={template || t('system.choose')}
+        onPress={() => {
+          // @ts-ignore
+          router.push('/(ordering)/templates');
+        }}
+      />
+      <ChevronButton
+        leftIcon="hand-coin"
+        leftTitle={t('system.replenishment')}
+        rightIcon="chevron-right"
+        rightTitle={money || t('system.choose')}
+        onPress={() => {
+          // @ts-ignore
+          router.push('/(ordering)/addCache');
         }}
       />
 
