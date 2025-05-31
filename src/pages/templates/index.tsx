@@ -20,8 +20,7 @@ const TemplatesPage = () => {
   const { user, token, updateUser } = useContext(AuthContext);
   const [loading, setLoading] = useState<number | null>(null);
   const [previewImage, setPreviewImage] = useState<number | null>(null);
-  // @ts-ignore
-  const checkedTemplate = user?.template || 1;
+  const checkedTemplate = user?.preferedTemplate || 1;
 
   const templates = [
     { id: 1, image: require('@/assets/templates/template1.png') },

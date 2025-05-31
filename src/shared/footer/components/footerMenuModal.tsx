@@ -50,7 +50,8 @@ const FooterMenuModal: FC<Props> = ({ close }) => {
         <TouchableOpacity
           onPress={() => {
             close();
-            router.push('/(ordering)/manualOrdering');
+            //@ts-ignore
+            router.push('/(ordering)/manualOrdering/index');
           }}
         >
           <Card.Title

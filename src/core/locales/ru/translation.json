@@ -61,7 +61,8 @@
     "venue": "Площадка",
     "yourSubscriptionsIs": "Ваша подписка ",
     "replenishment": "Пополнение",
-    "templates": "Шаблоны"
+    "templates": "Шаблоны",
+    "tags": "Теги"
   },
   "subscriptions": {
     "title": "Подписки для клиентов",

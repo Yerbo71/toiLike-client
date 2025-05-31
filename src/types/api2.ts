@@ -703,6 +703,7 @@ export interface components {
             totalCost: number;
             description?: string;
             place?: components["schemas"]["PlaceResponse"];
+            emailList: string[];
             eventServices: components["schemas"]["EventVendorResponse"][];
         };
         EventVendorResponse: {
@@ -738,6 +739,7 @@ export interface components {
             /** Format: date-time */
             endedAt?: string;
             description?: string;
+            emailList?: string;
             place?: components["schemas"]["Place"];
             user?: components["schemas"]["User"];
             eventServices: components["schemas"]["EventVendor"][];
@@ -894,6 +896,8 @@ export interface components {
             comment: number;
             /** Format: float */
             cache: number;
+            /** Format: int64 */
+            preferedTemplate: number;
             subscription: components["schemas"]["SubscriptionResponse"][];
         };
         PageableResponseUserVendorResponse: {
@@ -943,12 +947,12 @@ export interface components {
             date: string;
             /** Format: int64 */
             pendingCount: number;
-            /** Format: double */
-            sumCost: number;
             /** Format: int64 */
             confirmedCount: number;
             /** Format: int64 */
             rejectedCount: number;
+            /** Format: double */
+            sumCost: number;
         };
         FullEventVendorResponse: {
             /** Format: int64 */

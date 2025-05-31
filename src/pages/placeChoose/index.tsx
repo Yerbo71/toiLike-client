@@ -47,7 +47,7 @@ const PlaceChoosePage = () => {
     if (city) {
       setSearchParams((prev) => ({
         ...prev,
-        city: city,
+        cityEnum: city,
         page: 0,
       }));
     }
@@ -129,7 +129,7 @@ const PlaceChoosePage = () => {
     setCity(null);
     setSearchParams((prev) => ({
       ...prev,
-      city: undefined,
+      city: city,
       page: 0,
     }));
   };
@@ -219,7 +219,7 @@ const PlaceChoosePage = () => {
               <View style={styles.locationRow}>
                 <Icon name="map-marker" size={16} color="#666" />
                 <Text variant="bodyMedium" style={styles.locationText}>
-                  {[place.city, place.street].filter(Boolean).join(', ')}
+                  {[place.cityEnum, place.street].filter(Boolean).join(', ')}
                 </Text>
               </View>
 

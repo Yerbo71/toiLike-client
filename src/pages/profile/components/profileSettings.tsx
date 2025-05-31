@@ -16,8 +16,9 @@ const ProfileSettings = () => {
     locale === 'ru' ? 'Русский' : locale === 'kz' ? 'Қазақша' : 'English';
   const { city } = useGlobalFilters();
   const money = user?.cache ? user.cache.toLocaleString() : '0';
-  // @ts-ignore
-  const template = user?.template ? user.template.toLocaleString() : '1';
+  const template = user?.preferedTemplate
+    ? user.preferedTemplate.toLocaleString()
+    : '1';
 
   const toggleMenu = () => setMenuVisible(!menuVisible);
   const closeMenu = () => setMenuVisible(false);

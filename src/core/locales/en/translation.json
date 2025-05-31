@@ -61,7 +61,8 @@
     "venue": "Venue",
     "yourSubscriptionsIs": "Your Subscriptions is ",
     "replenishment": "Replenishment",
-    "templates": "Templates"
+    "templates": "Templates",
+    "tags": "Tags"
   },
   "subscriptions": {
     "title": "Subscriptions for Clients",

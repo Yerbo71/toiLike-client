@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useI18n } from '@/src/context/LocaleContext';
 import { useForm } from 'react-hook-form';
-import { CTextInput } from '@/src/shared';
+import { CTextInput, TagInput } from '@/src/shared';
 import {
   Button,
   HelperText,
@@ -40,6 +40,7 @@ type FormData = {
   eventServices: {
     id: number;
   }[];
+  emailList: string[];
 };
 
 const ManualOrderingPage: FC<Props> = ({ eventData }) => {
@@ -70,6 +71,7 @@ const ManualOrderingPage: FC<Props> = ({ eventData }) => {
         new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
       placeId: eventData?.place?.id || 0,
       eventServices: eventData?.eventServices?.map((s) => ({ id: s.id })) || [],
+      emailList: eventData?.emailList || [],
     },
   });
   console.log('eventData', eventData);
@@ -237,6 +239,10 @@ const ManualOrderingPage: FC<Props> = ({ eventData }) => {
                 t('system.isRequired'),
             }}
             multiline
+          />
+          <TagInput
+            values={watch('emailList')}
+            onChange={(emails) => setValue('emailList', emails)}
           />
           <Text style={styles.sectionHeader}>
             <Icon source="animation" size={18} />

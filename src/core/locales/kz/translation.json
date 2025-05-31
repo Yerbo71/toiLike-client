@@ -60,7 +60,8 @@
     "venue": "Тойхана",
     "yourSubscriptionsIs": "Сіздің жазылымыңыз ",
     "replenishment": "Толтыру",
-    "templates": "Шаблондар"
+    "templates": "Шаблондар",
+    "tags": "Тегтер"
   },
   "profileSubscription": {
     "headerTitle": "Жазылымдар",

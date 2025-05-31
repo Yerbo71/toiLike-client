@@ -8,3 +8,4 @@ export * from './detailRateBlock/index';
 export * from './loadingView/index';
 export * from './errorView/index';
 export * from './emptyView/index';
+export * from './tagInput/index';
