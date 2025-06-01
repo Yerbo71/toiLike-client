@@ -40,7 +40,7 @@ type Message = {
 type Role = 'user' | 'partner';
 
 const ChatPage = () => {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id, userId } = useLocalSearchParams<{ id: string; userId: string }>();
   const convId = id ? parseInt(id) : 0;
   const [input, setInput] = useState('');
   const scrollRef = useRef<ScrollView>(null);
@@ -144,8 +144,9 @@ const ChatPage = () => {
     const message = {
       content: input,
       senderId: currentUserId,
-      receiverId:
-        messages[0]?.fromUser === currentUserId
+      receiverId: userId
+        ? parseInt(userId)
+        : messages[0]?.fromUser === currentUserId
           ? messages[0]?.toUser
           : messages[0]?.fromUser,
       convId,

@@ -693,6 +693,8 @@ export interface components {
             isAIRecommended: boolean;
             mainImage?: string;
             secondaryImage?: string;
+            /** Format: int64 */
+            userId?: number;
             airecommended?: boolean;
         };
         PlaceRequest: {
@@ -722,6 +724,8 @@ export interface components {
             rating?: number;
             /** Format: float */
             cost?: number;
+            /** Format: int64 */
+            userId?: number;
         };
         EventRequest: {
             title: string;
@@ -995,12 +999,12 @@ export interface components {
             date: string;
             /** Format: int64 */
             pendingCount: number;
+            /** Format: double */
+            sumCost: number;
             /** Format: int64 */
             confirmedCount: number;
             /** Format: int64 */
             rejectedCount: number;
-            /** Format: double */
-            sumCost: number;
         };
         FullEventVendorResponse: {
             /** Format: int64 */

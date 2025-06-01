@@ -22,6 +22,7 @@ import {
 import DetailsCommentBlock from '@/src/pages/details/components/detailsCommentBlock';
 import VendorBasicBlock from '@/src/pages/details/vendorDetails/components/vendorBasicBlock';
 import { useEvent } from '@/src/context/EventContext';
+import { getChatByUser } from '@/src/core/rest/chat';
 
 const { width } = Dimensions.get('window');
 
@@ -76,6 +77,21 @@ const VendorDetailsPage = () => {
     });
     // @ts-ignore
     router.push('/(ordering)/vendorsChoose');
+  };
+
+  const handleMessageVendor = async (userId: number) => {
+    try {
+      const chat = await getChatByUser(userId);
+      if (chat) {
+        router.push({
+          //@ts-ignore
+          pathname: `/chat/${chat}`,
+          params: { userId: String(userId) },
+        });
+      }
+    } catch (error) {
+      console.error('Failed to create or fetch chat:', error);
+    }
   };
 
   return (
@@ -137,6 +153,16 @@ const VendorDetailsPage = () => {
           onPress={() => handleSelectVendor(vendor.id)}
         >
           {t('system.add')}
+        </Button>
+
+        <Button
+          mode="outlined"
+          icon="message"
+          style={[styles.messageButton]}
+          labelStyle={styles.buttonLabel}
+          onPress={() => handleMessageVendor(vendor?.userId || 0)}
+        >
+          {t('system.message')}
         </Button>
 
         <DetailsDescriptionBlock description={vendor?.description} />
@@ -201,7 +227,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   messageButton: {
-    marginTop: 12,
+    marginTop: 8,
     marginBottom: 8,
     borderRadius: 8,
     paddingVertical: 6,
