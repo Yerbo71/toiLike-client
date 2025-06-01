@@ -13,6 +13,7 @@ import { AuthContext } from '@/src/context/AuthContext';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { ApplicationsCard } from '@/src/pages/myApplications/components/applicationsCard';
 import { useI18n } from '@/src/context/LocaleContext';
+import { LoadingView } from '@/src/shared';
 
 const MyApplicationsPage = () => {
   const theme = useTheme();
@@ -42,11 +43,7 @@ const MyApplicationsPage = () => {
   }, [refetch]);
 
   if (isLoading && !manualRefreshing) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator animating={true} size="large" />
-      </View>
-    );
+    return <LoadingView />;
   }
 
   if (error) {

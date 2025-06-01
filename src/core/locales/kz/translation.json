@@ -61,7 +61,9 @@
     "yourSubscriptionsIs": "Сіздің жазылымыңыз ",
     "replenishment": "Толтыру",
     "templates": "Шаблондар",
-    "tags": "Тегтер"
+    "tags": "Тегтер",
+    "addReview": "Баға беру",
+    "comment": "Коммент"
   },
   "profileSubscription": {
     "headerTitle": "Жазылымдар",

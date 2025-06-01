@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Image,
   View,
@@ -19,8 +19,11 @@ import {
   LoadingView,
 } from '@/src/shared';
 import DetailsCommentBlock from '@/src/pages/details/components/detailsCommentBlock';
-import { getPlace, getRatingPlace } from '@/src/core/rest/place';
+import { getPlace, getRatingPlace, postPlaceRate } from '@/src/core/rest/place';
 import { useEvent } from '@/src/context/EventContext';
+import { getChatByUser } from '@/src/core/rest/chat';
+import DetailsRatingCommentBlock from '@/src/pages/details/components/detailsRatingCommentBlock';
+import { postRateUserVendor } from '@/src/core/rest/userVendor';
 
 const { width } = Dimensions.get('window');
 
@@ -30,6 +33,7 @@ const PlaceDetailsPage = () => {
   const { t } = useI18n();
   const { event, setEvent } = useEvent();
   const queryClient = useQueryClient();
+  const [isSubmittingRating, setIsSubmittingRating] = useState(false);
   const {
     data: vendor,
     isLoading: vendorIsLoading,
@@ -73,7 +77,41 @@ const PlaceDetailsPage = () => {
       ...event,
       placeId: placeId,
     });
+    //@ts-ignore
     router.push('/manualOrdering');
+  };
+
+  const handleMessagePlace = async (userId: number) => {
+    try {
+      const chat = await getChatByUser(userId);
+      if (chat) {
+        router.push({
+          //@ts-ignore
+          pathname: `/chat/${chat}`,
+          params: { userId: String(userId) },
+        });
+      }
+    } catch (error) {
+      console.error('Failed to create or fetch chat:', error);
+    }
+  };
+
+  const handleSubmitRating = async (ratingValue: number, comment: string) => {
+    try {
+      setIsSubmittingRating(true);
+      await postPlaceRate({
+        id: Number(id),
+        rating: ratingValue,
+        comment: comment,
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['ratingPlaceDetails'],
+      });
+    } catch (error) {
+      console.error('Rating submission error:', error);
+    } finally {
+      setIsSubmittingRating(false);
+    }
   };
 
   return (
@@ -137,11 +175,25 @@ const PlaceDetailsPage = () => {
           {t('system.add')}
         </Button>
 
+        <Button
+          mode="outlined"
+          icon="message"
+          style={[styles.messageButton]}
+          labelStyle={styles.buttonLabel}
+          onPress={() => handleMessagePlace(vendor?.userId || 0)}
+        >
+          {t('system.message')}
+        </Button>
+
         <DetailsDescriptionBlock description={vendor?.description} />
 
         <DetailsCommentBlock
           commentCount={rating.totalCount || 0}
           ratings={rating.list || []}
+        />
+        <DetailsRatingCommentBlock
+          onSubmit={handleSubmitRating}
+          isLoading={isSubmittingRating}
         />
       </View>
     </ScrollView>

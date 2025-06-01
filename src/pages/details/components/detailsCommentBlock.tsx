@@ -52,7 +52,7 @@ const DetailsCommentBlock: React.FC<DetailRateBlockProps> = ({
       </View>
 
       {ratings.length > 0 ? (
-        ratings.slice(0, 3).map((review, index) => (
+        ratings.map((review, index) => (
           <View
             key={`review-${index}`}
             style={[

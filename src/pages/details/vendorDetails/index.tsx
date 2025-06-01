@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Image,
   View,
@@ -11,7 +11,11 @@ import { Avatar, Button, Text, useTheme } from 'react-native-paper';
 import DetailsDescriptionBlock from '@/src/pages/details/components/detailsDescriptionBlock';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
-import { getRatingId, getUserVendorId } from '@/src/core/rest/userVendor';
+import {
+  getRatingId,
+  getUserVendorId,
+  postRateUserVendor,
+} from '@/src/core/rest/userVendor';
 import { useI18n } from '@/src/context/LocaleContext';
 import {
   DetailRateBlock,
@@ -23,6 +27,7 @@ import DetailsCommentBlock from '@/src/pages/details/components/detailsCommentBl
 import VendorBasicBlock from '@/src/pages/details/vendorDetails/components/vendorBasicBlock';
 import { useEvent } from '@/src/context/EventContext';
 import { getChatByUser } from '@/src/core/rest/chat';
+import DetailsRatingCommentBlock from '@/src/pages/details/components/detailsRatingCommentBlock';
 
 const { width } = Dimensions.get('window');
 
@@ -31,6 +36,7 @@ const VendorDetailsPage = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { t } = useI18n();
   const { event, setEvent } = useEvent();
+  const [isSubmittingRating, setIsSubmittingRating] = useState(false);
   const queryClient = useQueryClient();
   const {
     data: vendor,
@@ -91,6 +97,25 @@ const VendorDetailsPage = () => {
       }
     } catch (error) {
       console.error('Failed to create or fetch chat:', error);
+    }
+  };
+
+  const handleSubmitRating = async (ratingValue: number, comment: string) => {
+    try {
+      setIsSubmittingRating(true);
+      console.log('Rating value2 :', ratingValue, 'Comment2 :', comment);
+      await postRateUserVendor({
+        id: Number(id),
+        rating: ratingValue,
+        comment: comment,
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['ratingDetails'],
+      });
+    } catch (error) {
+      console.error('Rating submission error:', error);
+    } finally {
+      setIsSubmittingRating(false);
     }
   };
 
@@ -176,6 +201,10 @@ const VendorDetailsPage = () => {
         <DetailsCommentBlock
           commentCount={rating.totalCount || 0}
           ratings={rating.list || []}
+        />
+        <DetailsRatingCommentBlock
+          onSubmit={handleSubmitRating}
+          isLoading={isSubmittingRating}
         />
       </View>
     </ScrollView>

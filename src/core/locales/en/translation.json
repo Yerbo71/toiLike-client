@@ -62,7 +62,10 @@
     "yourSubscriptionsIs": "Your Subscriptions is ",
     "replenishment": "Replenishment",
     "templates": "Templates",
-    "tags": "Tags"
+    "tags": "Tags",
+    "addReview": "Add Review",
+    "comment": "Comment"
+
   },
   "subscriptions": {
     "title": "Subscriptions for Clients",

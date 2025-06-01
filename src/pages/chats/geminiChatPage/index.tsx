@@ -70,7 +70,7 @@ const GeminiChatPage = () => {
       <ScrollView style={styles.chatContainer} ref={scrollRef}>
         {isLoading ? (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" />
+            <ActivityIndicator size="large" color={theme.colors.primary} />
           </View>
         ) : (
           messages.map((msg, idx) => (

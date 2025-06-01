@@ -62,7 +62,9 @@
     "yourSubscriptionsIs": "Ваша подписка ",
     "replenishment": "Пополнение",
     "templates": "Шаблоны",
-    "tags": "Теги"
+    "tags": "Теги",
+    "addReview": "Добавить отзыв",
+    "comment": "Коммент"
   },
   "subscriptions": {
     "title": "Подписки для клиентов",
