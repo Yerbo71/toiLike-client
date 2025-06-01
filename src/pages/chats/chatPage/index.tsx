@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import {
   View,
   ScrollView,
@@ -15,55 +15,58 @@ import {
   useTheme,
   IconButton,
 } from 'react-native-paper';
+import { useLocalSearchParams } from 'expo-router';
+import { useQuery } from '@tanstack/react-query';
+import { getChatHistory } from '@/src/core/rest/chat';
+import { AuthContext } from '@/src/context/AuthContext';
+import { LoadingView } from '@/src/shared';
 
-type Role = 'user' | 'assistant';
-
-interface Message {
-  role: Role;
+type Message = {
+  id?: number;
+  convId?: number;
+  fromUser: number;
+  toUser: number;
+  time?: string;
   content: string;
-}
+};
+
+type Role = 'user' | 'partner';
 
 const ChatPage = () => {
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const convId = id ? parseInt(id) : 0;
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: 'Hello?' },
-  ]);
   const scrollRef = useRef<ScrollView>(null);
   const theme = useTheme();
+  const { user } = useContext(AuthContext);
+  const currentUserId = user?.id || 0;
 
-  const handleSend = async () => {
-    if (!input.trim()) return;
+  const { data: messages = [], isLoading } = useQuery<Message[]>({
+    queryKey: ['chatHistory', convId],
+    queryFn: async () => {
+      const data = await getChatHistory(convId, 0, 1000);
+      return data.map((message) => ({
+        ...message,
+        fromUser: message.fromUser || 0,
+        toUser: message.toUser || 0,
+        content: message.content || '',
+      }));
+    },
+    enabled: !!convId,
+    select: (data) =>
+      data.sort(
+        (a, b) =>
+          new Date(a.time || 0).getTime() - new Date(b.time || 0).getTime(),
+      ),
+  });
 
-    const userMessage: Message = {
-      role: 'user',
-      content: input,
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-    setInput('');
-
-    setTimeout(() => {
-      scrollRef.current?.scrollToEnd({ animated: true });
-    }, 100);
-
-    try {
-      let reply: string;
-
-      const assistantMessage: Message = {
-        role: 'assistant',
-        content: '',
-      };
-
-      setMessages((prev) => [...prev, assistantMessage]);
-    } catch (error) {
-      console.error('API Error:', error);
-      const errorMessage: Message = {
-        role: 'assistant',
-        content: 'Произошла ошибка при обработке запроса',
-      };
-      setMessages((prev) => [...prev, errorMessage]);
-    }
+  const getMessageRole = (message: Message): Role => {
+    return message.fromUser === currentUserId ? 'user' : 'partner';
   };
+
+  if (isLoading) {
+    return <LoadingView />;
+  }
 
   return (
     <KeyboardAvoidingView
@@ -78,29 +81,48 @@ const ChatPage = () => {
             { backgroundColor: theme.colors.background },
           ]}
         >
-          <ScrollView style={styles.chatContainer} ref={scrollRef}>
-            {messages.map((msg, idx) => (
-              <Card
-                key={idx}
-                mode="contained"
-                style={[
-                  styles.messageCard,
-                  msg.role === 'user'
-                    ? styles.userMessage
-                    : styles.assistantMessage,
-                  {
-                    backgroundColor:
-                      msg.role === 'user'
-                        ? theme.colors.primaryContainer
-                        : theme.colors.surfaceVariant,
-                  },
-                ]}
-              >
-                <Card.Content>
-                  <Text variant="bodyMedium">{msg.content}</Text>
-                </Card.Content>
-              </Card>
-            ))}
+          <ScrollView
+            style={styles.chatContainer}
+            ref={scrollRef}
+            onContentSizeChange={() =>
+              scrollRef.current?.scrollToEnd({ animated: true })
+            }
+          >
+            {messages.map((message, index) => {
+              const role = getMessageRole(message);
+              return (
+                <Card
+                  key={`${message.id || index}_${message.time}`}
+                  mode="contained"
+                  style={[
+                    styles.messageCard,
+                    role === 'user'
+                      ? styles.userMessage
+                      : styles.partnerMessage,
+                    {
+                      backgroundColor:
+                        role === 'user'
+                          ? theme.colors.primaryContainer
+                          : theme.colors.surfaceVariant,
+                    },
+                  ]}
+                >
+                  <Card.Content>
+                    <Text variant="bodyMedium">{message.content}</Text>
+                    <View style={styles.messageFooter}>
+                      <Text variant="labelSmall" style={styles.timestamp}>
+                        {message.time
+                          ? new Date(message.time).toLocaleTimeString([], {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })
+                          : ''}
+                      </Text>
+                    </View>
+                  </Card.Content>
+                </Card>
+              );
+            })}
           </ScrollView>
 
           <View style={styles.inputRow}>
@@ -111,13 +133,13 @@ const ChatPage = () => {
               onChangeText={setInput}
               style={styles.input}
               theme={{ roundness: 20 }}
+              disabled={true}
             />
             <IconButton
               icon="send"
               mode="contained"
               size={24}
-              onPress={handleSend}
-              style={styles.sendButton}
+              disabled={true}
             />
           </View>
         </View>
@@ -126,11 +148,14 @@ const ChatPage = () => {
   );
 };
 
-export default ChatPage;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   chatContainer: {
     flex: 1,
@@ -144,7 +169,7 @@ const styles = StyleSheet.create({
   userMessage: {
     alignSelf: 'flex-end',
   },
-  assistantMessage: {
+  partnerMessage: {
     alignSelf: 'flex-start',
   },
   inputRow: {
@@ -160,4 +185,16 @@ const styles = StyleSheet.create({
   sendButton: {
     margin: 0,
   },
+  messageFooter: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  timestamp: {
+    opacity: 0.6,
+    marginRight: 4,
+  },
 });
+
+export default ChatPage;

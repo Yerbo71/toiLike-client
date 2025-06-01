@@ -61,7 +61,7 @@ const GeminiChatPage = () => {
     };
 
     loadEventAnalysis();
-  }, [eventId, token, t]);
+  }, [eventId, token]);
 
   return (
     <View
